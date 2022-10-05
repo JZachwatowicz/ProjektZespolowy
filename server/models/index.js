@@ -1,4 +1,4 @@
-const dbConfig = require('../config/dbConfig.js');
+const dbConfig = require('../config/db.config.js');
 
 const { Sequelize } = require('sequelize');
 
@@ -77,17 +77,14 @@ db.user.hasOne(db.refreshToken, {
 // INSERT INTO roles VALUES (3, 'admin', now(), now());
 function init_roles() {
     db.role.create({
-        id: 1,
         name: "user"
     });
 
     db.role.create({
-        id: 2,
         name: "employee"
     });
 
     db.role.create({
-        id: 3,
         name: "admin"
     });
 }
