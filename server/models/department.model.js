@@ -1,28 +1,25 @@
 module.exports = (sequelize, Sequelize) => {
-    const Role = sequelize.define("roles", {
+    const Department = sequelize.define("deparments", {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true
       },
       name: Sequelize.STRING(45),
+      description: Sequelize.INTEGER
     },
     {
       indexes: [
-        {
-          primaryKey: true,
-          fields: ['id']
-        },
         {
           unique: true,
           fields:['name']
         },
         {
           allowNull: false,
-          fields:['name']
+          fields:['name', 'description']
         }
       ]
     });
   
-    return Role;
+    return Department;
   };
