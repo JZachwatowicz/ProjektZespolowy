@@ -5,17 +5,15 @@ module.exports = (sequelize, Sequelize) => {
         autoIncrement: true,
         primaryKey: true
       },
-      name: Sequelize.STRING(100),
-      description: Sequelize.STRING(250)
-    },
-    {
-        indexes: [
-          {
-            allowNull: false,
-            fields: ['name', 'description']
-          }
-        ]
-      });
+      name: {
+        type: Sequelize.STRING(100),
+        allowNull: false
+      },
+      description: {
+        type: Sequelize.STRING(250),
+        allowNull: false
+      }
+    });
   
     return Activity;
   };

@@ -5,20 +5,15 @@ module.exports = (sequelize, Sequelize) => {
         autoIncrement: true,
         primaryKey: true
       },
-      name: Sequelize.STRING(45),
-      description: Sequelize.INTEGER
-    },
-    {
-      indexes: [
-        {
-          unique: true,
-          fields:['name']
-        },
-        {
-          allowNull: false,
-          fields:['name', 'description']
-        }
-      ]
+      name: {
+        type: Sequelize.STRING(45),
+        unique: true,
+        allowNull: false
+      },
+      description: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      }
     });
   
     return Department;

@@ -5,19 +5,23 @@ module.exports = (sequelize, Sequelize) => {
         autoIncrement: true,
         primaryKey: true
       },
-      title: Sequelize.STRING(100),
-      description: Sequelize.TEXT,
-      author: Sequelize.VARCHAR(100),
-      date: Sequelize.DATEONLY
-    },
-    {
-        indexes: [
-          {
-            allowNull: false,
-            fields: ['title', 'description', 'author', 'date']
-          }
-        ]
-      });
+      title: {
+        type: Sequelize.STRING(100),
+        allowNull: false
+      },
+      description: {
+        type: Sequelize.TEXT,
+        allowNull: false,
+      },
+      author: {
+        type: Sequelize.STRING(100),
+        allowNull: false
+      },
+      date: {
+        type: Sequelize.DATEONLY,
+        allowNull: false
+      }
+    });
   
     return ClientDescription;
   };

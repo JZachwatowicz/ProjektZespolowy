@@ -5,18 +5,19 @@ module.exports = (sequelize, Sequelize) => {
         autoIncrement: true,
         primaryKey: true
       },
-      name: Sequelize.STRING(45),
-      serial_number: Sequelize.STRING(45),
-      possesion_date: Sequelize.DATEONLY
-    },
-    {
-        indexes: [
-          {
-            allowNull: false,
-            fields: ['name', 'serial_number', 'possesion_date']
-          }
-        ]
-      });
+      name: {
+        type: Sequelize.STRING(45),
+        allowNull: false
+      },
+      serial_number: {
+        type: Sequelize.STRING(45),
+        allowNull: false
+      },
+      possesion_date: {
+        type: Sequelize.DATEONLY,
+        allowNull: false
+      }
+    });
   
     return Item;
   };

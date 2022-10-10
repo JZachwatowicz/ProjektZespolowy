@@ -5,37 +5,41 @@ module.exports = (sequelize, Sequelize) => {
         autoIncrement: true,
         primaryKey: true
       },
-      username: Sequelize.STRING(15),
-      password: Sequelize.STRING(20),
-      first_name: Sequelize.STRING(45),
-      last_name: Sequelize.STRING(45),
-      birth_date: Sequelize.DATEONLY,
-      pesel: Sequelize.STRING(11),
-      contact_number: Sequelize.STRING(9),
-      email: Sequelize.STRING
-    },
-    {
-      indexes: [
-        {
-          unique: true,
-          fields: ['username', 'pesel']
-        },
-        {
-          allowNull: false,
-          fields:
-          [
-            'username',
-            'password',
-            'first_name',
-            'last_name',
-            'birth_date',
-            'pesel',
-            'contact_number',
-            'email'
-          ]
-        }
-      ]
+      username: {
+        type: Sequelize.STRING(15),
+        unique: true,
+        allowNull: false
+      },
+      password: {
+        type: Sequelize.STRING(20),
+        allowNull: false
+      },
+      first_name: {
+        type: Sequelize.STRING(45),
+        allowNull: false
+      },
+      last_name: {
+        type: Sequelize.STRING(45),
+        allowNull: false
+      },
+      birth_date: {
+        type: Sequelize.DATEONLY,
+        allowNull: false
+      },
+      pesel: {
+        type: Sequelize.STRING(11),
+        unique: true,
+        allowNull: false
+      },
+      contact_number: {
+        type: Sequelize.STRING(9),
+        allowNull: false
+      },
+      email: {
+        type: Sequelize.STRING,
+        allowNull: false
+      }
     });
   
     return User;
-  };
+};

@@ -5,21 +5,20 @@ module.exports = (sequelize, Sequelize) => {
         autoIncrement: true,
         primaryKey: true
       },
-      begin_date: Sequelize.DATE,
-      end_date: Sequelize.DATE,
+      begin_date: {
+        type: Sequelize.DATE,
+        allowNull:false
+      },
+      end_date: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
       admin_consent: {
         type: Sequelize.BOOLEAN,
-        defaultValue: 0
+        defaultValue: 0,
+        allowNull: false
       }
-    },
-    {
-        indexes: [
-          {
-            allowNull: false,
-            fields: ['begin_date', 'end_date', 'admin_consent']
-          }
-        ]
-      });
+    });
   
     return Harmonogram;
   };

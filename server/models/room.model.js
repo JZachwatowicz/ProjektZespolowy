@@ -5,20 +5,15 @@ module.exports = (sequelize, Sequelize) => {
         autoIncrement: true,
         primaryKey: true
       },
-      name: Sequelize.STRING(45),
-      capacity: Sequelize.INTEGER
-    },
-    {
-      indexes: [
-        {
-          unique: true,
-          fields:['name']
-        },
-        {
-          allowNull: false,
-          fields:['name', 'capacity']
-        }
-      ]
+      name: {
+        type: Sequelize.STRING(45),
+        unique: true,
+        allowNull: false
+      },
+      capacity: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      }
     });
   
     return ItemType;

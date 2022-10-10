@@ -1,5 +1,5 @@
 const db = require("../models");
-const config = require("../config/authConfig");
+const config = require("../config/auth.config");
 const { user: User, role: Role, refreshToken: RefreshToken } = db;
 
 const Op = db.Sequelize.Op;

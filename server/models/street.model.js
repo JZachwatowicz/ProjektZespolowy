@@ -5,20 +5,12 @@ module.exports = (sequelize, Sequelize) => {
         autoIncrement: true,
         primaryKey: true
       },
-      name: Sequelize.STRING(45)
-    },
-    {
-        indexes: [
-          {
-            unique: true,
-            fields: ['name']
-          },
-          {
-            allowNull: false,
-            fields: ['name']
-          }
-        ]
-      });
+      name: {
+        type: Sequelize.STRING(45),
+        unique: true,
+        allowNull: false
+      }
+    });
   
     return Street;
   };
