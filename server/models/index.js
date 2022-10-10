@@ -77,7 +77,13 @@ db.voivodeship.belongsTo(db.country, {
     as: 'country'
 });
 
-db.voivodeship.hasMany(db.city, {as: 'city'});
+db.voivodeship.hasMany(db.city, {
+    foreignKey: {
+        name: 'voivodeship_id',
+        allowNull: false
+    },
+    as: 'city'
+});
 db.city.belongsTo(db.voivodeship, {
     foreignKey: {
         name: 'voivodeship_id',
@@ -86,7 +92,13 @@ db.city.belongsTo(db.voivodeship, {
     as: 'voivodeship'
 });
 
-db.city.hasMany(db.street, {as: 'street'});
+db.city.hasMany(db.street, {
+    foreignKey: {
+        name: 'city_id',
+        allowNull: false
+    },
+    as: 'street'
+});
 db.street.belongsTo(db.city, {
     foreignKey: {
         name: 'city_id',
@@ -95,7 +107,13 @@ db.street.belongsTo(db.city, {
     as: 'city'
 });
 
-db.street.hasMany(db.address, {as: 'address'});
+db.street.hasMany(db.address, {
+    foreignKey: {
+        name: 'street_id',
+        allowNull: false
+    },
+    as: 'address'
+});
 db.address.belongsTo(db.street, {
     foreignKey: {
         name: 'street_id',
@@ -104,7 +122,13 @@ db.address.belongsTo(db.street, {
     as: 'street'
 });
 
-db.address.hasMany(db.user, {as: 'user'});
+db.address.hasMany(db.user, {
+    foreignKey: {
+        name: 'address_id',
+        allowNull: false
+    },
+    as: 'user'
+});
 db.user.belongsTo(db.address, {
     foreignKey: {
         name: 'address_id',
@@ -113,7 +137,13 @@ db.user.belongsTo(db.address, {
     as: 'address'
 });
 
-db.address.hasMany(db.department_has_address, {as: 'department_has_address'})
+db.address.hasMany(db.department_has_address, {
+    foreignKey: {
+        name: 'address_id',
+        allowNull: false
+    },
+    as: 'department_has_address'
+})
 db.department_has_address.belongsTo(db.address, {
     foreignKey: {
         name: 'address_id',
@@ -122,7 +152,13 @@ db.department_has_address.belongsTo(db.address, {
     as: 'address'
 });
 
-db.department.hasMany(db.department_has_address, {as: 'department_has_address'})
+db.department.hasMany(db.department_has_address, {
+    foreignKey: {
+        name: 'department_id',
+        allowNull: false
+    },
+    as: 'department_has_address'
+})
 db.department_has_address.belongsTo(db.department, {
     foreignKey: {
         name: 'department_id',
@@ -131,7 +167,13 @@ db.department_has_address.belongsTo(db.department, {
     as: 'department'
 });
 
-db.department_has_address.hasMany(db.room, {as: 'room'});
+db.department_has_address.hasMany(db.room, {
+    foreignKey: {
+        name: 'department_has_address_id',
+        allowNull: false
+    },
+    as: 'room'
+});
 db.room.belongsTo(db.department_has_address, {
     foreignKey: {
         name: 'department_has_address_id',
@@ -140,7 +182,13 @@ db.room.belongsTo(db.department_has_address, {
     as: 'department_has_address'
 });
 
-db.room_type.hasMany(db.room, {as: 'room'});
+db.room_type.hasMany(db.room, {
+    foreignKey: {
+        name: 'room_type_id',
+        allowNull: false
+    },
+    as: 'room'
+});
 db.room.belongsTo(db.room_type, {
     foreignKey: {
         name: 'room_type_id',
@@ -149,7 +197,13 @@ db.room.belongsTo(db.room_type, {
     as: 'room_type'
 });
 
-db.room.hasMany(db.harmonogram, {as: 'harmonogram'});
+db.room.hasMany(db.harmonogram, {
+    foreignKey: {
+        name: 'room_id',
+        allowNull: true
+    },
+    as: 'harmonogram'
+});
 db.harmonogram.belongsTo(db.room, {
     foreignKey: {
         name: 'room_id',
@@ -158,7 +212,13 @@ db.harmonogram.belongsTo(db.room, {
     as: 'room'
 });
 
-db.item.hasMany(db.harmonogram, {as: 'harmonogram'});
+db.item.hasMany(db.harmonogram, {
+    foreignKey: {
+        name: 'item_id',
+        allowNull: true
+    },
+    as: 'harmonogram'
+});
 db.harmonogram.belongsTo(db.item, {
     foreignKey: {
         name: 'item_id',
@@ -167,7 +227,13 @@ db.harmonogram.belongsTo(db.item, {
     as: 'item'
 });
 
-db.item_type.hasMany(db.item, {as: 'item'});
+db.item_type.hasMany(db.item, {
+    foreignKey: {
+        name: 'item_type_id',
+        allowNull: false
+    },
+    as: 'item'
+});
 db.item.belongsTo(db.item_type, {
     foreignKey: {
         name: 'item_type_id',
@@ -176,6 +242,170 @@ db.item.belongsTo(db.item_type, {
     as: 'item_type'
 });
 
+db.user.hasMany(db.harmonogram, {
+    foreignKey: {
+        name: 'user_id',
+        allowNull: false
+    },
+    as: 'harmonogram'
+});
+db.harmonogram.belongsTo(db.user, {
+    foreignKey: {
+        name: 'user_id',
+        allowNull: false
+    },
+    as: 'user'
+});
+
+db.harmonogram.hasOne(db.schedule, {
+    foreignKey: {
+        name: 'harmonogram_id',
+        allowNull: false
+    },
+    as: 'schedule'
+});
+db.schedule.belongsTo(db.harmonogram, {
+    foreignKey: {
+        name: 'harmonogram_id',
+        allowNull: false
+    },
+    as: 'harmonogram'
+})
+
+db.user.hasOne(db.client, {
+    foreignKey: {
+        name: 'user_id',
+        allowNull: false
+    },
+    as: 'client'
+});
+db.client.belongsTo(db.user, {
+    foreignKey: {
+        name: 'user_id',
+        allowNull: true
+    },
+    as: 'user'
+});
+
+db.client.hasMany(db.client_description, {
+    foreignKey: {
+        name: 'client_id',
+        allowNull: false
+    },
+    as: 'client_description'
+});
+db.client_description.belongsTo(db.client, {
+    foreignKey: {
+        name: 'client_id',
+        allowNull: false
+    },
+    as: 'client'
+});
+
+db.client.hasMany(db.client_has_schedule, {
+    foreignKey: {
+        name: 'client_id',
+        allowNull: false
+    },
+    as: 'client_has_schedule'
+});
+db.client_has_schedule.belongsTo(db.client, {
+    foreignKey: {
+        name: 'client_id',
+        allowNull: false
+    },
+    as: 'client'
+});
+
+db.schedule.hasMany(db.client_has_schedule, {
+    foreignKey: {
+        name: 'schedule_id',
+        allowNull: false
+    },
+    as: 'client_has_schedule'
+});
+db.client_has_schedule.belongsTo(db.schedule, {
+    foreignKey: {
+        name: 'schedule_id',
+        allowNull: false
+    },
+    as: 'schedule'
+});
+
+db.user.hasOne(db.employee, {
+    foreignKey: {
+        name: 'user_id',
+        allowNull: false
+    },
+    as: 'employee'
+});
+db.employee.belongsTo(db.user, {
+    foreignKey: {
+        name: 'user_id',
+        allowNull: true
+    },
+    as: 'user'
+});
+
+db.employee_type.hasMany(db.employee, {
+    foreignKey: {
+        name: 'employee_type_id',
+        allowNull: false
+    },
+    as: 'employee'
+});
+db.employee.belongsTo(db.employee_type, {
+    foreignKey: {
+        name: 'employee_type_id',
+        allowNull: false
+    },
+    as: 'employee_type'
+});
+
+db.employee.hasMany(db.employee_has_schedule, {
+    foreignKey: {
+        name: 'employee_id',
+        allowNull: false
+    },
+    as: 'employee_has_schedule'
+});
+db.employee_has_schedule.belongsTo(db.employee, {
+    foreignKey: {
+        name: 'employee_id',
+        allowNull: false
+    },
+    as: 'employee'
+});
+
+db.schedule.hasMany(db.employee_has_schedule, {
+    foreignKey: {
+        name: 'schedule_id',
+        allowNull: false
+    },
+    as: 'employee_has_schedule'
+});
+db.employee_has_schedule.belongsTo(db.schedule, {
+    foreignKey: {
+        name: 'schedule_id',
+        allowNull: false
+    },
+    as: 'schedule'
+});
+
+db.activity.hasMany(db.schedule, {
+    foreignKey: {
+        name: 'activity_id',
+        allowNull: false
+    },
+    as: 'schedule'
+});
+db.schedule.belongsTo(db.activity, {
+    foreignKey: {
+        name: 'activity_id',
+        allowNull: false
+    },
+    as: 'activity'
+})
 
 
 db.refresh_token.belongsTo(db.user, {
