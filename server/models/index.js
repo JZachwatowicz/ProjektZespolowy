@@ -35,27 +35,24 @@ db.sequelize = sequelize
 
 // connecting models
 
-db.refresh_token = require('./refresh_token.model.js')(sequelize, Sequelize);
-
 db.activity = require('./activity.model.js')(sequelize, Sequelize);
 db.address = require('./address.model.js')(sequelize, Sequelize);
+db.article = require('./article.model.js')(sequelize, Sequelize0);
 db.city = require('./city.model.js')(sequelize, Sequelize);
-db.client_description = require('./client_description.model.js')(sequelize, Sequelize);
-db.client_has_schedule = require('./client_has_schedule.model.js')(sequelize, Sequelize);
-db.client = require('./client.model.js')(sequelize, Sequelize);
 db.country = require('./country.model.js')(sequelize, Sequelize);
 db.department_has_address = require('./department_has_address.model.js')(sequelize, Sequelize);
 db.department = require('./department.model.js')(sequelize, Sequelize);
-db.employee_has_schedule = require('./employee_has_schedule.model.js')(sequelize, Sequelize);
-db.employee_type = require('./employee_type.model.js')(sequelize, Sequelize);
-db.employee = require('./employee.model.js')(sequelize, Sequelize);
 db.harmonogram = require('./harmonogram.model.js')(sequelize, Sequelize);
 db.item_type = require('./item_type.model.js')(sequelize, Sequelize);
 db.item = require('./item.model.js')(sequelize, Sequelize);
+db.refresh_token = require('./refresh_token.model.js')(sequelize, Sequelize);
 db.room_type = require('./room_type.model.js')(sequelize, Sequelize);
 db.room = require('./room.model.js')(sequelize, Sequelize);
 db.schedule = require('./schedule.model.js')(sequelize, Sequelize);
 db.street = require('./street.model.js')(sequelize, Sequelize);
+db.user_description = require('./user_description.model.js')(sequelize, Sequelize);
+db.user_has_schedule = require('./user_has_schedule.model.js')(sequelize, Sequelize);
+db.user_type = require('./user_type.model.js')(sequelize, Sequelize);
 db.user = require('./user.model.js')(sequelize, Sequelize);
 db.voivodeship = require('./voivodeship.model.js')(sequelize, Sequelize);
 
@@ -272,119 +269,45 @@ db.schedule.belongsTo(db.harmonogram, {
     as: 'harmonogram'
 })
 
-db.user.hasOne(db.client, {
+
+db.user.hasMany(db.user_description, {
     foreignKey: {
         name: 'user_id',
         allowNull: false
     },
-    as: 'client'
+    as: 'user_description'
 });
-db.client.belongsTo(db.user, {
+db.user_description.belongsTo(db.user, {
     foreignKey: {
         name: 'user_id',
-        allowNull: true
+        allowNull: false
     },
     as: 'user'
 });
 
-db.client.hasMany(db.client_description, {
+db.user.hasMany(db.user_has_schedule, {
     foreignKey: {
-        name: 'client_id',
+        name: 'user_id',
         allowNull: false
     },
-    as: 'client_description'
+    as: 'user_has_schedule'
 });
-db.client_description.belongsTo(db.client, {
+db.user_has_schedule.belongsTo(db.user, {
     foreignKey: {
-        name: 'client_id',
+        name: 'user_id',
         allowNull: false
     },
-    as: 'client'
-});
-
-db.client.hasMany(db.client_has_schedule, {
-    foreignKey: {
-        name: 'client_id',
-        allowNull: false
-    },
-    as: 'client_has_schedule'
-});
-db.client_has_schedule.belongsTo(db.client, {
-    foreignKey: {
-        name: 'client_id',
-        allowNull: false
-    },
-    as: 'client'
+    as: 'user'
 });
 
-db.schedule.hasMany(db.client_has_schedule, {
+db.schedule.hasMany(db.user_has_schedule, {
     foreignKey: {
         name: 'schedule_id',
         allowNull: false
     },
     as: 'client_has_schedule'
 });
-db.client_has_schedule.belongsTo(db.schedule, {
-    foreignKey: {
-        name: 'schedule_id',
-        allowNull: false
-    },
-    as: 'schedule'
-});
-
-db.user.hasOne(db.employee, {
-    foreignKey: {
-        name: 'user_id',
-        allowNull: false
-    },
-    as: 'employee'
-});
-db.employee.belongsTo(db.user, {
-    foreignKey: {
-        name: 'user_id',
-        allowNull: true
-    },
-    as: 'user'
-});
-
-db.employee_type.hasMany(db.employee, {
-    foreignKey: {
-        name: 'employee_type_id',
-        allowNull: false
-    },
-    as: 'employee'
-});
-db.employee.belongsTo(db.employee_type, {
-    foreignKey: {
-        name: 'employee_type_id',
-        allowNull: false
-    },
-    as: 'employee_type'
-});
-
-db.employee.hasMany(db.employee_has_schedule, {
-    foreignKey: {
-        name: 'employee_id',
-        allowNull: false
-    },
-    as: 'employee_has_schedule'
-});
-db.employee_has_schedule.belongsTo(db.employee, {
-    foreignKey: {
-        name: 'employee_id',
-        allowNull: false
-    },
-    as: 'employee'
-});
-
-db.schedule.hasMany(db.employee_has_schedule, {
-    foreignKey: {
-        name: 'schedule_id',
-        allowNull: false
-    },
-    as: 'employee_has_schedule'
-});
-db.employee_has_schedule.belongsTo(db.schedule, {
+db.user_has_schedule.belongsTo(db.schedule, {
     foreignKey: {
         name: 'schedule_id',
         allowNull: false
@@ -405,7 +328,22 @@ db.schedule.belongsTo(db.activity, {
         allowNull: false
     },
     as: 'activity'
-})
+});
+
+db.user.hasMany(db.article, {
+    foreignKey: {
+        name: 'user_id',
+        allowNull: false
+    },
+    as: 'article'
+});
+db.article.belongsTo(db.user, {
+    foreignKey: {
+        name: 'user_id',
+        allowNull: false
+    },
+    as: 'user'
+});
 
 
 db.refresh_token.belongsTo(db.user, {

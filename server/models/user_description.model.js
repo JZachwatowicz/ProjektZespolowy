@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const ClientDescription = sequelize.define("client_descriptions", {
+    const UserDescription = sequelize.define("user_descriptions", {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -23,5 +23,5 @@ module.exports = (sequelize, Sequelize) => {
       }
     });
   
-    return ClientDescription;
+    return UserDescription;
   };
