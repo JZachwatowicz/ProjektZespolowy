@@ -5,17 +5,12 @@ module.exports = (sequelize, Sequelize) => {
         autoIncrement: true,
         primaryKey: true
       },
-      building_number: Sequelize.STRING(5),
+      building_number: {
+        type: Sequelize.STRING(5),
+        allowNull: false
+      },
       apartment_number: Sequelize.STRING(5)
-    },
-    {
-        indexes: [
-          {
-            allowNull: false,
-            fields: ['building_number']
-          }
-        ]
-      });
+    });
   
     return Address;
   };

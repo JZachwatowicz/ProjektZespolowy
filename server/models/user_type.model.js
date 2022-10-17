@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const Street = sequelize.define("streets", {
+    const UserType = sequelize.define("user_types", {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -12,5 +12,5 @@ module.exports = (sequelize, Sequelize) => {
       }
     });
   
-    return Street;
+    return UserType;
   };

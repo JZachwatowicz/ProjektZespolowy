@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const Street = sequelize.define("streets", {
+    const Item = sequelize.define("items", {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -7,10 +7,17 @@ module.exports = (sequelize, Sequelize) => {
       },
       name: {
         type: Sequelize.STRING(45),
-        unique: true,
+        allowNull: false
+      },
+      serial_number: {
+        type: Sequelize.STRING(45),
+        allowNull: false
+      },
+      possesion_date: {
+        type: Sequelize.DATEONLY,
         allowNull: false
       }
     });
   
-    return Street;
+    return Item;
   };

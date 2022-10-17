@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const Employee = sequelize.define("employees", {
+    const Schedule = sequelize.define("schedules", {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -7,5 +7,5 @@ module.exports = (sequelize, Sequelize) => {
       }
     });
   
-    return Employee;
+    return Schedule;
   };

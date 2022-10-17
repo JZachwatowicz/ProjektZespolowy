@@ -1,16 +1,19 @@
 module.exports = (sequelize, Sequelize) => {
-    const Street = sequelize.define("streets", {
+    const Activity = sequelize.define("activities", {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true
       },
       name: {
-        type: Sequelize.STRING(45),
-        unique: true,
+        type: Sequelize.STRING(100),
+        allowNull: false
+      },
+      description: {
+        type: Sequelize.STRING(250),
         allowNull: false
       }
     });
   
-    return Street;
+    return Activity;
   };
