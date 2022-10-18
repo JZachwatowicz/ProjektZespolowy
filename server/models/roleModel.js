@@ -1,11 +1,13 @@
 module.exports = (sequelize, Sequelize) => {
-    const Schedule = sequelize.define("schedules", {
+    const Role = sequelize.define("roles", {
       id: {
         type: Sequelize.INTEGER,
-        autoIncrement: true,
         primaryKey: true
+      },
+      name: {
+        type: Sequelize.STRING
       }
     });
   
-    return Schedule;
+    return Role;
   };

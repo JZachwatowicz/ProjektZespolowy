@@ -1,5 +1,5 @@
 const { verifySignUp } = require("../middleware");
-const controller = require("../controllers/auth.controller");
+const controller = require("../controllers/authController");
 const router = require('express').Router()
 
 router.use((req, res, next) => {
