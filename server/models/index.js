@@ -1,4 +1,4 @@
-const dbConfig = require('../config/dbConfig.js');
+const dbConfig = require('../config/db.config.js');
 
 const { Sequelize } = require('sequelize');
 
@@ -35,13 +35,13 @@ db.sequelize = sequelize
 
 db.products = require('./productModel.js')(sequelize, Sequelize)
 db.reviews = require('./reviewModel.js')(sequelize, Sequelize)
-db.user = require('./userModel.js')(sequelize, Sequelize)
-db.role = require('./roleModel.js')(sequelize, Sequelize)
-db.refreshToken = require("../models/refreshTokenModel.js")(sequelize, Sequelize);
+db.user = require('./user.model.js')(sequelize, Sequelize)
+db.role = require('./role.model.js')(sequelize, Sequelize)
+db.refreshToken = require("./refresh-token.model.js")(sequelize, Sequelize);
 
 
 
-// 1 to Many Relation
+// 1 to Many Relation example
 
 db.products.hasMany(db.reviews, {
     foreignKey: 'product_id',
@@ -53,7 +53,7 @@ db.reviews.belongsTo(db.products, {
     as: 'product'
 })
 
-//many to many relation
+//many to many relation example 
 db.role.belongsToMany(db.user, {
     through: "user_roles",
     foreignKey: "roleId",
@@ -72,30 +72,10 @@ db.user.hasOne(db.refreshToken, {
     foreignKey: 'userId', targetKey: 'id'
 });
 
-// INSERT INTO roles VALUES (1, 'user', now(), now());
-// INSERT INTO roles VALUES (2, 'employee', now(), now());
-// INSERT INTO roles VALUES (3, 'admin', now(), now());
-function init_roles() {
-    db.role.create({
-        id: 1,
-        name: "user"
-    });
-
-    db.role.create({
-        id: 2,
-        name: "employee"
-    });
-
-    db.role.create({
-        id: 3,
-        name: "admin"
-    });
-}
 
 db.sequelize.sync()
     .then(() => {
         console.log('yes re-sync done!');
-        //init_roles();
     })
 
 db.ROLES = ["user", "employee", "admin"];

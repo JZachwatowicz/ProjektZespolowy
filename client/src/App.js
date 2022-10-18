@@ -3,19 +3,19 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
-import Navbar from './screens/Navbar'
+import Navbar from './screens/navbar'
 import AddProduct from './screens/AddProduct'
 import ShowProducts from './screens/ShowProducts'
 import ProductDetail from './screens/ProductDetail'
 import EditProduct from './screens/EditProduct'
 
-import Login from "./components/loginComponent";
-import Register from "./components/registerComponent";
-import Home from "./components/homeComponent";
-import Profile from "./components/profileComponent";
-import BoardUser from "./components/userBoardComponent";
-import BoardEmployee from "./components/employeeBoardComponent";
-import BoardAdmin from "./components/adminBoardComponent";
+import Login from "./components/login.component";
+import Register from "./components/register.component";
+import Home from "./components/home.component";
+import Profile from "./components/profile.component";
+import BoardUser from "./components/user-board.component";
+import BoardEmployee from "./components/employee-board.component";
+import BoardAdmin from "./components/admin-board.component";
 
 
 const App = () => {

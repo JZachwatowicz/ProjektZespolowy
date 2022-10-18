@@ -1,5 +1,5 @@
 const db = require("../models");
-const config = require("../config/authConfig");
+const config = require("../config/auth.config");
 const { user: User, role: Role, refreshToken: RefreshToken } = db;
 
 const Op = db.Sequelize.Op;
@@ -12,7 +12,13 @@ exports.signup = (req, res) => {
   User.create({
     username: req.body.username,
     email: req.body.email,
-    password: bcrypt.hashSync(req.body.password, 8)
+    password: bcrypt.hashSync(req.body.password, 8),
+    first_name: req.body.first_name,
+    last_name: req.body.last_name,
+    birth_date: req.body.birth_date,
+    pesel: req.body.pesel,
+    contact_number: req.body.contact_number,
+
   })
     .then(user => {
       if (req.body.roles) {
@@ -77,6 +83,10 @@ exports.signin = (req, res) => {
           id: user.id,
           username: user.username,
           email: user.email,
+          first_name: user.first_name,
+          last_name: user.last_name,
+          pesel: user.pesel,
+          contact_number: user.contact_number,
           roles: authorities,
           accessToken: token,
           refreshToken: refreshToken,

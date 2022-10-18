@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from "react";
 
-import UserService from "../services/userService";
+import UserService from "../services/user.service";
 
-const BoardUser = () => {
+
+const Home = () => {
   const [content, setContent] = useState("");
 
   useEffect(() => {
-    UserService.getUserBoard().then(
+    UserService.getPublicContent().then(
       (response) => {
         setContent(response.data);
       },
       (error) => {
         const _content =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
+          (error.response && error.response.data) ||
           error.message ||
           error.toString();
 
@@ -30,4 +29,4 @@ const BoardUser = () => {
   );
 };
 
-export default BoardUser;
+export default Home;

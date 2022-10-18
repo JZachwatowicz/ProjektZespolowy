@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import AuthService from '../services/authService';
+import AuthService from '../services/auth.service';
 
 export default function Navbar() {
   const [showEmployeeBoard, setShowEmployeeBoard] = useState(false);

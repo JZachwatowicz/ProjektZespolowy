@@ -4,7 +4,7 @@ import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
 
-import AuthService from "../services/authService";
+import AuthService from "../services/auth.service";
 
 const required = (value) => {
   if (!value) {
@@ -53,6 +53,12 @@ const Register = (props) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [birthDate, setBirthDate] = useState(new Date());
+  const [pesel, setPesel] = useState("");
+  const [contactNumber, setContactNumber] = useState("");
+
   const [successful, setSuccessful] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -71,6 +77,29 @@ const Register = (props) => {
     setPassword(password);
   };
 
+  const onChangeFirstName = (e) => {
+    const firstName = e.target.value;
+    setFirstName(firstName);
+  };
+
+  const onChangeLastName = (e) => {
+    const lastName = e.target.value;
+    setLastName(lastName);
+  };
+
+  const onChangeBirthDate = (e) => {
+    const birthDate = e.target.value;
+    setBirthDate(birthDate);
+  };
+
+  const onChangeContactNumber = (e) => {
+    const contactNumber = e.target.value;
+    setContactNumber(contactNumber);
+  };
+  const onChangePesel = (e) => {
+    const pesel = e.target.value;
+    setPesel(pesel);
+  };
   const handleRegister = (e) => {
     e.preventDefault();
 
@@ -80,7 +109,7 @@ const Register = (props) => {
     form.current.validateAll();
 
     if (checkBtn.current.context._errors.length === 0) {
-      AuthService.register(username, email, password).then(
+      AuthService.register(username, email, password, firstName ,lastName, birthDate, pesel, contactNumber).then(
         (response) => {
           setMessage(response.data.message);
           setSuccessful(true);
@@ -113,7 +142,7 @@ const Register = (props) => {
           {!successful && (
             <div>
               <div className="form-group">
-                <label htmlFor="username">Username</label>
+                <label htmlFor="username">Login</label>
                 <Input
                   type="text"
                   className="form-control"
@@ -137,7 +166,7 @@ const Register = (props) => {
               </div>
 
               <div className="form-group">
-                <label htmlFor="password">Password</label>
+                <label htmlFor="password">Hasło</label>
                 <Input
                   type="password"
                   className="form-control"
@@ -145,6 +174,66 @@ const Register = (props) => {
                   value={password}
                   onChange={onChangePassword}
                   validations={[required, vpassword]}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="firstName">Imię</label>
+                <Input
+                  type="text"
+                  className="form-control"
+                  name="firstName"
+                  value={firstName}
+                  onChange={onChangeFirstName}
+                  validations={[required]}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="lastName">Nazwisko</label>
+                <Input
+                  type="text"
+                  className="form-control"
+                  name="lastName"
+                  value={lastName}
+                  onChange={onChangeLastName}
+                  validations={[required]}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="birthDate">Data urodzenia</label>
+                <Input
+                  type="date"
+                  className="form-control"
+                  name="birthDate"
+                  value={birthDate}
+                  onChange={onChangeBirthDate}
+                  validations={[required]}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="pesel">PESEL</label>
+                <Input
+                  type="text"
+                  className="form-control"
+                  name="pesel"
+                  value={pesel}
+                  onChange={onChangePesel}
+                  validations={[required]}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="contactNumber">Telefon</label>
+                <Input
+                  type="text"
+                  className="form-control"
+                  name="contactNumber"
+                  value={contactNumber}
+                  onChange={onChangeContactNumber}
+                  validations={[required]}
                 />
               </div>
 
