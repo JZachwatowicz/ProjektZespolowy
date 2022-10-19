@@ -26,12 +26,7 @@ export default function Navbar() {
 
   return (
     <Container>
-      <nav className='navbar navbar-expand-lg navbar-light bg-light'>
-        <ul className='navbar-nav mr-auto'>
-          <li className='nav-item'><Link className='nav-link' to="/addProduct">addProduct</Link></li>
-          <li className='nav-item'><Link className='nav-link' to="/products">products</Link></li>
-        </ul>
-      </nav>
+
 
       <nav className="navbar navbar-expand navbar-dark bg-dark">
         <Link to={"/"} className="navbar-brand">
@@ -50,14 +45,22 @@ export default function Navbar() {
                 Employee Board
               </Link>
             </li>
+
           )}
 
           {showAdminBoard && (
-            <li className="nav-item">
-              <Link to={"/admin"} className="nav-link">
-                Admin Board
-              </Link>
-            </li>
+            <div className="navbar-nav ml-auto">
+              <li className="nav-item">
+                <Link to={"/employee"} className="nav-link">
+                  Employee Board
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to={"/admin"} className="nav-link">
+                  Admin Board
+                </Link>
+              </li>
+            </div>
           )}
 
           {currentUser && (
