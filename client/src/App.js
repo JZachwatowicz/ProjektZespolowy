@@ -4,8 +4,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 import Navbar from './screens/Navbar'
-import AddProduct from './screens/AddProduct'
-import ShowProducts from './screens/ShowProducts'
+import AddActivity from './screens/AddActivity'
+import ShowActivities from './screens/ShowActivities'
 import ProductDetail from './screens/ProductDetail'
 import EditProduct from './screens/EditProduct'
 
@@ -32,8 +32,8 @@ const App = () => {
         <Route exact path="/user" component={BoardUser} />
         <Route exact path="/employee" component={BoardEmployee} />
         <Route exact path="/admin" component={BoardAdmin} />
-        <Route exact path='/addProduct' component={AddProduct} />
-        <Route exact path='/products' component={ShowProducts} />
+        <Route exact path='/addActivity' component={AddActivity} />
+        <Route exact path='/activities' component={ShowActivities} />
         <Route exact path='/product/edit/:id' component={EditProduct} />
         <Route exact path='/product/:id' component={ProductDetail} />
       </Switch>

@@ -37,7 +37,7 @@ db.sequelize = sequelize
 
 db.activity = require('./activity.model.js')(sequelize, Sequelize);
 db.address = require('./address.model.js')(sequelize, Sequelize);
-db.article = require('./article.model.js')(sequelize, Sequelize0);
+db.article = require('./article.model.js')(sequelize, Sequelize);
 db.city = require('./city.model.js')(sequelize, Sequelize);
 db.country = require('./country.model.js')(sequelize, Sequelize);
 db.department_has_address = require('./department_has_address.model.js')(sequelize, Sequelize);
