@@ -7,7 +7,7 @@ import Navbar from './screens/Navbar'
 import AddActivity from './screens/AddActivity'
 import ShowActivities from './screens/ShowActivities'
 import ProductDetail from './screens/ProductDetail'
-import EditProduct from './screens/EditProduct'
+import EditActivity from './screens/EditActivity'
 
 import Login from "./components/loginComponent";
 import Register from "./components/registerComponent";
@@ -33,8 +33,8 @@ const App = () => {
         <Route exact path="/employee" component={BoardEmployee} />
         <Route exact path="/admin" component={BoardAdmin} />
         <Route exact path='/addActivity' component={AddActivity} />
+        <Route exact path='/editActivity/:id' component={EditActivity} />
         <Route exact path='/activities' component={ShowActivities} />
-        <Route exact path='/product/edit/:id' component={EditProduct} />
         <Route exact path='/product/:id' component={ProductDetail} />
       </Switch>
     </Router>

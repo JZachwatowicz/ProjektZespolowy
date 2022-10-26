@@ -14,5 +14,7 @@ router.use((req, res, next) => {
 
 router.get("/allActivities", ActvityController.allActivities);
 router.post('/addActivity', ActvityController.addActivity);
+router.put('/editActivity', ActvityController.editActivity);
 router.delete("/deleteActivity", ActvityController.deleteActivity)
+router.get("/getActivity/:id", ActvityController.getActivity)
 module.exports = router

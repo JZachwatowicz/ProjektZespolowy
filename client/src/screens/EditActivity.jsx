@@ -1,7 +1,11 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect} from 'react'
+import {
+    useParams
+  } from "react-router-dom";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import Textarea from "react-validation/build/textarea";
+
 import CheckButton from "react-validation/build/button"
 
 import ActivityService from '../services/activity.service'
@@ -34,11 +38,13 @@ const required = (value) => {
       );
     }
   };
-  
+
   
 
-const AddActivity = ({ history }) => {
 
+const EditActivity = ({ history }) => {
+
+    let { id } = useParams();
     const form = useRef();
     const checkBtn = useRef();
     const [name, setName] = useState('')
@@ -46,7 +52,23 @@ const AddActivity = ({ history }) => {
     const [successful, setSuccessful] = useState(false);
     const [message, setMessage] = useState("");
 
+    useEffect(() => {
+      ActivityService.getActivity(id).then(
+        (response) => {
+          console.log(response.data);
+          setName(response.data.name);
+          setDescription(response.data.description);
+        },
+        (error) => {
+          const _error =
+            (error.response && error.response.data) ||
+            error.message ||
+            error.toString();
   
+            setMessage(_error);
+        }
+      );
+    },[id]);
 
     const onChangeName = (e) => {
         const name = e.target.value;
@@ -59,17 +81,16 @@ const AddActivity = ({ history }) => {
       };
     
 
-    const addActivityHandler = async (e) => {
+    const EditActivityHandler = async (e) => {
 
         e.preventDefault()
 
         setMessage("");
         setSuccessful(false)
-
-
+        
         form.current.validateAll();
         if (checkBtn.current.context._errors.length === 0) {
-            ActivityService.addActivity(name,description).then(
+            ActivityService.editActivity(id,name,description).then(
                 ()=> {
                     history.push('/activities');
                     window.location.reload();
@@ -98,10 +119,10 @@ const AddActivity = ({ history }) => {
     return (
         <>
             <div className='container mt-5 p-2 col-md-12'>
-                <h1>Add Activity</h1>
+                <h1>Edit Activity</h1>
                 <hr />
 
-                <Form onSubmit={addActivityHandler} ref={form}>
+                <Form onSubmit={EditActivityHandler} ref={form}>
                 {!successful && (
                     <div>
                     <div className="form-group mb-3">
@@ -127,11 +148,11 @@ const AddActivity = ({ history }) => {
 
 
                     <button  className='btn btn-primary' type="submit">
-                        Add Activity
+                        Edit Activity
                     </button>
                     </div>
                     )}
-                    {message && successful === false && (
+                    { successful === false && message && (
                         <div className="form-group">
                         <div
                             className={
@@ -150,4 +171,4 @@ const AddActivity = ({ history }) => {
     )
 }
 
-export default AddActivity
+export default EditActivity
