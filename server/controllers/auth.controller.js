@@ -2,8 +2,6 @@ const db = require("../models");
 const config = require("../config/auth.config");
 const { user: User, role: Role, refreshToken: RefreshToken } = db;
 
-const Op = db.Sequelize.Op;
-
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 
@@ -21,24 +19,9 @@ exports.signup = (req, res) => {
 
   })
     .then(user => {
-      if (req.body.roles) {
-        Role.findAll({
-          where: {
-            name: {
-              [Op.or]: req.body.roles
-            }
-          }
-        }).then(roles => {
-          user.setRoles(roles).then(() => {
-            res.send({ message: "User was registered successfully!" });
-          });
-        });
-      } else {
-        // user role = 1
-        user.setRoles([1]).then(() => {
-          res.send({ message: "User was registered successfully!" });
-        });
-      }
+      user.setRole(1).then(() => {
+        res.send({ message: "User was registered successfully!" });
+      });
     })
     .catch(err => {
       res.status(500).send({ message: err.message });
@@ -75,10 +58,8 @@ exports.signin = (req, res) => {
       let refreshToken = await RefreshToken.createToken(user);
 
       var authorities = [];
-      user.getRoles().then(roles => {
-        for (let i = 0; i < roles.length; i++) {
-          authorities.push("ROLE_" + roles[i].name.toUpperCase());
-        }
+      user.getRole().then(role => {
+        authorities.push("ROLE_" + role.name.toUpperCase());
         res.status(200).send({
           username: user.username,
           email: user.email,

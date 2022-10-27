@@ -53,23 +53,20 @@ db.reviews.belongsTo(db.products, {
     as: 'product'
 })
 
-//many to many relation example 
-db.role.belongsToMany(db.user, {
-    through: "user_roles",
-    foreignKey: "roleId",
-    otherKey: "userId"
+db.role.hasMany(db.user,{
+    foreignKey: 'role_id',
+    as: 'user'
 });
-db.user.belongsToMany(db.role, {
-    through: "user_roles",
-    foreignKey: "userId",
-    otherKey: "roleId"
-});
+db.user.belongsTo(db.role,{
+    foreignKey: 'role_id',
+    as: 'role'
+})
 
 db.refreshToken.belongsTo(db.user, {
-    foreignKey: 'userId', targetKey: 'id'
+    foreignKey: 'user_id', targetKey: 'id'
 });
 db.user.hasOne(db.refreshToken, {
-    foreignKey: 'userId', targetKey: 'id'
+    foreignKey: 'user_id', targetKey: 'id'
 });
 
 

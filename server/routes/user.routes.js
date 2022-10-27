@@ -22,7 +22,7 @@ router.get(
 
 router.get(
     "/test/employee",
-    [authJwt.verifyToken, authJwt.isEmployeeOrAdmin],
+    [authJwt.verifyToken, authJwt.isEmployee],
     controller.employeeBoard
 );
 

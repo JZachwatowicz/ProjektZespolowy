@@ -1,8 +1,6 @@
 import React, { useState, useRef } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
-import Select from "react-validation/build/select";
-
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
 
@@ -209,31 +207,11 @@ const Register = (props) => {
                   type="date"
                   className="form-control"
                   name="birthDate"
+                  maxDate={new Date()}
                   value={birthDate}
                   onChange={onChangeBirthDate}
                   validations={[required]}
                 />
-              </div>
-              <div className="form-group">
-                <label htmlFor="day">data urodzenia</label>
-                <Select name='day' value=''>
-                  <option value=''>Dzień</option>
-                  <option value='1'>1</option>
-                  <option value='2'>2</option>
-                  <option value='3'>2</option>
-                </Select>
-                <Select name='month' value=''>
-                  <option value=''>Miesiąc</option>
-                  <option value='1'>1</option>
-                  <option value='2'>2</option>
-                  <option value='3'>2</option>
-                </Select>
-                <Select name='year' value=''>
-                  <option value=''>Rok</option>
-                  <option value='1999'>1999</option>
-                  <option value='2000'>2000</option>
-                  <option value='2005'>2005</option>
-                </Select>
               </div>
 
               <div className="form-group">
