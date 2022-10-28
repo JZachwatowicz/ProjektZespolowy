@@ -37,7 +37,7 @@ db.sequelize = sequelize
 
 db.activity = require('./activity.model.js')(sequelize, Sequelize);
 db.address = require('./address.model.js')(sequelize, Sequelize);
-db.article = require('./article.model.js')(sequelize, Sequelize0);
+db.article = require('./article.model.js')(sequelize, Sequelize);
 db.city = require('./city.model.js')(sequelize, Sequelize);
 db.country = require('./country.model.js')(sequelize, Sequelize);
 db.department_has_address = require('./department_has_address.model.js')(sequelize, Sequelize);
@@ -52,12 +52,28 @@ db.schedule = require('./schedule.model.js')(sequelize, Sequelize);
 db.street = require('./street.model.js')(sequelize, Sequelize);
 db.user_description = require('./user_description.model.js')(sequelize, Sequelize);
 db.user_has_schedule = require('./user_has_schedule.model.js')(sequelize, Sequelize);
-db.user_type = require('./user_type.model.js')(sequelize, Sequelize);
+db.role = require('./role.model.js')(sequelize, Sequelize);
 db.user = require('./user.model.js')(sequelize, Sequelize);
 db.voivodeship = require('./voivodeship.model.js')(sequelize, Sequelize);
 
 
 // creating associations
+
+db.role.hasMany(db.user, {
+    foreignKey: "role_id"
+});
+db.user.belongsTo(db.role, {
+    foreignKey: "role_id"
+});
+
+db.refresh_token.belongsTo(db.user, {
+    foreignKey: 'user_id',
+    targetKey: 'id'
+});
+db.user.hasOne(db.refresh_token, {
+    foreignKey: 'user_id',
+    targetKey: 'id'
+});
 
 db.country.hasMany(db.voivodeship, {
     foreignKey: {
@@ -118,7 +134,7 @@ db.address.belongsTo(db.street, {
     },
     as: 'street'
 });
-
+/*
 db.address.hasMany(db.user, {
     foreignKey: {
         name: 'address_id',
@@ -133,7 +149,7 @@ db.user.belongsTo(db.address, {
     },
     as: 'address'
 });
-
+*/
 db.address.hasMany(db.department_has_address, {
     foreignKey: {
         name: 'address_id',
@@ -346,16 +362,11 @@ db.article.belongsTo(db.user, {
 });
 
 
-db.refresh_token.belongsTo(db.user, {
-    foreignKey: 'user_id', targetKey: 'id'
-});
-db.user.hasOne(db.refresh_token, {
-    foreignKey: 'user_id', targetKey: 'id'
-});
 
 
 
-/*
+
+
 // INSERT INTO roles VALUES (1, 'user', now(), now());
 // INSERT INTO roles VALUES (2, 'employee', now(), now());
 // INSERT INTO roles VALUES (3, 'admin', now(), now());
@@ -372,7 +383,7 @@ function init_roles() {
         name: "admin"
     });
 }
-*/
+
 
 db.sequelize.sync()
     .then(() => {
