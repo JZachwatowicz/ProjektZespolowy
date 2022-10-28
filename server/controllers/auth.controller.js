@@ -1,6 +1,6 @@
 const db = require("../models");
 const config = require("../config/auth.config");
-const { user: User, role: Role, refreshToken: RefreshToken } = db;
+const { user: User, role: Role, refresh_token: RefreshToken } = db;
 
 const Op = db.Sequelize.Op;
 
@@ -12,27 +12,17 @@ exports.signup = (req, res) => {
   User.create({
     username: req.body.username,
     email: req.body.email,
-    password: bcrypt.hashSync(req.body.password, 8)
+    password: bcrypt.hashSync(req.body.password, 8),
+    first_name: req.body.first_name,
+    last_name: req.body.last_name,
+    birth_date: req.body.birth_date,
+    pesel: req.body.pesel,
+    contact_number: req.body.contact_number,
   })
     .then(user => {
-      if (req.body.roles) {
-        Role.findAll({
-          where: {
-            name: {
-              [Op.or]: req.body.roles
-            }
-          }
-        }).then(roles => {
-          user.setRoles(roles).then(() => {
-            res.send({ message: "User was registered successfully!" });
-          });
-        });
-      } else {
-        // user role = 1
-        user.setRoles([1]).then(() => {
-          res.send({ message: "User was registered successfully!" });
-        });
-      }
+      user.setRole(1).then(() => {
+        res.send({ message: "User was registered successfully!" });
+      });
     })
     .catch(err => {
       res.status(500).send({ message: err.message });
@@ -66,10 +56,13 @@ exports.signin = (req, res) => {
         expiresIn: config.jwtExpiration
       });
 
+      console.log("refresh token - createToken");
       let refreshToken = await RefreshToken.createToken(user);
+      console.log("refresh token - createToken");
 
       var authorities = [];
-      user.getRoles().then(roles => {
+      user.getRole().then(roles => {
+        console.log("auth get roles");
         for (let i = 0; i < roles.length; i++) {
           authorities.push("ROLE_" + roles[i].name.toUpperCase());
         }
