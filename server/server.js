@@ -23,7 +23,7 @@ app.use(express.urlencoded({ extended: true }))
 // routers
 app.use('/api/auth', require('./routes/auth.routes.js'))
 app.use('/api', require('./routes/user.routes.js'))
-//app.use('/api/products', require('./routes/productRouter.js'))
+app.use('/api/art', require('./routes/article.routes.js'))
 
 //static Images Folder
 
