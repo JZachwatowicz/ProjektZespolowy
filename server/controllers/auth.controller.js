@@ -1,13 +1,52 @@
 const db = require("../models");
 const config = require("../config/auth.config");
-const { user: User, role: Role, refreshToken: RefreshToken } = db;
+const { user: User, refreshToken: RefreshToken, address: Address, street: Street, city: City, voivodeship: Voivodeship, country: Country } = db;
 
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
+exports.signup = async (req, res) => {
 
-exports.signup = (req, res) => {
-  // Save User to Database
-  User.create({
+
+  const [country, isCountryCreated] = await Country.findOrCreate({
+    where: {
+      name: req.body.country_name,
+      code: req.body.country_code,
+    }
+  })
+
+  const [voivodeship, isVoivodeshipCreated] = await Voivodeship.findOrCreate({
+    where: {
+      name: req.body.voivodeship_name,
+      code: req.body.voivodeship_code,
+      country_id: country.id
+    }
+  })
+
+  const [city, isCityCreated] = await City.findOrCreate({
+    where: {
+      name: req.body.city_name,
+      voivodeship_id: voivodeship.id
+    }
+  })
+
+
+  const [street, isStreetCreated] = await Street.findOrCreate({
+    where: {
+      name: req.body.street_name,
+      city_id: city.id
+    }
+  })
+
+  const [address, isAddresCreated] = await Address.findOrCreate({
+    where: {
+      building_number: req.body.building_number,
+      apartment_number: req.body.apartment_number,
+      street_id: street.id
+    }
+  })
+
+  //Save User to Database
+  await User.create({
     username: req.body.username,
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password, 8),
@@ -16,9 +55,16 @@ exports.signup = (req, res) => {
     birth_date: req.body.birth_date,
     pesel: req.body.pesel,
     contact_number: req.body.contact_number,
-
+    address_id: address.id
   })
     .then(user => {
+      // use this to debug mistakes if something would be happening
+      // console.log(country.toJSON())
+      // console.log(voivodeship.toJSON())
+      // console.log(city.toJSON())
+      // console.log(street.toJSON())
+      // console.log(address.toJSON())
+      // console.log(user.toJSON())
       user.setRole(1).then(() => {
         res.send({ message: "User was registered successfully!" });
       });

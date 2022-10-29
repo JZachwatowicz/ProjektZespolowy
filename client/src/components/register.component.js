@@ -58,6 +58,15 @@ const Register = (props) => {
   const [birthDate, setBirthDate] = useState(new Date());
   const [pesel, setPesel] = useState("");
   const [contactNumber, setContactNumber] = useState("");
+  const [buildingNumber, setBuildingNumber] = useState("");
+  const [apartmentNumber, setApartmentNumber] = useState("");
+  const [streetName, setStreetName] = useState("");
+  const [cityName, setCityName] = useState("");
+  const [voivodeshipName, setVoivodeshipName] = useState("");
+  const [voivodeshipCode, setVoivodeshipCode] = useState("");
+  const [countryName, setCountryName] = useState("");
+  const [countryCode, setCountryCode] = useState("");
+
 
   const [successful, setSuccessful] = useState(false);
   const [message, setMessage] = useState("");
@@ -66,6 +75,40 @@ const Register = (props) => {
     const username = e.target.value;
     setUsername(username);
   };
+
+  const onChangeBuildingNumber = (e) => {
+    const buildingNumber = e.target.value;
+    setBuildingNumber(buildingNumber);
+  };
+  const onChangeApartmentNumber = (e) => {
+    const apartmentNumber = e.target.value;
+    setApartmentNumber(apartmentNumber);
+  };
+  const onChangeStreetName = (e) => {
+    const streetName = e.target.value;
+    setStreetName(streetName);
+  };
+  const onChangeCityName = (e) => {
+    const cityName = e.target.value;
+    setCityName(cityName);
+  };
+  const onChangeVoivodeshipName = (e) => {
+    const voivodeshipName = e.target.value;
+    setVoivodeshipName(voivodeshipName);
+  };
+  const onChangeVoivodeshipCode = (e) => {
+    const voivodeshipCode = e.target.value;
+    setVoivodeshipCode(voivodeshipCode);
+  };
+  const onChangeCountryName = (e) => {
+    const countryName = e.target.value;
+    setCountryName(countryName);
+  };
+  const onChangeCountryCode = (e) => {
+    const countryCode = e.target.value;
+    setCountryCode(countryCode);
+  };
+
 
   const onChangeEmail = (e) => {
     const email = e.target.value;
@@ -109,7 +152,24 @@ const Register = (props) => {
     form.current.validateAll();
 
     if (checkBtn.current.context._errors.length === 0) {
-      AuthService.register(username, email, password, firstName, lastName, birthDate, pesel, contactNumber).then(
+      AuthService.register(
+        username,
+        email,
+        password,
+        firstName,
+        lastName,
+        birthDate,
+        pesel,
+        contactNumber,
+        buildingNumber,
+        apartmentNumber,
+        streetName,
+        cityName,
+        voivodeshipName,
+        voivodeshipCode,
+        countryName,
+        countryCode
+        ).then(
         (response) => {
           setMessage(response.data.message);
           setSuccessful(true);
@@ -238,11 +298,72 @@ const Register = (props) => {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="contactNumber">Kraj</label>
+                ADRES
+                <label htmlFor="buildingNumber">buildingNumber</label>
                 <Input
                   type="text"
+                  className="form-control"
+                  name="buildingNumber"
+                  value={buildingNumber}
+                  onChange={onChangeBuildingNumber}
+                  validations={[required]}
                 />
-                wojewodztwa maja sie wyswietlac po wybraniu kraju -&gt; miasta po wybraniu ...
+                <label htmlFor="apartmentNumber">apartmentNumber</label>
+                <Input
+                  type="text"
+                  className="form-control"
+                  name="apartmentNumber"
+                  value={apartmentNumber}
+                  onChange={onChangeApartmentNumber}
+                />
+                <label htmlFor="streetName">streetName</label>
+                <Input
+                  type="text"
+                  className="form-control"
+                  name="streetName"
+                  value={streetName}
+                  onChange={onChangeStreetName}
+                />
+                <label htmlFor="cityName">cityName</label>
+                <Input
+                  type="text"
+                  className="form-control"
+                  name="cityName"
+                  value={cityName}
+                  onChange={onChangeCityName}
+                />
+                <label htmlFor="streetName">voivodeshipName</label>
+                <Input
+                  type="text"
+                  className="form-control"
+                  name="voivodeshipName"
+                  value={voivodeshipName}
+                  onChange={onChangeVoivodeshipName}
+                />
+                <label htmlFor="voivodeshipCode">voivodeshipCode</label>
+                <Input
+                  type="text"
+                  className="form-control"
+                  name="voivodeshipCode"
+                  value={voivodeshipCode}
+                  onChange={onChangeVoivodeshipCode}
+                />
+                <label htmlFor="countryName">countryName</label>
+                <Input
+                  type="text"
+                  className="form-control"
+                  name="countryName"
+                  value={countryName}
+                  onChange={onChangeCountryName}
+                />
+                <label htmlFor="countryCode">countryCode</label>
+                <Input
+                  type="text"
+                  className="form-control"
+                  name="countryCode"
+                  value={countryCode}
+                  onChange={onChangeCountryCode}
+                />
               </div>
 
               <div className="form-group">
