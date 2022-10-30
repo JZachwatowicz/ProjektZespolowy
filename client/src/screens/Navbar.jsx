@@ -13,8 +13,8 @@ export default function Navbar() {
 
     if (user) {
       setCurrentUser(user);
-      setShowEmployeeBoard(user.roles.includes("ROLE_EMPLOYEE"));
-      setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
+      //setShowEmployeeBoard(user.roles.includes("ROLE_EMPLOYEE"));
+     // setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
     }
   }, []);
   const logOut = () => {
@@ -28,8 +28,8 @@ export default function Navbar() {
     <Container>
       <nav className='navbar navbar-expand-lg navbar-light bg-light'>
         <ul className='navbar-nav mr-auto'>
-          <li className='nav-item'><Link className='nav-link' to="/addProduct">addProduct</Link></li>
-          <li className='nav-item'><Link className='nav-link' to="/products">products</Link></li>
+          <li className='nav-item'><Link className='nav-link' to="/activities">Activities</Link></li>
+          <li className='nav-item'><Link className='nav-link' to="/addActivity">Add Activity</Link></li>
         </ul>
       </nav>
 
