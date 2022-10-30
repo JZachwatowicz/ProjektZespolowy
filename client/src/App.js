@@ -4,10 +4,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 import Navbar from './screens/Navbar'
-import AddActivity from './screens/AddActivity'
-import ShowActivities from './screens/ShowActivities'
-import ProductDetail from './screens/ProductDetail'
-import EditActivity from './screens/EditActivity'
+import AddActivity from './components/add_activity.component'
+import ShowActivities from './components/show_activities.component'
+import EditActivity from './components/edit_activity.component'
 
 import Login from "./components/loginComponent";
 import Register from "./components/registerComponent";
@@ -35,7 +34,6 @@ const App = () => {
         <Route exact path='/addActivity' component={AddActivity} />
         <Route exact path='/editActivity/:id' component={EditActivity} />
         <Route exact path='/activities' component={ShowActivities} />
-        <Route exact path='/product/:id' component={ProductDetail} />
       </Switch>
     </Router>
   );
