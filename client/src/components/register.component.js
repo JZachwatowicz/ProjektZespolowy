@@ -63,7 +63,6 @@ const Register = (props) => {
   const [streetName, setStreetName] = useState("");
   const [cityName, setCityName] = useState("");
   const [voivodeshipName, setVoivodeshipName] = useState("");
-  const [voivodeshipCode, setVoivodeshipCode] = useState("");
   const [countryName, setCountryName] = useState("");
   const [countryCode, setCountryCode] = useState("");
 
@@ -95,10 +94,6 @@ const Register = (props) => {
   const onChangeVoivodeshipName = (e) => {
     const voivodeshipName = e.target.value;
     setVoivodeshipName(voivodeshipName);
-  };
-  const onChangeVoivodeshipCode = (e) => {
-    const voivodeshipCode = e.target.value;
-    setVoivodeshipCode(voivodeshipCode);
   };
   const onChangeCountryName = (e) => {
     const countryName = e.target.value;
@@ -166,7 +161,6 @@ const Register = (props) => {
         streetName,
         cityName,
         voivodeshipName,
-        voivodeshipCode,
         countryName,
         countryCode
         ).then(
@@ -339,14 +333,6 @@ const Register = (props) => {
                   name="voivodeshipName"
                   value={voivodeshipName}
                   onChange={onChangeVoivodeshipName}
-                />
-                <label htmlFor="voivodeshipCode">voivodeshipCode</label>
-                <Input
-                  type="text"
-                  className="form-control"
-                  name="voivodeshipCode"
-                  value={voivodeshipCode}
-                  onChange={onChangeVoivodeshipCode}
                 />
                 <label htmlFor="countryName">countryName</label>
                 <Input

@@ -21,13 +21,13 @@ app.use(express.urlencoded({ extended: true }))
 
 
 // routers
-app.use('/api/auth', require('./routes/auth.routes.js'))
-app.use('/api', require('./routes/user.routes.js'))
-app.use('/api/products', require('./routes/productRouter.js'))
+app.use('/api/auth', require('./src/routes/auth.routes.js'))
+app.use('/api', require('./src/routes/user.routes.js'))
+app.use('/api/products', require('./src/routes/productRouter.js'))
 
 //static Images Folder
 
-app.use('/Images', express.static('./Images'))
+app.use('/Images', express.static('./src/assets/images'))
 
 
 //port

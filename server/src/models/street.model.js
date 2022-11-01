@@ -1,11 +1,10 @@
 module.exports = (sequelize, Sequelize) => {
-    const City = sequelize.define("cities", {
+    const Street = sequelize.define("streets", {
         name: {
             type: Sequelize.STRING(45),
-            allowNull: false,
-            unique: true
+            allowNull: false
         }
     });
 
-    return City;
+    return Street;
 };

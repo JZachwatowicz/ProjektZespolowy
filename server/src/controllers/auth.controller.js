@@ -1,30 +1,29 @@
 const db = require("../models");
-const config = require("../config/auth.config");
+const config = require("../configs/auth.config");
 const { user: User, refreshToken: RefreshToken, address: Address, street: Street, city: City, voivodeship: Voivodeship, country: Country } = db;
-
+const { createUser } = require('../services/user.service');
 var jwt = require("jsonwebtoken");
-var bcrypt = require("bcryptjs");
 exports.signup = async (req, res) => {
 
+  const {username, email, password, firstName, lastName, birthDate, pesel, contactNumber, countryName, countryCode, voivodeshipName, cityName, streetName, buildingNumber, apartmentNumber} = req.body
 
   const [country, isCountryCreated] = await Country.findOrCreate({
     where: {
-      name: req.body.country_name,
-      code: req.body.country_code,
+      name: countryName,
+      code: countryCode,
     }
   })
 
   const [voivodeship, isVoivodeshipCreated] = await Voivodeship.findOrCreate({
     where: {
-      name: req.body.voivodeship_name,
-      code: req.body.voivodeship_code,
+      name: voivodeshipName,
       country_id: country.id
     }
   })
 
   const [city, isCityCreated] = await City.findOrCreate({
     where: {
-      name: req.body.city_name,
+      name: cityName,
       voivodeship_id: voivodeship.id
     }
   })
@@ -32,46 +31,29 @@ exports.signup = async (req, res) => {
 
   const [street, isStreetCreated] = await Street.findOrCreate({
     where: {
-      name: req.body.street_name,
+      name: streetName,
       city_id: city.id
     }
   })
 
   const [address, isAddresCreated] = await Address.findOrCreate({
     where: {
-      building_number: req.body.building_number,
-      apartment_number: req.body.apartment_number,
+      building_number: buildingNumber,
+      apartment_number: apartmentNumber,
       street_id: street.id
     }
   })
 
   //Save User to Database
-  await User.create({
-    username: req.body.username,
-    email: req.body.email,
-    password: bcrypt.hashSync(req.body.password, 8),
-    first_name: req.body.first_name,
-    last_name: req.body.last_name,
-    birth_date: req.body.birth_date,
-    pesel: req.body.pesel,
-    contact_number: req.body.contact_number,
-    address_id: address.id
-  })
-    .then(user => {
-      // use this to debug mistakes if something would be happening
-      // console.log(country.toJSON())
-      // console.log(voivodeship.toJSON())
-      // console.log(city.toJSON())
-      // console.log(street.toJSON())
-      // console.log(address.toJSON())
-      // console.log(user.toJSON())
-      user.setRole(1).then(() => {
-        res.send({ message: "User was registered successfully!" });
-      });
+  console.log(username, email, password, firstName, lastName, birthDate, pesel, countryName)
+  await createUser(username, email, password, firstName, lastName, birthDate, pesel, contactNumber, address.id)
+    .then(() => {
+      res.send({ message: "User was registered successfully!" });
     })
     .catch(err => {
       res.status(500).send({ message: err.message });
     });
+
 };
 
 exports.signin = (req, res) => {

@@ -1,6 +1,6 @@
-const dbConfig = require('../config/db.config.js');
+const dbConfig = require('../configs/db.config.js')
 
-const { Sequelize } = require('sequelize');
+const { Sequelize } = require('sequelize')
 
 const sequelize = new Sequelize(
     dbConfig.DB,
@@ -46,7 +46,8 @@ db.city = require('./city.model.js')(sequelize, Sequelize)
 db.voivodeship = require('./voivodeship.model.js')(sequelize, Sequelize)
 db.country = require('./country.model.js')(sequelize, Sequelize)
 db.refreshToken = require("./refresh-token.model.js")(sequelize, Sequelize)
-
+db.activity = require('./activity.model.js')(sequelize, Sequelize)
+db.article = require('./article.model.js')(sequelize, Sequelize)
 
 // creating associations
 
@@ -62,49 +63,49 @@ db.reviews.belongsTo(db.products, {
 
 db.role.hasMany(db.user, {
     foreignKey: 'role_id',
-});
+})
 db.user.belongsTo(db.role, {
     foreignKey: 'role_id',
 })
 
 db.refreshToken.belongsTo(db.user, {
     foreignKey: 'user_id', targetKey: 'id'
-});
+})
 db.user.hasOne(db.refreshToken, {
     foreignKey: 'user_id', targetKey: 'id'
-});
+})
 
 db.address.hasMany(db.user, {
     foreignKey: 'address_id',
-});
+})
 db.user.belongsTo(db.address, {
     foreignKey: 'address_id',
 })
 
 db.street.hasMany(db.address, {
     foreignKey: 'street_id',
-});
+})
 db.address.belongsTo(db.street, {
     foreignKey: 'street_id',
 })
 
 db.city.hasMany(db.street, {
     foreignKey: 'city_id',
-});
+})
 db.street.belongsTo(db.city, {
     foreignKey: 'city_id',
 })
 
 db.voivodeship.hasMany(db.city, {
     foreignKey: 'voivodeship_id',
-});
+})
 db.city.belongsTo(db.voivodeship, {
     foreignKey: 'voivodeship_id',
 })
 
 db.country.hasMany(db.voivodeship, {
     foreignKey: 'country_id',
-});
+})
 db.voivodeship.belongsTo(db.country, {
     foreignKey: 'country_id',
 })
