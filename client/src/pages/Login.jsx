@@ -4,7 +4,7 @@ import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 
 import AuthService from "../services/auth.service";
-import { useHistory } from 'react-router'
+import { useNavigate } from 'react-router-dom';
 
 const required = (value) => {
   if (!value) {
@@ -25,7 +25,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const onChangeUsername = (e) => {
     const username = e.target.value;
@@ -48,7 +48,7 @@ const Login = () => {
     if (checkBtn.current.context._errors.length === 0) {
       AuthService.login(username, password).then(
         () => {
-          history.push("/profile");
+          navigate("/profile");
           window.location.reload();
         },
         (error) => {

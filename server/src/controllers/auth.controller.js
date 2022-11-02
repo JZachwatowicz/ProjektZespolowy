@@ -3,6 +3,8 @@ const config = require("../configs/auth.config");
 const { user: User, refreshToken: RefreshToken, address: Address, street: Street, city: City, voivodeship: Voivodeship, country: Country } = db;
 const { createUser } = require('../services/user.service');
 var jwt = require("jsonwebtoken");
+var bcrypt = require("bcryptjs");
+
 exports.signup = async (req, res) => {
 
   const {username, email, password, firstName, lastName, birthDate, pesel, contactNumber, countryName, countryCode, voivodeshipName, cityName, streetName, buildingNumber, apartmentNumber} = req.body

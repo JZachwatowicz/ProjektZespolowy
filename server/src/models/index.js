@@ -46,8 +46,8 @@ db.city = require('./city.model.js')(sequelize, Sequelize)
 db.voivodeship = require('./voivodeship.model.js')(sequelize, Sequelize)
 db.country = require('./country.model.js')(sequelize, Sequelize)
 db.refreshToken = require("./refresh-token.model.js")(sequelize, Sequelize)
-db.activity = require('./activity.model.js')(sequelize, Sequelize)
-db.article = require('./article.model.js')(sequelize, Sequelize)
+// db.activity = require('./activity.model.js')(sequelize, Sequelize)
+// db.article = require('./article.model.js')(sequelize, Sequelize)
 
 // creating associations
 

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 
-import UserService from "../services/user.service";
+import UserService from "../../services/user.service";
 
-const BoardEmployee = () => {
+const UserBoard = () => {
   const [content, setContent] = useState("");
 
   useEffect(() => {
-    UserService.getEmployeeBoard().then(
+    UserService.getUserBoard().then(
       (response) => {
         setContent(response.data);
       },
@@ -30,4 +30,4 @@ const BoardEmployee = () => {
   );
 };
 
-export default BoardEmployee;
+export default UserBoard;
