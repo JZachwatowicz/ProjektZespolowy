@@ -25,6 +25,7 @@ app.use('/api/auth', require('./routes/auth.routes.js'))
 app.use('/api', require('./routes/user.routes.js'))
 app.use('/api/art', require('./routes/article.routes.js'))
 app.use('/api/items', require('./routes/item.routes.js'))
+app.use('/api/itemTypes', require('./routes/item_type.routes.js'))
 app.use('/api/activities', require('./routes/activity.routes.js'))
 
 //static Images Folder

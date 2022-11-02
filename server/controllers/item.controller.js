@@ -1,7 +1,6 @@
 const moment = require( "moment");
 const db = require("../models");
 const Item = db.item
-const Item_type = db.item_type
 
 exports.allItems = async (req, res) => {
     await Item.findAll({})
@@ -99,12 +98,4 @@ exports.getItem = async (req, res) => {
         res.status(500).send({ message: err.message });
      })
 
-}
-exports.getItem_types = async (req, res) => {
-    await Item_type.findAll({})
-    .then((types)=>{
-        res.status(200).send(types);
-    }).catch((err) => {
-        res.status(500).send({ message: err.message });
-    })
 }

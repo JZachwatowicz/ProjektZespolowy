@@ -1,8 +1,7 @@
-//const { authJwt } = require("../middleware");
+const { authJwt } = require("../middleware");
 const ItemController = require("../controllers/item.controller.js");
 
 const router = require('express').Router()
-
 
 router.use((req, res, next) => {
     res.header(
@@ -12,10 +11,13 @@ router.use((req, res, next) => {
     next();
 });
 
-router.get("/allItems", ItemController.allItems);
+router.get("/allItems",ItemController.allItems);
 router.post('/addItem', ItemController.addItem);
 router.put('/editItem', ItemController.editItem);
 router.delete("/deleteItem", ItemController.deleteItem);
 router.get("/getItem/:id", ItemController.getItem);
-router.get("/getItemTypes", ItemController.getItem_types);
+//router.get("/getItemTypes", ItemController.getItem_types);
+//router.post('/addItemType', ItemController.addItem_type);
+//router.put('/editItemType', ItemController.editItem_type);
+//router.delete('/deleteItemType', ItemController.deleteItem_type);
 module.exports = router
