@@ -1,44 +1,66 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.css";
+import React, { useEffect } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Sidebar, Footer} from './components';
+import { Home, Login, Register, Profile, Schedule, AdminBoard, EmployeeBoard, UserBoard, About} from './pages';
+import './App.css'
 
-import Navbar from './screens/navbar'
-import AddProduct from './screens/AddProduct'
-import ShowProducts from './screens/ShowProducts'
-import ProductDetail from './screens/ProductDetail'
-import EditProduct from './screens/EditProduct'
-
-import Login from "./components/login.component";
-import Register from "./components/register.component";
-import Home from "./components/home.component";
-import Profile from "./components/profile.component";
-import BoardUser from "./components/user-board.component";
-import BoardEmployee from "./components/employee-board.component";
-import BoardAdmin from "./components/admin-board.component";
-
+import { useStateContext } from './services/ContextProvider';
 
 const App = () => {
 
-  return (
-    <Router>
-      <Navbar />
-      <Switch>
-        <Route exact path={"/"} component={Home} />
-        <Route exact path={"/home"} component={Home} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/register" component={Register} />
-        <Route exact path="/profile" component={Profile} />
-        <Route exact path="/user" component={BoardUser} />
-        <Route exact path="/employee" component={BoardEmployee} />
-        <Route exact path="/admin" component={BoardAdmin} />
-        <Route exact path='/addProduct' component={AddProduct} />
-        <Route exact path='/products' component={ShowProducts} />
-        <Route exact path='/product/edit/:id' component={EditProduct} />
-        <Route exact path='/product/:id' component={ProductDetail} />
-      </Switch>
-    </Router>
-  );
-};
+  const { setCurrentColor, setCurrentMode, currentMode, activeMenu } = useStateContext();
 
-export default App;
+  useEffect(() => {
+    const currentThemeColor = localStorage.getItem('colorMode');
+    const currentThemeMode = localStorage.getItem('themeMode');
+    if (currentThemeColor && currentThemeMode) {
+      setCurrentColor(currentThemeColor);
+      setCurrentMode(currentThemeMode);
+    }
+  }, []);
+
+
+  return (
+    <div className={currentMode === 'Dark' ? 'dark' : ''}>
+      <BrowserRouter>
+        <div className="flex relative dark:bg-main-dark-bg">
+          {activeMenu ? (
+            <div className="w-72 fixed sidebar dark:bg-secondary-dark-bg bg-white ">
+              <Sidebar />
+            </div>
+          ) : (
+            <div className="w-0 dark:bg-secondary-dark-bg">
+              <Sidebar />
+            </div>
+          )}
+          <div
+            className={ `dark:bg-main-dark-bg  bg-main-bg min-h-screen w-full' 
+             ${activeMenu  ? 'md:ml-72' : 'flex-2'}`
+            }
+          >
+              <Routes>
+                <Route exact path={"/"} element={<Home />} />
+                <Route exact path={"/home"} element={<Home />} />
+                <Route exact path={"/about"} element={<About />} />
+
+                <Route exact path="/profile" element={<Profile />} />
+                <Route exact path="/login" element={<Login />} />
+                <Route exact path="/register" element={<Register />} />
+
+
+                <Route exact path="/user" element={<UserBoard />} />
+                <Route exact path="/employee" element={<EmployeeBoard />} />
+                <Route exact path="/admin" element={<AdminBoard />} />
+
+                <Route exact path="/schedule" element={<Schedule />} />
+
+              </Routes>
+            <Footer />
+          </div>
+        </div>
+      </BrowserRouter>
+    </div>
+  )
+}
+
+export default App
