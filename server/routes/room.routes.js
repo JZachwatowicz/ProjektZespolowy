@@ -1,4 +1,4 @@
-//const { authJwt } = require("../middleware");
+const { authJwt } = require("../middleware");
 const RoomController = require("../controllers/room.controller.js");
 
 const router = require('express').Router()
@@ -12,10 +12,10 @@ router.use((req, res, next) => {
     next();
 });
 
-router.get("/allRooms", RoomController.allRooms);
-router.post('/addRoom', RoomController.addRoom);
-router.put('/editRoom', RoomController.editRoom);
-router.delete("/deleteRoom", RoomController.deleteRoom);
-router.get("/getRoom/:id", RoomController.getRoom);
-router.get("/getRoomTypes", RoomController.getRoom_types);
+router.get("/allRooms", [authJwt.verifyToken, authJwt.isEmployee], RoomController.allRooms);
+router.post('/addRoom',[authJwt.verifyToken, authJwt.isEmployee], RoomController.addRoom);
+router.put('/editRoom', [authJwt.verifyToken, authJwt.isEmployee], RoomController.editRoom);
+router.delete("/deleteRoom",[authJwt.verifyToken, authJwt.isEmployee], RoomController.deleteRoom);
+router.get("/getRoom/:id",[authJwt.verifyToken, authJwt.isEmployee], RoomController.getRoom);
+router.get("/getRoomTypes",[authJwt.verifyToken, authJwt.isEmployee], RoomController.getRoom_types);
 module.exports = router
