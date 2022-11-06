@@ -11,13 +11,9 @@ router.use((req, res, next) => {
     next();
 });
 
-router.get("/allItems",ItemController.allItems);
-router.post('/addItem', ItemController.addItem);
-router.put('/editItem', ItemController.editItem);
-router.delete("/deleteItem", ItemController.deleteItem);
-router.get("/getItem/:id", ItemController.getItem);
-//router.get("/getItemTypes", ItemController.getItem_types);
-//router.post('/addItemType', ItemController.addItem_type);
-//router.put('/editItemType', ItemController.editItem_type);
-//router.delete('/deleteItemType', ItemController.deleteItem_type);
+router.get("/allItems",[authJwt.verifyToken, authJwt.isEmployee],ItemController.allItems);
+router.post('/addItem', [authJwt.verifyToken, authJwt.isEmployee],ItemController.addItem);
+router.put('/editItem',[authJwt.verifyToken, authJwt.isEmployee], ItemController.editItem);
+router.delete("/deleteItem",[authJwt.verifyToken, authJwt.isEmployee], ItemController.deleteItem);
+router.get("/getItem/:id",[authJwt.verifyToken, authJwt.isEmployee], ItemController.getItem);
 module.exports = router

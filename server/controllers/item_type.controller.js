@@ -54,7 +54,7 @@ exports.editItem_type = async (req, res) => {
             item_type.name = data.name;
             item_type.save({fields: ['name']})
             .then(() => {
-                res.status(200).send({message: "Successfully updated item."});
+                res.status(200).send({message: "Successfully updated item type."});
             }).catch((err) =>{
                 res.status(500).send({ message: err.message });
             })

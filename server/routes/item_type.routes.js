@@ -11,9 +11,9 @@ router.use((req, res, next) => {
     next();
 });
 
-router.get("/getItemTypes", ItemTypeController.getItem_types);
-router.post('/addItemType', ItemTypeController.addItem_type);
-router.put('/editItemType', ItemTypeController.editItem_type);
-router.delete('/deleteItemType', ItemTypeController.deleteItem_type);
-router.get("/getItemType/:id", ItemTypeController.getItem_type);
+router.get("/getItemTypes", [authJwt.verifyToken, authJwt.isEmployee],ItemTypeController.getItem_types);
+router.post('/addItemType',[authJwt.verifyToken, authJwt.isAdmin], ItemTypeController.addItem_type);
+router.put('/editItemType',[authJwt.verifyToken, authJwt.isAdmin], ItemTypeController.editItem_type);
+router.delete('/deleteItemType',[authJwt.verifyToken, authJwt.isAdmin], ItemTypeController.deleteItem_type);
+router.get("/getItemType/:id",[authJwt.verifyToken, authJwt.isEmployee], ItemTypeController.getItem_type);
 module.exports = router
