@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Sidebar, Footer} from './components';
-import { Home, Login, Register, Profile, Schedule, AdminBoard, EmployeeBoard, UserBoard, About} from './pages';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Sidebar, Footer, Navbar } from './components';
+import { Home, Login, Register, Profile, Schedule, AdminBoard, EmployeeBoard, UserBoard, About, Contact } from './pages';
 import './App.css'
 
 import { useStateContext } from './services/ContextProvider';
@@ -34,27 +34,34 @@ const App = () => {
             </div>
           )}
           <div
-            className={ `dark:bg-main-dark-bg  bg-main-bg min-h-screen w-full' 
-             ${activeMenu  ? 'md:ml-72' : 'flex-2'}`
+            className={`dark:bg-main-dark-bg  bg-main-bg min-h-screen w-full' 
+             ${activeMenu ? 'md:ml-72' : 'flex-2'}`
             }
           >
-              <Routes>
-                <Route exact path={"/"} element={<Home />} />
-                <Route exact path={"/home"} element={<Home />} />
-                <Route exact path={"/about"} element={<About />} />
+            <Routes>
 
-                <Route exact path="/profile" element={<Profile />} />
-                <Route exact path="/login" element={<Login />} />
-                <Route exact path="/register" element={<Register />} />
+              <Route path="/" element={<Navigate to="/home" />} />
+
+              <Route exact path="/home" element={<Navbar />} >
+              <Route index element={<Home />} />
+              <Route exact path="/home/contact" element={<Contact />} />
+              <Route exact path="/home/about" element={<About />} />
+              </Route>
+              
+              
+
+              <Route exact path="/profile" element={<Profile />} />
+              <Route exact path="/login" element={<Login />} />
+              <Route exact path="/register" element={<Register />} />
 
 
-                <Route exact path="/user" element={<UserBoard />} />
-                <Route exact path="/employee" element={<EmployeeBoard />} />
-                <Route exact path="/admin" element={<AdminBoard />} />
+              <Route exact path="/user" element={<UserBoard />} />
+              <Route exact path="/employee" element={<EmployeeBoard />} />
+              <Route exact path="/admin" element={<AdminBoard />} />
 
-                <Route exact path="/schedule" element={<Schedule />} />
+              <Route exact path="/schedule" element={<Schedule />} />
 
-              </Routes>
+            </Routes>
             <Footer />
           </div>
         </div>

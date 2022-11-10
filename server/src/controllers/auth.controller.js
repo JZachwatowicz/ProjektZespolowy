@@ -7,7 +7,7 @@ var bcrypt = require("bcryptjs");
 
 exports.signup = async (req, res) => {
 
-  const {username, email, password, firstName, lastName, birthDate, pesel, contactNumber, countryName, countryCode, voivodeshipName, cityName, streetName, buildingNumber, apartmentNumber} = req.body
+  const {username, email, password, firstName, lastName, pesel, contactNumber, countryName, countryCode, voivodeshipName, cityName, streetName, buildingNumber, apartmentNumber} = req.body
 
   const [country, isCountryCreated] = await Country.findOrCreate({
     where: {
@@ -47,8 +47,8 @@ exports.signup = async (req, res) => {
   })
 
   //Save User to Database
-  console.log(username, email, password, firstName, lastName, birthDate, pesel, countryName)
-  await createUser(username, email, password, firstName, lastName, birthDate, pesel, contactNumber, address.id)
+  console.log(username, email, password, firstName, lastName, pesel, countryName)
+  await createUser(username, email, password, firstName, lastName, pesel, contactNumber, address.id)
     .then(() => {
       res.send({ message: "User was registered successfully!" });
     })

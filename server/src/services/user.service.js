@@ -4,14 +4,14 @@ const { user: User } = db
 
 const createUser = async (
     username, email, password, firstName, lastName,
-    birthDate, pesel, contactNumber, addressId) => {
+    pesel, contactNumber, addressId) => {
     await User.create({
         username: username,
         email: email,
         password: bcrypt.hashSync(password, 8),
         first_name: firstName,
         last_name: lastName,
-        birth_date: birthDate,
+        birth_date: new Date(),
         pesel: pesel,
         contact_number: contactNumber,
         address_id: addressId

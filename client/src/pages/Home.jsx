@@ -24,8 +24,6 @@ const Home = () => {
 
   return (
     <div className="container">
-        <Navbar />
-
 
       <h3>{content}</h3>
     </div>

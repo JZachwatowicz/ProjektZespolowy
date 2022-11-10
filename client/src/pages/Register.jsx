@@ -1,10 +1,18 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
+
+import { DropDownListComponent } from '@syncfusion/ej2-react-dropdowns';
 import { isEmail } from "validator";
 
+import Select from 'react-select';
+
+import { Country, State, City } from 'country-state-city';
+
 import AuthService from "../services/auth.service";
+
+
 
 const required = (value) => {
   if (!value) {
@@ -44,99 +52,35 @@ const vpassword = (value) => {
       </div>
     );
   }
-};
-
+}
 const Register = (props) => {
+
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    firstName: "",
+    lastName: "",
+    pesel: "",
+    contactNumber: "",
+    buildingNumber: "",
+    apartmentNumber: "",
+    streetName: "",
+    cityName: "",
+    voivodeshipName: "",
+    voivodeshipCode: "",
+    countryName: "",
+    countryCode: "",
+
+  });
   const form = useRef();
   const checkBtn = useRef();
-
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [birthDate, setBirthDate] = useState(new Date());
-  const [pesel, setPesel] = useState("");
-  const [contactNumber, setContactNumber] = useState("");
-  const [buildingNumber, setBuildingNumber] = useState("");
-  const [apartmentNumber, setApartmentNumber] = useState("");
-  const [streetName, setStreetName] = useState("");
-  const [cityName, setCityName] = useState("");
-  const [voivodeshipName, setVoivodeshipName] = useState("");
-  const [countryName, setCountryName] = useState("");
-  const [countryCode, setCountryCode] = useState("");
-
 
   const [successful, setSuccessful] = useState(false);
   const [message, setMessage] = useState("");
 
-  const onChangeUsername = (e) => {
-    const username = e.target.value;
-    setUsername(username);
-  };
-
-  const onChangeBuildingNumber = (e) => {
-    const buildingNumber = e.target.value;
-    setBuildingNumber(buildingNumber);
-  };
-  const onChangeApartmentNumber = (e) => {
-    const apartmentNumber = e.target.value;
-    setApartmentNumber(apartmentNumber);
-  };
-  const onChangeStreetName = (e) => {
-    const streetName = e.target.value;
-    setStreetName(streetName);
-  };
-  const onChangeCityName = (e) => {
-    const cityName = e.target.value;
-    setCityName(cityName);
-  };
-  const onChangeVoivodeshipName = (e) => {
-    const voivodeshipName = e.target.value;
-    setVoivodeshipName(voivodeshipName);
-  };
-  const onChangeCountryName = (e) => {
-    const countryName = e.target.value;
-    setCountryName(countryName);
-  };
-  const onChangeCountryCode = (e) => {
-    const countryCode = e.target.value;
-    setCountryCode(countryCode);
-  };
-
-
-  const onChangeEmail = (e) => {
-    const email = e.target.value;
-    setEmail(email);
-  };
-
-  const onChangePassword = (e) => {
-    const password = e.target.value;
-    setPassword(password);
-  };
-
-  const onChangeFirstName = (e) => {
-    const firstName = e.target.value;
-    setFirstName(firstName);
-  };
-
-  const onChangeLastName = (e) => {
-    const lastName = e.target.value;
-    setLastName(lastName);
-  };
-
-  const onChangeBirthDate = (e) => {
-    const birthDate = e.target.value;
-    setBirthDate(birthDate);
-  };
-
-  const onChangeContactNumber = (e) => {
-    const contactNumber = e.target.value;
-    setContactNumber(contactNumber);
-  };
-  const onChangePesel = (e) => {
-    const pesel = e.target.value;
-    setPesel(pesel);
+  const onChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
   const handleRegister = (e) => {
     e.preventDefault();
@@ -145,25 +89,24 @@ const Register = (props) => {
     setSuccessful(false);
 
     form.current.validateAll();
-
     if (checkBtn.current.context._errors.length === 0) {
       AuthService.register(
-        username,
-        email,
-        password,
-        firstName,
-        lastName,
-        birthDate,
-        pesel,
-        contactNumber,
-        buildingNumber,
-        apartmentNumber,
-        streetName,
-        cityName,
-        voivodeshipName,
-        countryName,
-        countryCode
-        ).then(
+        formData.username,
+        formData.email,
+        formData.password,
+        formData.firstName,
+        formData.lastName,
+        formData.pesel,
+        formData.contactNumber,
+        formData.buildingNumber,
+        formData.apartmentNumber,
+        formData.streetName,
+        formData.cityName,
+        formData.voivodeshipName,
+        formData.countryName,
+        formData.countryCode
+
+      ).then(
         (response) => {
           setMessage(response.data.message);
           setSuccessful(true);
@@ -201,8 +144,8 @@ const Register = (props) => {
                   type="text"
                   className="form-control"
                   name="username"
-                  value={username}
-                  onChange={onChangeUsername}
+                  value={formData.username}
+                  onChange={onChange}
                   validations={[required, vusername]}
                 />
               </div>
@@ -213,8 +156,8 @@ const Register = (props) => {
                   type="text"
                   className="form-control"
                   name="email"
-                  value={email}
-                  onChange={onChangeEmail}
+                  value={formData.email}
+                  onChange={onChange}
                   validations={[required, validEmail]}
                 />
               </div>
@@ -225,8 +168,8 @@ const Register = (props) => {
                   type="password"
                   className="form-control"
                   name="password"
-                  value={password}
-                  onChange={onChangePassword}
+                  value={formData.password}
+                  onChange={onChange}
                   validations={[required, vpassword]}
                 />
               </div>
@@ -237,8 +180,8 @@ const Register = (props) => {
                   type="text"
                   className="form-control"
                   name="firstName"
-                  value={firstName}
-                  onChange={onChangeFirstName}
+                  value={formData.firstName}
+                  onChange={onChange}
                   validations={[required]}
                 />
               </div>
@@ -249,24 +192,12 @@ const Register = (props) => {
                   type="text"
                   className="form-control"
                   name="lastName"
-                  value={lastName}
-                  onChange={onChangeLastName}
+                  value={formData.lastName}
+                  onChange={onChange}
                   validations={[required]}
                 />
               </div>
 
-              <div className="form-group">
-                <label htmlFor="birthDate">Data urodzenia</label>
-                <Input
-                  type="date"
-                  className="form-control"
-                  name="birthDate"
-                  maxDate={new Date()}
-                  value={birthDate}
-                  onChange={onChangeBirthDate}
-                  validations={[required]}
-                />
-              </div>
 
               <div className="form-group">
                 <label htmlFor="pesel">PESEL</label>
@@ -274,8 +205,8 @@ const Register = (props) => {
                   type="text"
                   className="form-control"
                   name="pesel"
-                  value={pesel}
-                  onChange={onChangePesel}
+                  value={formData.pesel}
+                  onChange={onChange}
                   validations={[required]}
                 />
               </div>
@@ -286,8 +217,8 @@ const Register = (props) => {
                   type="text"
                   className="form-control"
                   name="contactNumber"
-                  value={contactNumber}
-                  onChange={onChangeContactNumber}
+                  value={formData.contactNumber}
+                  onChange={onChange}
                   validations={[required]}
                 />
               </div>
@@ -298,8 +229,8 @@ const Register = (props) => {
                   type="text"
                   className="form-control"
                   name="buildingNumber"
-                  value={buildingNumber}
-                  onChange={onChangeBuildingNumber}
+                  value={formData.buildingNumber}
+                  onChange={onChange}
                   validations={[required]}
                 />
                 <label htmlFor="apartmentNumber">apartmentNumber</label>
@@ -307,51 +238,71 @@ const Register = (props) => {
                   type="text"
                   className="form-control"
                   name="apartmentNumber"
-                  value={apartmentNumber}
-                  onChange={onChangeApartmentNumber}
+                  value={formData.apartmentNumber}
+                  onChange={onChange}
                 />
                 <label htmlFor="streetName">streetName</label>
                 <Input
                   type="text"
                   className="form-control"
                   name="streetName"
-                  value={streetName}
-                  onChange={onChangeStreetName}
+                  value={formData.streetName}
+                  onChange={onChange}
                 />
-                <label htmlFor="cityName">cityName</label>
-                <Input
-                  type="text"
-                  className="form-control"
-                  name="cityName"
-                  value={cityName}
-                  onChange={onChangeCityName}
-                />
-                <label htmlFor="streetName">voivodeshipName</label>
-                <Input
-                  type="text"
-                  className="form-control"
-                  name="voivodeshipName"
-                  value={voivodeshipName}
-                  onChange={onChangeVoivodeshipName}
-                />
-                <label htmlFor="countryName">countryName</label>
-                <Input
-                  type="text"
-                  className="form-control"
-                  name="countryName"
-                  value={countryName}
-                  onChange={onChangeCountryName}
-                />
-                <label htmlFor="countryCode">countryCode</label>
-                <Input
-                  type="text"
-                  className="form-control"
-                  name="countryCode"
-                  value={countryCode}
-                  onChange={onChangeCountryCode}
-                />
-              </div>
+                {/* {console.log(City.getAllCities())} */}
+                {/* <DropDownListComponent>
 
+                </DropDownListComponent> */}
+                {/* <Select
+                  options={aquaticCreatures}
+                  onChange={opt => console.log(opt.label, opt.value)}
+                /> */}
+
+
+
+
+                <label htmlFor="countryName">countryName</label>
+                <select name="countryCode" value={formData.countryCode} onChange={onChange} >
+                  
+                  {Country.getAllCountries().map(e =>
+                    <option key={e.isoCode} value={e.isoCode}>{e.name}</option>)}
+                </select>
+
+                {formData.countryCode ?
+                 <input hidden type="text" onChange={onChange} name={formData.countryName} value={formData.countryName = Country.getCountryByCode(formData.countryCode).name} />
+                  : null}
+                {State.getStatesOfCountry(formData.countryCode).length !== 0 ?
+
+                  <>
+                    <label htmlFor="voivodeshipName">voivodeshipName</label>
+                    <select name="voivodeshipCode" value={formData.voivodeshipCode} onChange={onChange}>
+                      {State.getStatesOfCountry(formData.countryCode).map(e => <option key={e.isoCode} value={e.isoCode}>{e.name}</option>)}
+                    </select>
+                    {formData.voivodeshipCode ?
+                     <input hidden type="text" onChange={onChange} name={formData.voivodeshipName} value={formData.voivodeshipName = State.getStateByCode(formData.voivodeshipCode).name} />
+                      : null}                  
+                    </>
+                  :
+                  <>
+                    {City.getCitiesOfCountry(formData.countryCode).length !== 0 ?
+                      <>
+                        <label htmlFor="cityName">cityName</label>
+                        <select name="cityName" value={formData.cityName} onChange={onChange}>
+                          {City.getCitiesOfCountry(formData.countryCode).map(e => <option key={e.isoCode} value={e.isoCode}>{e.name}</option>)}
+                        </select>
+                      </>
+                      : null}
+                  </>
+                }
+                {City.getCitiesOfState(formData.countryCode, formData.voivodeshipCode).length !== 0 ?
+                  <>
+                    <label htmlFor="cityName">cityName</label>
+                    <select name="cityName" value={formData.cityName} onChange={onChange}>
+                      {City.getCitiesOfState(formData.countryCode, formData.voivodeshipCode).map(e => <option key={e.isoCode} value={e.isoCode}>{e.name}</option>)}
+                    </select>
+                  </>
+                  : null}
+              </div>
               <div className="form-group">
                 <button className="btn btn-primary btn-block">Sign Up</button>
               </div>
@@ -370,6 +321,7 @@ const Register = (props) => {
               </div>
             </div>
           )}
+          {console.log(Object.values(formData))}
           <CheckButton style={{ display: "none" }} ref={checkBtn} />
         </Form>
       </div>
