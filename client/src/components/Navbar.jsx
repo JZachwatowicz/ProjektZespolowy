@@ -27,7 +27,7 @@ const Navbar = () => {
   return (
 
     <>
-      <div className={`${screenSize <= 900 ? 'flex-2' : 'flex'} justify-evenly p-2 md:mx-6 relative`}>
+      <div className={`${screenSize <= 900 ? 'flex-2' : 'flex'} justify-evenly p-2 md:mx-6 relative pb-10`}>
 
         <NavButton name="home" link="/home" icon={<FiShoppingBag />} />
         <NavButton name="about" link="/home/about" icon={<FiShoppingBag />} />

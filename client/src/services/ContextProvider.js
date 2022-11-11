@@ -2,12 +2,6 @@ import React, { createContext, useContext, useState } from 'react';
 
 const StateContext = createContext();
 
-const initialState = {
-  chat: false,
-  cart: false,
-  userProfile: false,
-  notification: false,
-};
 
 export const ContextProvider = ({ children }) => {
   const [screenSize, setScreenSize] = useState(undefined);
@@ -29,7 +23,7 @@ export const ContextProvider = ({ children }) => {
 
   return (
     <StateContext.Provider 
-    value={{ currentColor, currentMode, activeMenu, screenSize, setScreenSize, initialState, setActiveMenu, setCurrentColor, setCurrentMode, setMode, setColor, themeSettings, setThemeSettings }}>
+    value={{ currentColor, currentMode, activeMenu, screenSize, setScreenSize, setActiveMenu, setCurrentColor, setCurrentMode, setMode, setColor, themeSettings, setThemeSettings }}>
       {children}
     </StateContext.Provider>
   );

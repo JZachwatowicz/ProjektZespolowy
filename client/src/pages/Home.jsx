@@ -23,9 +23,11 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="container">
+    <div className="flex gap-10 flex-wrap justify-center">
 
       <h3>{content}</h3>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas, blanditiis! Voluptas doloremque reprehenderit eveniet non fuga, qui adipisci ducimus ullam eum culpa dolorem vel magni et assumenda minus unde inventore.
+    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nemo, iure accusamus natus inventore nesciunt blanditiis magnam hic ipsum enim cupiditate, explicabo dolores. Laborum, nostrum ipsum atque est eaque accusamus eius?</p>
     </div>
   );
 };

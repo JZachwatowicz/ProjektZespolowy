@@ -1,9 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
-
-import { DropDownListComponent } from '@syncfusion/ej2-react-dropdowns';
 import { isEmail } from "validator";
 
 import Select from 'react-select';
@@ -17,8 +15,8 @@ import AuthService from "../services/auth.service";
 const required = (value) => {
   if (!value) {
     return (
-      <div className="invalid-feedback d-block">
-        This field is required!
+      <div className="text-red-500 font-medium">
+        To pole jest wymagane!
       </div>
     );
   }
@@ -27,7 +25,7 @@ const required = (value) => {
 const validEmail = (value) => {
   if (!isEmail(value)) {
     return (
-      <div className="invalid-feedback d-block">
+      <div className="text-red-500 font-medium">
         This is not a valid email.
       </div>
     );
@@ -37,7 +35,7 @@ const validEmail = (value) => {
 const vusername = (value) => {
   if (value.length < 3 || value.length > 20) {
     return (
-      <div className="invalid-feedback d-block">
+      <div className="text-red-500 font-medium">
         The username must be between 3 and 20 characters.
       </div>
     );
@@ -47,7 +45,7 @@ const vusername = (value) => {
 const vpassword = (value) => {
   if (value.length < 6 || value.length > 40) {
     return (
-      <div className="invalid-feedback d-block">
+      <div className="text-red-500 font-medium">
         The password must be between 6 and 40 characters.
       </div>
     );
@@ -125,200 +123,162 @@ const Register = (props) => {
       );
     }
   };
+  const formStyle = "form-control p-3 m-2 border-b-2 shadow-md"
+  // Swap default select to react component
+  // const countries = Country.getAllCountries().map(e => {
+  //   return {
+  //     value: e.isoCode,
+  //     label: e.name
+  //   }
+  // })
+  // console.log(countries)
+  //               <Select name="countryCode" value={formData.countryCode} onChange={onChange} className={formStyle} options={countries} /> 
 
   return (
-    <div className="col-md-12">
-      <div className="card card-container">
-        <img
-          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-          alt="profile-img"
-          className="profile-img-card"
-        />
+    <div className="flex flex-wrap justify-center min-h-screen content-center">
 
-        <Form onSubmit={handleRegister} ref={form}>
+
+
+      <div className="p-11  shadow-2xl">
+        <h1 className="mb-8 text-center text-3xl text-stone-800 font-semibold">Rejestracja</h1>
+
+        <Form onSubmit={handleRegister} ref={form} className="flex-2 text-center">
           {!successful && (
-            <div>
-              <div className="form-group">
-                <label htmlFor="username">Login</label>
-                <Input
-                  type="text"
-                  className="form-control"
-                  name="username"
-                  value={formData.username}
-                  onChange={onChange}
-                  validations={[required, vusername]}
-                />
-              </div>
+            <><div>
+              <Input
+                type="text"
+                className={formStyle}
+                name="username"
+                placeholder="Login"
+                value={formData.username}
+                onChange={onChange}
+                validations={[required, vusername]} />
 
-              <div className="form-group">
-                <label htmlFor="email">Email</label>
-                <Input
-                  type="text"
-                  className="form-control"
-                  name="email"
-                  value={formData.email}
-                  onChange={onChange}
-                  validations={[required, validEmail]}
-                />
-              </div>
+              <Input
+                type="text"
+                className={formStyle}
+                name="email"
+                placeholder="Email"
+                value={formData.email}
+                onChange={onChange}
+                validations={[required, validEmail]} />
 
-              <div className="form-group">
-                <label htmlFor="password">Hasło</label>
-                <Input
-                  type="password"
-                  className="form-control"
-                  name="password"
-                  value={formData.password}
-                  onChange={onChange}
-                  validations={[required, vpassword]}
-                />
-              </div>
+              <Input
+                type="password"
+                className={formStyle}
+                name="password"
+                placeholder="Hasło"
+                value={formData.password}
+                onChange={onChange}
+                validations={[required, vpassword]} />
 
-              <div className="form-group">
-                <label htmlFor="firstName">Imię</label>
-                <Input
-                  type="text"
-                  className="form-control"
-                  name="firstName"
-                  value={formData.firstName}
-                  onChange={onChange}
-                  validations={[required]}
-                />
-              </div>
+              <Input
+                type="text"
+                className={formStyle}
+                name="firstName"
+                placeholder="Imię"
+                value={formData.firstName}
+                onChange={onChange}
+                validations={[required]} />
 
-              <div className="form-group">
-                <label htmlFor="lastName">Nazwisko</label>
-                <Input
-                  type="text"
-                  className="form-control"
-                  name="lastName"
-                  value={formData.lastName}
-                  onChange={onChange}
-                  validations={[required]}
-                />
-              </div>
+              <Input
+                type="text"
+                className={formStyle}
+                name="lastName"
+                placeholder="Nazwisko"
+                value={formData.lastName}
+                onChange={onChange}
+                validations={[required]} />
 
+              <Input
+                type="text"
+                className={formStyle}
+                name="pesel"
+                placeholder="PESEL"
+                value={formData.pesel}
+                onChange={onChange}
+                validations={[required]} />
 
-              <div className="form-group">
-                <label htmlFor="pesel">PESEL</label>
-                <Input
-                  type="text"
-                  className="form-control"
-                  name="pesel"
-                  value={formData.pesel}
-                  onChange={onChange}
-                  validations={[required]}
-                />
-              </div>
+              <Input
+                type="text"
+                className={formStyle}
+                name="contactNumber"
+                placeholder="Telefon"
+                value={formData.contactNumber}
+                onChange={onChange}
+                validations={[required]} />
+              <Input
+                type="text"
+                className={formStyle}
+                name="streetName"
+                placeholder="Ulica"
+                value={formData.streetName}
+                onChange={onChange}
+                validations={[required]} />
+              <Input
+                type="text"
+                className={formStyle}
+                name="buildingNumber"
+                placeholder="Nr domu"
+                value={formData.buildingNumber}
+                onChange={onChange}
+                validations={[required]} />
+              <Input
+                type="text"
+                className={formStyle}
+                name="apartmentNumber"
+                placeholder="Nr mieszkania"
+                value={formData.apartmentNumber}
+                onChange={onChange} />
+              <select name="countryCode" value={formData.countryCode} onChange={onChange} className={formStyle}>
 
-              <div className="form-group">
-                <label htmlFor="contactNumber">Telefon</label>
-                <Input
-                  type="text"
-                  className="form-control"
-                  name="contactNumber"
-                  value={formData.contactNumber}
-                  onChange={onChange}
-                  validations={[required]}
-                />
-              </div>
-              <div className="form-group">
-                ADRES
-                <label htmlFor="buildingNumber">buildingNumber</label>
-                <Input
-                  type="text"
-                  className="form-control"
-                  name="buildingNumber"
-                  value={formData.buildingNumber}
-                  onChange={onChange}
-                  validations={[required]}
-                />
-                <label htmlFor="apartmentNumber">apartmentNumber</label>
-                <Input
-                  type="text"
-                  className="form-control"
-                  name="apartmentNumber"
-                  value={formData.apartmentNumber}
-                  onChange={onChange}
-                />
-                <label htmlFor="streetName">streetName</label>
-                <Input
-                  type="text"
-                  className="form-control"
-                  name="streetName"
-                  value={formData.streetName}
-                  onChange={onChange}
-                />
-                {/* {console.log(City.getAllCities())} */}
-                {/* <DropDownListComponent>
+                {Country.getAllCountries().map(e => <option key={e.isoCode} value={e.isoCode}>{e.name}</option>)}
+              </select>
 
-                </DropDownListComponent> */}
-                {/* <Select
-                  options={aquaticCreatures}
-                  onChange={opt => console.log(opt.label, opt.value)}
-                /> */}
+              {formData.countryCode ?
+                <input hidden type="text" onChange={onChange} name={formData.countryName} value={formData.countryName = Country.getCountryByCode(formData.countryCode).name} />
+                : null}
+              {State.getStatesOfCountry(formData.countryCode).length !== 0 ?
 
-
-
-
-                <label htmlFor="countryName">countryName</label>
-                <select name="countryCode" value={formData.countryCode} onChange={onChange} >
-                  
-                  {Country.getAllCountries().map(e =>
-                    <option key={e.isoCode} value={e.isoCode}>{e.name}</option>)}
-                </select>
-
-                {formData.countryCode ?
-                 <input hidden type="text" onChange={onChange} name={formData.countryName} value={formData.countryName = Country.getCountryByCode(formData.countryCode).name} />
-                  : null}
-                {State.getStatesOfCountry(formData.countryCode).length !== 0 ?
-
-                  <>
-                    <label htmlFor="voivodeshipName">voivodeshipName</label>
-                    <select name="voivodeshipCode" value={formData.voivodeshipCode} onChange={onChange}>
-                      {State.getStatesOfCountry(formData.countryCode).map(e => <option key={e.isoCode} value={e.isoCode}>{e.name}</option>)}
-                    </select>
-                    {formData.voivodeshipCode ?
-                     <input hidden type="text" onChange={onChange} name={formData.voivodeshipName} value={formData.voivodeshipName = State.getStateByCode(formData.voivodeshipCode).name} />
-                      : null}                  
+                <>
+                  <select name="voivodeshipCode" value={formData.voivodeshipCode} onChange={onChange} className={formStyle}>
+                    {State.getStatesOfCountry(formData.countryCode).map(e => <option key={e.isoCode} value={e.isoCode}>{e.name}</option>)}
+                  </select>
+                  {formData.voivodeshipCode ?
+                    <input hidden type="text" onChange={onChange} name={formData.voivodeshipName} value={formData.voivodeshipName = State.getStateByCode(formData.voivodeshipCode).name} />
+                    : null}
+                </>
+                :
+                <>
+                  {City.getCitiesOfCountry(formData.countryCode).length !== 0 ?
+                    <>
+                      <select name="cityName" value={formData.cityName} onChange={onChange} className={formStyle}>
+                        {City.getCitiesOfCountry(formData.countryCode).map(e => <option key={e.isoCode} value={e.isoCode}>{e.name}</option>)}
+                      </select>
                     </>
-                  :
-                  <>
-                    {City.getCitiesOfCountry(formData.countryCode).length !== 0 ?
-                      <>
-                        <label htmlFor="cityName">cityName</label>
-                        <select name="cityName" value={formData.cityName} onChange={onChange}>
-                          {City.getCitiesOfCountry(formData.countryCode).map(e => <option key={e.isoCode} value={e.isoCode}>{e.name}</option>)}
-                        </select>
-                      </>
-                      : null}
-                  </>
-                }
-                {City.getCitiesOfState(formData.countryCode, formData.voivodeshipCode).length !== 0 ?
-                  <>
-                    <label htmlFor="cityName">cityName</label>
-                    <select name="cityName" value={formData.cityName} onChange={onChange}>
-                      {City.getCitiesOfState(formData.countryCode, formData.voivodeshipCode).map(e => <option key={e.isoCode} value={e.isoCode}>{e.name}</option>)}
-                    </select>
-                  </>
-                  : null}
-              </div>
-              <div className="form-group">
-                <button className="btn btn-primary btn-block">Sign Up</button>
-              </div>
+                    : null}
+                </>}
+              {City.getCitiesOfState(formData.countryCode, formData.voivodeshipCode).length !== 0 ?
+                <>
+                  <select name="cityName" value={formData.cityName} onChange={onChange} className={formStyle}>
+                    {City.getCitiesOfState(formData.countryCode, formData.voivodeshipCode).map(e => <option key={e.isoCode} value={e.isoCode}>{e.name}</option>)}
+                  </select>
+                </>
+                : null}
             </div>
+              <button className="p-4 shadow-xl m-2 rounded-lg border-1 hover:bg-gray-600 hover:text-white">Zarejestruj</button>
+            </>
+
           )}
 
           {message && (
-            <div className="form-group">
-              <div
-                className={
-                  successful ? "alert alert-success" : "alert alert-danger"
-                }
-                role="alert"
-              >
-                {message}
-              </div>
+            <div
+              className={
+                successful ? "m-2 text-green-500 font-medium" : "m-2 text-red-500 font-medium"
+              }
+              role="alert"
+            >
+              {message}
             </div>
           )}
           {console.log(Object.values(formData))}

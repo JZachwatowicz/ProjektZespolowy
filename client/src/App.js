@@ -63,8 +63,8 @@ const App = () => {
               <Route exact path="/schedule" element={<Schedule />} />
 
             </Routes>
+            </div>
             <Footer />
-          </div>
         </div>
       </BrowserRouter>
     </div>

@@ -9,8 +9,8 @@ import { useNavigate } from 'react-router-dom';
 const required = (value) => {
   if (!value) {
     return (
-      <div className="invalid-feedback d-block">
-        This field is required!
+      <div className="text-red-500 font-medium">
+        To pole jest wymagane!
       </div>
     );
   }
@@ -22,7 +22,6 @@ const Login = () => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
   const navigate = useNavigate();
@@ -41,7 +40,6 @@ const Login = () => {
     e.preventDefault();
 
     setMessage("");
-    setLoading(true);
 
     form.current.validateAll();
 
@@ -59,62 +57,54 @@ const Login = () => {
             error.message ||
             error.toString();
 
-          setLoading(false);
           setMessage(resMessage);
         }
       );
-    } else {
-      setLoading(false);
     }
   };
 
   return (
-    <div className="col-md-12">
-      <div className="card card-container">
+    <div className="flex flex-wrap justify-center min-h-screen content-center">
+
+      <div className="p-11  shadow-2xl mb-20">
+        <h1 className="mb-8 text-center text-3xl text-stone-800 font-semibold">Logowanie</h1>
+
+        <Form onSubmit={handleLogin} ref={form} className="flex-2 text-center">
+
+          <Input
+            type="text"
+            className="form-control p-3 m-2 border-b-2 shadow-md"
+            name="username"
+            placeholder="Login"
+            value={username}
+            onChange={onChangeUsername}
+            validations={[required]}
+          />
+
+          <Input
+            type="password"
+            className="form-control p-3 m-2 border-b-2 shadow-md"
+            name="password"
+            placeholder="Hasło"
+            value={password}
+            onChange={onChangePassword}
+            validations={[required]}
+          />
 
 
-        <Form onSubmit={handleLogin} ref={form}>
-          <div className="form-group">
-            <label htmlFor="username">Username</label>
-            <Input
-              type="text"
-              className="form-control"
-              name="username"
-              value={username}
-              onChange={onChangeUsername}
-              validations={[required]}
-            />
-          </div>
+          <button className="p-4 shadow-xl m-2 rounded-lg border-1 hover:bg-gray-600 hover:text-white">
+            Zaloguj
+          </button>
 
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <Input
-              type="password"
-              className="form-control"
-              name="password"
-              value={password}
-              onChange={onChangePassword}
-              validations={[required]}
-            />
-          </div>
-
-          <div className="form-group">
-            <button className="btn btn-primary btn-block" disabled={loading}>
-              {loading && (
-                <span className="spinner-border spinner-border-sm"></span>
-              )}
-              <span>Login</span>
-            </button>
-          </div>
 
           {message && (
-            <div className="form-group">
-              <div className="alert alert-danger" role="alert">
-                {message}
-              </div>
+
+            <div className="m-2 text-red-500 font-medium" role="alert">
+              {message}
             </div>
+
           )}
-          <CheckButton style={{ display: "none" }} ref={checkBtn} />
+          <CheckButton  ref={checkBtn} />
         </Form>
       </div>
     </div>
