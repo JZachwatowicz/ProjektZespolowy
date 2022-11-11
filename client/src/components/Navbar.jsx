@@ -1,46 +1,42 @@
-import React, { useEffect } from 'react';
-import { Link, Outlet} from 'react-router-dom';
+import React from 'react';
+import { NavLink, Outlet } from 'react-router-dom';
+import { FiShoppingBag } from 'react-icons/fi';
+import { useStateContext } from '../services/ContextProvider';
 
-// import { useStateContext } from '../services/ContextProvider';
+// dark: text-gray-200 items-center gap-3 ml-3 mt-4 flex text-xl capitalize
+
+
 
 
 const Navbar = () => {
-  // const { setActiveMenu, setScreenSize, screenSize } = useStateContext();
 
-  // useEffect(() => {
-  //   const handleResize = () => setScreenSize(window.innerWidth);
+  const activeLink = 'flex items-center px-9 pt-3 pb-2.5 gap-3 rounded-lg text-white text-md m-2';
+  const normalLink = 'flex items-center px-9 pt-3 pb-2.5 gap-3 rounded-lg text-gray-700 text-md dark:text-gray-200 dark:hover:text-black hover:bg-light-gray m-2';
 
-  //   window.addEventListener('resize', handleResize);
-
-  //   handleResize();
-
-  //   return () => window.removeEventListener('resize', handleResize);
-  // }, []);
-
-  // useEffect(() => {
-  //   if (screenSize <= 900) {
-  //     setActiveMenu(false);
-  //   } else {
-  //     setActiveMenu(true);
-  //   }
-  // }, [screenSize]);
+  const { currentColor, screenSize } = useStateContext();
 
 
+  const NavButton = ({ name, link, icon }) => (
+    <NavLink end to={link} style={({ isActive }) => ({ backgroundColor: isActive ? currentColor : '' })}
+      className={({ isActive }) => (isActive ? activeLink : normalLink)}>
+      {icon}
+      <span className="capitalize">{name}</span>
+
+    </NavLink>
+  );
   return (
-    <div className="flex justify-between p-2 md:ml-6 md:mr-6 relative">
-      {/* //placeholder */}
-      <nav className='navbar navbar-expand-lg navbar-light bg-light'>
-        <ul className='navbar-nav mr-auto'>
-          <li className='nav-item'><Link className='nav-link' to="/addProduct">addProduct</Link></li>
-          <li className='nav-item'><Link className='nav-link' to="/products">products</Link></li>
-          <li className='nav-item'><Link className='nav-link' to="/home">home</Link></li>
-          <li className='nav-item'><Link className='nav-link' to="/home/about">About</Link></li>
-          <li className='nav-item'><Link className='nav-link' to="/home/contact">Contact</Link></li>
-        </ul>
-      </nav>
-      <Outlet />
 
-    </div>
+    <>
+      <div className={`${screenSize <= 900 ? 'flex-2' : 'flex'} justify-evenly p-2 md:mx-6 relative`}>
+
+        <NavButton name="home" link="/home" icon={<FiShoppingBag />} />
+        <NavButton name="about" link="/home/about" icon={<FiShoppingBag />} />
+        <NavButton name="contact" link="/home/contact" icon={<FiShoppingBag />} />
+        <NavButton name="news" link="/home/news" icon={<FiShoppingBag />} />
+      </div>
+      <Outlet />
+    </>
+
   );
 };
 

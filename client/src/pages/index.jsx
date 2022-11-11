@@ -6,6 +6,7 @@ export {default as Register} from './Register';
 export {default as Schedule} from './Schedule';
 export {default as About} from './About';
 export {default as Contact} from './Contact';
+export {default as News} from './News';
 export {default as AdminBoard} from './Boards/AdminBoard';
 export {default as EmployeeBoard} from './Boards/EmployeeBoard';
 export {default as UserBoard} from './Boards/UserBoard';
