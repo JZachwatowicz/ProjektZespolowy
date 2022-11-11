@@ -43,9 +43,7 @@ exports.add_harmonogram = (req, res) => {
         end_date: req.body.end_date,
         user_id: req.body.user_id
     }).then(harmonogram => {
-       // harmonogram.getUser().then(() => {
-            res.send({ message: "Harmonogram was added successfully!" });
-       // });
+        res.send({ message: "Harmonogram added." });
     }).catch(err => {
         console.log(err.message);
         res.status(500).send({ message: err.message });
@@ -68,13 +66,13 @@ exports.update_harmonogram = (req, res) => {
     }).then(harmonogram => {
         console.log(harmonogram);
         harmonogram.set({
-            begin_date: req.body.title,
-            end_date: req.body.content
+            begin_date: req.body.begin_date,
+            end_date: req.body.end_date
         });
         harmonogram.save({
             fields: ['begin_date', 'end_date']
         });
-        res.status(200).send("Update harmonogram.");
+        res.status(200).send("Harmonogram updated.");
     }).catch(err => {
         res.status(500).send({message: err.message});
     });
@@ -85,7 +83,7 @@ exports.delete_harmonogram = (req, res) => {
         where: {id: req.params.id}
     }).then(harmonogram => {
         harmonogram.destroy();
-        res.status(200).send("Delete harmonogram.");
+        res.status(200).send("Harmonogram deleted.");
     }).catch(err => {
         res.status(500).send({message: err.message});
     });
@@ -101,7 +99,7 @@ exports.accept_harmonogram = (req, res) => {
         harmonogram.save({
             fields: ['admin_consent']
         });
-        res.status(200).send("Acctept harmonogram.");
+        res.status(200).send("Harmonogram accepted.");
     }).catch(err => {
         res.status(500).send({message: err.message});
     });

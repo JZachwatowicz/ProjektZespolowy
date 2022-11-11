@@ -22,7 +22,7 @@ exports.add_schedule = (req, res) => {
                 activity_id: req.body.activity_id,
                 harmonogram_id: harmonogram.id
             }).then(schedule => {
-                res.send({ message: "Schedule was created successfully!" });
+                res.send({ message: "Schedule created." });
             }).catch(err => {
                 console.log(err.message);
                 res.status(500).send({ message: err.message });
@@ -49,20 +49,15 @@ exports.one_schedule = (req, res) => {
 };
 
 exports.update_schedule = (req, res) => {
-    console.log("61");
     User.findOne({
         where: { id: req.body.user_id }
     }).then(user => {
-        console.log("65");
         Schedule.findOne({
             where: { id: req.params.id }
         }).then(schedule => {
-            console.log("69");
             schedule.addUser(user.id);
-            //user.addSchedule(schedule.id);
             schedule.save();
-            console.log("72");
-            res.status(200).send("Update schedule.");
+            res.status(200).send("Schedule updated.");
         }).catch(err => {
             res.status(500).send({ message: err.message });
         });
@@ -76,7 +71,7 @@ exports.delete_schedule = (req, res) => {
         where: { id: req.params.id }
     }).then(schedule => {
         schedule.destroy();
-        res.status(200).send("Delete schedule.");
+        res.status(200).send("Schedule deleted.");
     }).catch(err => {
         res.status(500).send({ message: err.message });
     });
