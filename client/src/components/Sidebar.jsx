@@ -178,6 +178,16 @@ const Sidebar = () => {
                 {<FiShoppingBag />}
                 <span className="capitalize ">Harmonogram</span>
               </NavLink>
+              <NavLink
+                to={`/activities`}
+                onClick={handleCloseSideBar}
+                style={({ isActive }) => ({
+                  backgroundColor: isActive ? currentColor : '',
+                })}
+                className={({ isActive }) => (isActive ? activeLink : normalLink)}>
+                {<FiShoppingBag />}
+                <span className="capitalize ">Activity</span>
+              </NavLink>
             </div>
             {currentUser ? 
             <div className="mt-10 ">

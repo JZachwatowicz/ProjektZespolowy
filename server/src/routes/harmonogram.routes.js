@@ -1,4 +1,4 @@
-const { authJwt } = require("../middleware");
+const { authJwt } = require("../middlewares");
 const controller = require("../controllers/harmonogram.controller");
 const router = require('express').Router()
 

@@ -50,16 +50,7 @@ isAdmin = (req, res, next) => {
 isEmployee = (req, res, next) => {
     User.findByPk(req.userId).then(user => {
         user.getRole().then(role => {
-<<<<<<<< HEAD:server/src/middlewares/auth_jwt.js
-            if (role.name === "employee") {
-                next();
-                return;
-            }
-
-            if (role.name === "admin") {
-========
             if (role.name === "employee" || role.name === "admin") {
->>>>>>>> origin/auth_fix:server/src/middlewares/auth-jwt.js
                 next();
                 return;
             }
@@ -74,10 +65,6 @@ isEmployee = (req, res, next) => {
 const authJwt = {
     verifyToken: verifyToken,
     isAdmin: isAdmin,
-<<<<<<<< HEAD:server/src/middlewares/auth_jwt.js
-    isEmployee: isEmployee,
-========
     isEmployee: isEmployee
->>>>>>>> origin/auth_fix:server/src/middlewares/auth-jwt.js
 };
 module.exports = authJwt;

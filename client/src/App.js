@@ -7,9 +7,12 @@ import './App.css'
 import { useStateContext } from './services/ContextProvider';
 
 import AddActivity from './components/AddActivity'
-import ShowActivities from './screens/ShowActivities'
+import EditActivity from './components/EditActivity'
+import ShowActivities from './components/ShowActivities'
 
-import EditActivity from './screens/EditActivity'
+
+const App = () => {
+
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu } = useStateContext();
 
   // useEffect(() => {
@@ -45,13 +48,13 @@ import EditActivity from './screens/EditActivity'
               <Route path="/" element={<Navigate to="/home" />} />
 
               <Route exact path="/home" element={<Navbar />} >
-              <Route index element={<Home />} />
-              <Route exact path="/home/contact" element={<Contact />} />
-              <Route exact path="/home/about" element={<About />} />
-              <Route exact path="/home/news" element={<News />} />
+                <Route index element={<Home />} />
+                <Route exact path="/home/contact" element={<Contact />} />
+                <Route exact path="/home/about" element={<About />} />
+                <Route exact path="/home/news" element={<News />} />
               </Route>
-              
-              
+
+
 
               <Route exact path="/profile" element={<Profile />} />
               <Route exact path="/login" element={<Login />} />
@@ -61,12 +64,16 @@ import EditActivity from './screens/EditActivity'
               <Route exact path="/user" element={<UserBoard />} />
               <Route exact path="/employee" element={<EmployeeBoard />} />
               <Route exact path="/admin" element={<AdminBoard />} />
-
               <Route exact path="/schedule" element={<Schedule />} />
 
+              <Route exact path='/addActivity' element={<AddActivity />} />
+              <Route exact path='/editActivity/:id' element={<EditActivity />} />
+              <Route exact path="/activities" element={<ShowActivities />} />
+
+
             </Routes>
-            </div>
-            <Footer />
+          </div>
+          <Footer />
         </div>
       </BrowserRouter>
     </div>
