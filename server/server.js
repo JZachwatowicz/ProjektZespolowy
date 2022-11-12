@@ -30,7 +30,7 @@ app.use('/api/sche', require('./routes/schedule.routes.js'))
 
 //static Images Folder
 
-app.use('/Images', express.static('./Images'))
+app.use('/Images', express.static('./src/assets/images'))
 
 
 //port

@@ -1,6 +1,6 @@
-const dbConfig = require('../configs/db.config.js');
+const dbConfig = require('../configs/db.config.js')
 
-const { Sequelize } = require('sequelize');
+const { Sequelize } = require('sequelize')
 
 const sequelize = new Sequelize(
     dbConfig.DB,
@@ -35,120 +35,81 @@ db.sequelize = sequelize
 
 // connecting models
 
+
+db.user = require('./user.model.js')(sequelize, Sequelize)
+db.role = require('./role.model.js')(sequelize, Sequelize)
+db.address = require('./address.model.js')(sequelize, Sequelize)
+db.street = require('./street.model.js')(sequelize, Sequelize)
+db.city = require('./city.model.js')(sequelize, Sequelize)
+db.voivodeship = require('./voivodeship.model.js')(sequelize, Sequelize)
+db.country = require('./country.model.js')(sequelize, Sequelize)
+db.refreshToken = require("./refresh-token.model.js")(sequelize, Sequelize)
 db.activity = require('./activity.model.js')(sequelize, Sequelize);
-db.address = require('./address.model.js')(sequelize, Sequelize);
 db.article = require('./article.model.js')(sequelize, Sequelize);
-db.city = require('./city.model.js')(sequelize, Sequelize);
-db.country = require('./country.model.js')(sequelize, Sequelize);
 db.department_has_address = require('./department_has_address.model.js')(sequelize, Sequelize);
 db.department = require('./department.model.js')(sequelize, Sequelize);
 db.harmonogram = require('./harmonogram.model.js')(sequelize, Sequelize);
 db.item_type = require('./item_type.model.js')(sequelize, Sequelize);
 db.item = require('./item.model.js')(sequelize, Sequelize);
-db.refresh_token = require('./refresh_token.model.js')(sequelize, Sequelize);
 db.room_type = require('./room_type.model.js')(sequelize, Sequelize);
 db.room = require('./room.model.js')(sequelize, Sequelize);
 db.schedule = require('./schedule.model.js')(sequelize, Sequelize);
-db.street = require('./street.model.js')(sequelize, Sequelize);
 db.user_description = require('./user_description.model.js')(sequelize, Sequelize);
-db.role = require('./role.model.js')(sequelize, Sequelize);
-db.user = require('./user.model.js')(sequelize, Sequelize);
-db.voivodeship = require('./voivodeship.model.js')(sequelize, Sequelize);
+
 
 
 // creating associations
 
+
 db.role.hasMany(db.user, {
-    foreignKey: "role_id"
-});
+    foreignKey: 'role_id',
+})
 db.user.belongsTo(db.role, {
-    foreignKey: "role_id"
-});
+    foreignKey: 'role_id',
+})
 
-db.refresh_token.belongsTo(db.user, {
-    foreignKey: 'user_id',
-    targetKey: 'id'
-});
-db.user.hasOne(db.refresh_token, {
-    foreignKey: 'user_id',
-    targetKey: 'id'
-});
+db.refreshToken.belongsTo(db.user, {
+    foreignKey: 'user_id', targetKey: 'id'
+})
+db.user.hasOne(db.refreshToken, {
+    foreignKey: 'user_id', targetKey: 'id'
+})
 
-db.country.hasMany(db.voivodeship, {
-    foreignKey: {
-        name: 'country_id',
-        allowNull: false
-    },
-    as: 'voivodeship'
-});
-db.voivodeship.belongsTo(db.country, {
-    foreignKey: {
-        name: 'country_id',
-        allowNull: false
-    },
-    as: 'country'
-});
-
-db.voivodeship.hasMany(db.city, {
-    foreignKey: {
-        name: 'voivodeship_id',
-        allowNull: false
-    },
-    as: 'city'
-});
-db.city.belongsTo(db.voivodeship, {
-    foreignKey: {
-        name: 'voivodeship_id',
-        allowNull: false
-    },
-    as: 'voivodeship'
-});
-
-db.city.hasMany(db.street, {
-    foreignKey: {
-        name: 'city_id',
-        allowNull: false
-    },
-    as: 'street'
-});
-db.street.belongsTo(db.city, {
-    foreignKey: {
-        name: 'city_id',
-        allowNull: false
-    },
-    as: 'city'
-});
+db.address.hasMany(db.user, {
+    foreignKey: 'address_id',
+})
+db.user.belongsTo(db.address, {
+    foreignKey: 'address_id',
+})
 
 db.street.hasMany(db.address, {
-    foreignKey: {
-        name: 'street_id',
-        allowNull: false
-    },
-    as: 'address'
-});
+    foreignKey: 'street_id',
+})
 db.address.belongsTo(db.street, {
-    foreignKey: {
-        name: 'street_id',
-        allowNull: false
-    },
-    as: 'street'
-});
-/*
-db.address.hasMany(db.user, {
-    foreignKey: {
-        name: 'address_id',
-        allowNull: false
-    },
-    as: 'user'
-});
-db.user.belongsTo(db.address, {
-    foreignKey: {
-        name: 'address_id',
-        allowNull: false
-    },
-    as: 'address'
-});
-*/
+    foreignKey: 'street_id',
+})
+
+db.city.hasMany(db.street, {
+    foreignKey: 'city_id',
+})
+db.street.belongsTo(db.city, {
+    foreignKey: 'city_id',
+})
+
+db.voivodeship.hasMany(db.city, {
+    foreignKey: 'voivodeship_id',
+})
+db.city.belongsTo(db.voivodeship, {
+    foreignKey: 'voivodeship_id',
+})
+
+db.country.hasMany(db.voivodeship, {
+    foreignKey: 'country_id',
+})
+db.voivodeship.belongsTo(db.country, {
+    foreignKey: 'country_id',
+})
+
 db.address.hasMany(db.department_has_address, {
     foreignKey: {
         name: 'address_id',
@@ -351,19 +312,24 @@ db.schedule.belongsToMany(db.user, {
 function init_roles() {
     db.role.findAll().then(roles => {
         if (roles < 3) {
-            db.role.create({name: "user"});
-            db.role.create({name: "employee"});
-            db.role.create({name: "admin"});
+            db.role.create({ name: "user" });
+            db.role.create({ name: "employee" });
+            db.role.create({ name: "admin" });
         }
     });
 }
 
 
-db.sequelize.sync()
-    .then(() => {
-        console.log('yes re-sync done!');
-        init_roles();
-    })
+//alter:true force:false - nie wymazuj wszystkich danych ale stwórz na nowo tabele
+//force:true - wymaż wszystko i stwórz na nowo
+db.sequelize.sync({
+    alter: true,
+    force: false
+}).then(() => {
+    console.log('yes re-sync done!');
+    init_roles();
+})
 
-//db.ROLES = ["user", "employee", "admin"];
+db.ROLES = ["user", "employee", "admin"];
+
 module.exports = db
