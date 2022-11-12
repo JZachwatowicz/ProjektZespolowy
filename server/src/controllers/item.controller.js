@@ -2,7 +2,7 @@ const moment = require( "moment");
 const db = require("../models");
 const Item = db.item
 
-exports.allItems = async (req, res) => {
+exports.all_items = async (req, res) => {
     await Item.findAll({})
     .then((items)=>{
         res.status(200).send(items);
@@ -10,7 +10,7 @@ exports.allItems = async (req, res) => {
         res.status(500).send({ message: err.message });
     })
 };
-exports.deleteItem = async (req, res) => {
+exports.delete_item = async (req, res) => {
     await Item.destroy({where:{id: req.body.id}})
     .then(() => {
         res.status(200).send({message: "Successfully deleted item."});
@@ -19,7 +19,7 @@ exports.deleteItem = async (req, res) => {
     })
     
 };
-exports.addItem = async (req, res) => {
+exports.add_item = async (req, res) => {
     let data = {
         name: req.body.name,
         serial_number: req.body.serial_number,
@@ -46,7 +46,7 @@ exports.addItem = async (req, res) => {
     }
 
 }
-exports.editItem = async (req, res) => {
+exports.edit_item = async (req, res) => {
 
     await Item.findOne({
         where:{
@@ -86,7 +86,7 @@ exports.editItem = async (req, res) => {
      })
 
 }
-exports.getItem = async (req, res) => {
+exports.one_item = async (req, res) => {
 
     await Item.findOne({
         where:{

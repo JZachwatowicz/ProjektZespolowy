@@ -1,7 +1,7 @@
 const db = require("../models");
 const Activity = db.activity
 
-exports.allActivities = async (req, res) => {
+exports.all_activities = async (req, res) => {
 
     await Activity.findAll({})
     .then((activities)=>{
@@ -11,7 +11,7 @@ exports.allActivities = async (req, res) => {
     })
     
 };
-exports.deleteActivity = async (req, res) => {
+exports.delete_activity = async (req, res) => {
 
      await Activity.destroy({where:{id: req.body.id}})
     .then(() => {
@@ -21,7 +21,7 @@ exports.deleteActivity = async (req, res) => {
     })
     
 };
-exports.addActivity = async (req, res) => {
+exports.add_activity = async (req, res) => {
     
     let data = {
         name: req.body.name,
@@ -43,7 +43,7 @@ exports.addActivity = async (req, res) => {
         })
     }
 }
-exports.editActivity = async (req, res) => {
+exports.edit_activity = async (req, res) => {
 
     await Activity.findOne({
         where:{
@@ -76,7 +76,7 @@ exports.editActivity = async (req, res) => {
      })
 
 }
-exports.getActivity = async (req, res) => {
+exports.one_activity = async (req, res) => {
 
     await Activity.findOne({
         where:{

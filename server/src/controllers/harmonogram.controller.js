@@ -60,7 +60,7 @@ exports.one_harmonogram = (req, res) => {
     });
 };
 
-exports.update_harmonogram = (req, res) => {
+exports.edit_harmonogram = (req, res) => {
     Harmonogram.findOne({
         where: {id: req.params.id}
     }).then(harmonogram => {

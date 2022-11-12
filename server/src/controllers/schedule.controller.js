@@ -48,7 +48,7 @@ exports.one_schedule = (req, res) => {
     });
 };
 
-exports.update_schedule = (req, res) => {
+exports.edit_schedule = (req, res) => {
     User.findOne({
         where: { id: req.body.user_id }
     }).then(user => {

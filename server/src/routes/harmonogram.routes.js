@@ -1,4 +1,4 @@
-const { authJwt } = require("../middlewares");
+const { authJwt } = require("../middleware");
 const controller = require("../controllers/harmonogram.controller");
 const router = require('express').Router()
 
@@ -11,32 +11,38 @@ router.use((req, res, next) => {
     next();
 });
 
-router.get('/',
+router.get(
+    '/get',
     [authJwt.verifyToken],
     controller.all_harmonograms
 );
+
 router.post(
-    '/harmonogram',
+    '/add',
     [authJwt.verifyToken],
     controller.add_harmonogram
 );
+
 router.get(
-    '/harmonogram/:id',
+    '/get/:id',
     [authJwt.verifyToken],
     controller.one_harmonogram
 );
+
 router.put(
-    '/harmonogram/:id',
+    '/edit/:id',
     [authJwt.verifyToken],
-    controller.update_harmonogram
+    controller.edit_harmonogram
 );
+
 router.delete(
-    '/harmonogram/:id',
+    '/delete/:id',
     [authJwt.verifyToken],
     controller.delete_harmonogram
 );
+
 router.patch(
-    '/harmonogram/:id',
+    '/accept/:id',
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.accept_harmonogram
 );

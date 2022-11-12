@@ -1,5 +1,5 @@
 const { authJwt } = require("../middleware");
-const controller = require("../controllers/article.controller");
+const controller = require("../controllers/room_type.controller.js");
 const router = require('express').Router()
 
 
@@ -12,36 +12,28 @@ router.use((req, res, next) => {
 });
 
 router.get(
-    '/',
-    controller.home_articles
-);
-
-router.get(
-    '/get',
-    controller.all_articles
-);
-
-router.post(
     '/get',
     [authJwt.verifyToken, authJwt.isEmployee],
-    controller.add_article
-);
+    controller.all_room_types);
 
-router.get(
-    '/get/:id',
-    controller.one_article
-);
+router.post(
+    '/add',
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.add_room_type);
 
 router.put(
     '/edit/:id',
-    [authJwt.verifyToken, authJwt.isEmployee],
-    controller.edit_article
-);
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.edit_room_type);
 
 router.delete(
     '/delete/:id',
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.delete_room_type);
+
+router.get(
+    '/get/:id',
     [authJwt.verifyToken, authJwt.isEmployee],
-    controller.delete_article
-);
+    controller.one_room_type);
 
 module.exports = router

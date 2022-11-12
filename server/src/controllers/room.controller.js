@@ -2,7 +2,7 @@ const db = require("../models");
 const Room = db.room
 const Room_type = db.room_type
 
-exports.allRooms = async (req, res) => {
+exports.all_rooms = async (req, res) => {
     await Room.findAll({})
     .then((rooms)=>{
         res.status(200).send(rooms);
@@ -10,8 +10,8 @@ exports.allRooms = async (req, res) => {
         res.status(500).send({ message: err.message });
     })
 };
-exports.deleteRoom = async (req, res) => {
-    await Room.destroy({where:{id: req.body.id}})
+exports.delete_room = async (req, res) => {
+    await Room.destroy({where:{id: req.params.id}})
     .then(() => {
         res.status(200).send({message: "Successfully deleted room."});
     }).catch((err) => {
@@ -19,7 +19,7 @@ exports.deleteRoom = async (req, res) => {
     })
     
 };
-exports.addRoom = async (req, res) => {
+exports.add_room = async (req, res) => {
     let data = {
         name: req.body.name,
         capacity: req.body.capacity,
@@ -44,11 +44,11 @@ exports.addRoom = async (req, res) => {
     }
 
 }
-exports.editRoom = async (req, res) => {
+exports.edit_room = async (req, res) => {
 
     await Room.findOne({
         where:{
-          id: req.body.id
+          id: req.params.id
         }
      }).then(async (room) => {
         let data = {
@@ -82,7 +82,7 @@ exports.editRoom = async (req, res) => {
      })
 
 }
-exports.getRoom = async (req, res) => {
+exports.one_room = async (req, res) => {
 
     await Room.findOne({
         where:{
@@ -93,13 +93,4 @@ exports.getRoom = async (req, res) => {
      }).catch((err) => {
         res.status(500).send({ message: err.message });
      })
-
-}
-exports.getRoom_types = async (req, res) => {
-    await Room_type.findAll({})
-    .then((types)=>{
-        res.status(200).send(types);
-    }).catch((err) => {
-        res.status(500).send({ message: err.message });
-    })
 }

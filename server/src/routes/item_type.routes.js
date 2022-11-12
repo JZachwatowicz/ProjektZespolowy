@@ -1,7 +1,6 @@
 const { authJwt } = require("../middleware");
-const controller = require("../controllers/article.controller");
+const controller = require("../controllers/item_type.controller.js");
 const router = require('express').Router()
-
 
 router.use((req, res, next) => {
     res.header(
@@ -12,36 +11,33 @@ router.use((req, res, next) => {
 });
 
 router.get(
-    '/',
-    controller.home_articles
-);
-
-router.get(
     '/get',
-    controller.all_articles
+    [authJwt.verifyToken, authJwt.isEmployee],
+    controller.all_item_types
 );
 
 router.post(
-    '/get',
-    [authJwt.verifyToken, authJwt.isEmployee],
-    controller.add_article
+    '/add',
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.add_item_type
+);
+
+router.put(
+    '/edit',
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.edit_item_type
+);
+
+router.delete(
+    '/delete',
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.delete_item_type
 );
 
 router.get(
     '/get/:id',
-    controller.one_article
-);
-
-router.put(
-    '/edit/:id',
     [authJwt.verifyToken, authJwt.isEmployee],
-    controller.edit_article
-);
-
-router.delete(
-    '/delete/:id',
-    [authJwt.verifyToken, authJwt.isEmployee],
-    controller.delete_article
+    controller.one_item_type
 );
 
 module.exports = router

@@ -1,5 +1,5 @@
-//const { authJwt } = require("../middleware");
-const ActvityController = require("../controllers/activity.controller.js");
+const { authJwt } = require("../middleware");
+const controller = require("../controllers/activity.controller.js");
 
 const router = require('express').Router()
 
@@ -12,9 +12,34 @@ router.use((req, res, next) => {
     next();
 });
 
-router.get("/allActivities", ActvityController.allActivities);
-router.post('/addActivity', ActvityController.addActivity);
-router.put('/editActivity', ActvityController.editActivity);
-router.delete("/deleteActivity", ActvityController.deleteActivity)
-router.get("/getActivity/:id", ActvityController.getActivity)
+router.get(
+    '/get',
+    [authJwt.verifyToken],
+    controller.all_activities
+);
+
+router.post(
+    '/add',
+    [authJwt.verifyToken, authJwt.isEmployee],
+    controller.add_activity
+);
+
+router.put(
+    '/edit',
+    [authJwt.verifyToken, authJwt.isEmployee],
+    controller.edit_activity
+);
+
+router.delete(
+    '/delete',
+    [authJwt.verifyToken, authJwt.isEmployee],
+    controller.delete_activity
+);
+
+router.get(
+    '/get/:id',
+    [authJwt.verifyToken],
+    controller.one_activity
+);
+
 module.exports = router

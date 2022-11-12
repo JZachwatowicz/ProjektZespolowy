@@ -1,7 +1,7 @@
 const db = require("../models");
 const Item_type = db.item_type
 
-exports.getItem_types = async (req, res) => {
+exports.all_item_types = async (req, res) => {
     await Item_type.findAll({})
     .then((types)=>{
         res.status(200).send(types);
@@ -9,7 +9,7 @@ exports.getItem_types = async (req, res) => {
         res.status(500).send({ message: err.message });
     })
 }
-exports.addItem_type = async (req, res) => {
+exports.add_item_type = async (req, res) => {
     let data = {
         name: req.body.name
     }
@@ -26,7 +26,7 @@ exports.addItem_type = async (req, res) => {
         })
     }
 }
-exports.deleteItem_type = async (req, res) => {
+exports.delete_item_type = async (req, res) => {
     await Item_type.destroy({where:{id: req.body.id}})
     .then(() => {
         res.status(200).send({message: "Successfully deleted item type."});
@@ -35,7 +35,7 @@ exports.deleteItem_type = async (req, res) => {
     })
     
 };
-exports.editItem_type = async (req, res) => {
+exports.edit_item_type = async (req, res) => {
 
     await Item_type.findOne({
         where:{
@@ -63,7 +63,7 @@ exports.editItem_type = async (req, res) => {
      })
 
 }
-exports.getItem_type = async (req, res) => {
+exports.one_item_type = async (req, res) => {
 
     await Item_type.findOne({
         where:{

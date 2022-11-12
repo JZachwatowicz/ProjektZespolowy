@@ -26,7 +26,7 @@ exports.all_articles = (req, res) => {
     });
 };
 
-exports.post_article = (req, res) => {
+exports.add_article = (req, res) => {
     Article.create({
         title: req.body.title,
         content: req.body.content,
@@ -51,7 +51,7 @@ exports.one_article = (req, res) => {
     });
 };
 
-exports.update_article = (req, res) => {
+exports.edit_article = (req, res) => {
     Article.findOne({
         where: {id: req.params.id}
     }).then(article => {
