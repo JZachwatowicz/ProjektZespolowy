@@ -2,11 +2,7 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { Container, Form, Button } from 'react-bootstrap'
 
-
-
-const AddProduct = ({ history }) => {
-
-
+const add_article = ({history}) => {
     const [title, setTitle] = useState('')
     const [price, setPrice] = useState(0)
     const [description, setDescription] = useState('')
@@ -17,17 +13,8 @@ const AddProduct = ({ history }) => {
 
         e.preventDefault()
 
-        // const data = {
-        //     title: title,
-        //     price: price,
-        //     description: description,
-        //     published: published
-        // }
-
-
         const formData = new FormData()
 
-        formData.append('image', image)
         formData.append('title', title)
         formData.append('price', price)
         formData.append('description', description)
@@ -103,4 +90,4 @@ const AddProduct = ({ history }) => {
     )
 }
 
-export default AddProduct
+export default add_article

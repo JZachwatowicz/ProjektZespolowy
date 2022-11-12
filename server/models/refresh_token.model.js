@@ -6,29 +6,30 @@ module.exports = (sequelize, Sequelize) => {
         token: {
             type: Sequelize.STRING,
         },
-        expiryDate: {
+        expiry_date: {
             type: Sequelize.DATE,
         },
     });
 
     RefreshToken.createToken = async function (user) {
-        let expiredAt = new Date();
+        console.log("createToken function");
+        let expired_at = new Date();
 
-        expiredAt.setSeconds(expiredAt.getSeconds() + config.jwtRefreshExpiration);
+        expired_at.setSeconds(expired_at.getSeconds() + config.jwtRefreshExpiration);
 
         let _token = uuidv4();
 
-        let refreshToken = await this.create({
+        let refresh_token = await this.create({
             token: _token,
-            userId: user.id,
-            expiryDate: expiredAt.getTime(),
+            user_id: user.id,
+            expiry_date: expired_at.getTime(),
         });
 
-        return refreshToken.token;
+        return refresh_token.token;
     };
 
     RefreshToken.verifyExpiration = (token) => {
-        return token.expiryDate.getTime() < new Date().getTime();
+        return token.expiry_date.getTime() < new Date().getTime();
     };
 
     return RefreshToken;
