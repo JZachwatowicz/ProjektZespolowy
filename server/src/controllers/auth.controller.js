@@ -7,7 +7,7 @@ var bcrypt = require("bcryptjs");
 
 exports.signup = async (req, res) => {
 
-  const {username, email, password, firstName, lastName, pesel, contactNumber, countryName, countryCode, voivodeshipName, cityName, streetName, buildingNumber, apartmentNumber} = req.body
+  const { username, email, password, firstName, lastName, pesel, contactNumber, countryName, countryCode, voivodeshipName, cityName, streetName, buildingNumber, apartmentNumber } = req.body
 
   const [country, isCountryCreated] = await Country.findOrCreate({
     where: {

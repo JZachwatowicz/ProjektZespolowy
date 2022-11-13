@@ -14,23 +14,21 @@ var corsOptions = {
 // middleware
 
 app.use(cors(corsOptions));
-
-app.use(express.json())
-
-app.use(express.urlencoded({ extended: true }))
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 
 // routers
-app.use('/api/auth', require('./routes/auth.routes.js'))
-app.use('/api', require('./routes/user.routes.js'))
-app.use('/api/art', require('./routes/article.routes.js'))
-app.use('/api/rooms', require('./routes/room.routes.js'))
-app.use('/api/roomTypes', require('./routes/room_type.routes.js'))
-app.use('/api/items', require('./routes/item.routes.js'))
-app.use('/api/itemTypes', require('./routes/item_type.routes.js'))
-app.use('/api/activities', require('./routes/activity.routes.js'))
-app.use('/api/harmo', require('./routes/harmonogram.routes.js'))
-app.use('/api/sche', require('./routes/schedule.routes.js'))
+app.use('/api/auth', require('./src/routes/auth.routes.js'))
+app.use('/api/test', require('./src/routes/user.routes.js'))
+app.use('/api/article', require('./src/routes/article.routes.js'))
+app.use('/api/room', require('./src/routes/room.routes.js'))
+app.use('/api/room_type', require('./src/routes/room_type.routes.js'))
+app.use('/api/item', require('./src/routes/item.routes.js'))
+app.use('/api/item_type', require('./src/routes/item_type.routes.js'))
+app.use('/api/activity', require('./src/routes/activity.routes.js'))
+app.use('/api/harmogram', require('./src/routes/harmonogram.routes.js'))
+app.use('/api/schedule', require('./src/routes/schedule.routes.js'))
 
 //static Images Folder
 

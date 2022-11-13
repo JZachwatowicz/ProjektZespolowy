@@ -1,5 +1,5 @@
 const { authJwt } = require("../middleware");
-const controller = require("../controllers/schedule.controller");
+const controller = require("../controllers/room.controller.js");
 const router = require('express').Router()
 
 
@@ -13,32 +13,32 @@ router.use((req, res, next) => {
 
 router.get(
     '/get',
-    [authJwt.verifyToken],
-    controller.all_schedules
+    [authJwt.verifyToken, authJwt.isEmployee],
+    controller.all_rooms
 );
 
 router.post(
     '/add',
     [authJwt.verifyToken, authJwt.isEmployee],
-    controller.add_schedule
-);
-
-router.get(
-    '/get/:id',
-    [authJwt.verifyToken],
-    controller.one_schedule
+    controller.add_room
 );
 
 router.put(
     '/edit/:id',
     [authJwt.verifyToken, authJwt.isEmployee],
-    controller.edit_schedule
+    controller.edit_room
 );
 
 router.delete(
     '/delete/:id',
     [authJwt.verifyToken, authJwt.isEmployee],
-    controller.delete_schedule
+    controller.delete_room
+);
+
+router.get(
+    '/get/:id',
+    [authJwt.verifyToken, authJwt.isEmployee],
+    controller.one_room
 );
 
 module.exports = router

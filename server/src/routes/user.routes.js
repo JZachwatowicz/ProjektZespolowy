@@ -1,6 +1,5 @@
-const { authJwt } = require("../middlewares");
+const { authJwt } = require("../middleware");
 const controller = require("../controllers/user.controller");
-
 const router = require('express').Router()
 
 
@@ -12,22 +11,22 @@ router.use((req, res, next) => {
     next();
 });
 
-router.get("/test/all", controller.allAccess);
+router.get("/all", controller.allAccess);
 
 router.get(
-    "/test/user",
+    "/user",
     [authJwt.verifyToken],
     controller.userBoard
 );
 
 router.get(
-    "/test/employee",
+    "/employee",
     [authJwt.verifyToken, authJwt.isEmployee],
     controller.employeeBoard
 );
 
 router.get(
-    "/test/admin",
+    "/admin",
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.adminBoard
 );
