@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // routers
 app.use('/api/auth', require('./src/routes/auth.routes.js'))
-app.use('/api', require('./src/routes/user.routes.js'))
+app.use('/api/test', require('./src/routes/user.routes.js'))
 app.use('/api/article', require('./src/routes/article.routes.js'))
 app.use('/api/room', require('./src/routes/room.routes.js'))
 app.use('/api/room_type', require('./src/routes/room_type.routes.js'))

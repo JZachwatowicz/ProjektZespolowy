@@ -22,7 +22,7 @@ router.get(
 );
 
 router.post(
-    '/get',
+    '/add',
     [authJwt.verifyToken, authJwt.isEmployee],
     controller.add_article
 );
