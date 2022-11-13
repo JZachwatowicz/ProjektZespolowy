@@ -1,19 +1,17 @@
-const { harmonogram } = require("../models");
 const db = require("../models");
-const { refreshToken } = require("./auth.controller");
-const { user: User, harmonogram: Harmonogram } = db;
+const { harmonogram: Harmonogram } = db;
 
 const Op = db.Sequelize.Op;
 
-exports.all_harmonograms = (req, res) => {
+exports.all_harmonograms = async (req, res) => {
     var begin_date = req.query.begin_date ? {begin_date: {[Op.gte]: req.query.begin_date}}: {};
     var end_date = req.query.end_date ? {end_date: {[Op.lte]: req.query.end_date}}: {};
     var user_id = req.query.user_id ? {user_id: req.query.user_id}: {};
     var admin_consent = req.query.admin_consent ? {admin_consent: req.query.admin_consent}: {};
-    //var room_id = req.query.room_id ? {room_id: req.query.room_id}: {};
-    //var item_id = req.query.item_id ? {item_id: req.query.item_id}: {};
+    var room_id = req.query.room_id ? {room_id: req.query.room_id}: {};
+    var item_id = req.query.item_id ? {item_id: req.query.item_id}: {};
 
-    var condition = begin_date + end_date + user_id + admin_consent;// + room_id + item_id;
+    var condition = begin_date + end_date + user_id + admin_consent + room_id + item_id;
     if(condition != ""){
         condition = {where: {
             [Op.and]: [
@@ -21,15 +19,15 @@ exports.all_harmonograms = (req, res) => {
                 end_date,
                 user_id,
                 admin_consent,
-                //room_id,
-                //item_id
+                room_id,
+                item_id
             ]
         }};
     } else {
         condition = {};
     }
 
-    Harmonogram.findAll(condition)
+    await Harmonogram.findAll(condition)
     .then(harmonograms => {
         res.status(200).send(harmonograms)
     }).catch(err => {
@@ -37,11 +35,14 @@ exports.all_harmonograms = (req, res) => {
     });
 };
 
-exports.add_harmonogram = (req, res) => {
-    Harmonogram.create({
+exports.add_harmonogram = async (req, res) => {
+    await Harmonogram.create({
         begin_date: req.body.begin_date,
         end_date: req.body.end_date,
-        user_id: req.body.user_id
+        user_id: req.body.user_id,
+        room_id: req.body.room_id,
+        item_id: req.body.item_id
+
     }).then(harmonogram => {
         res.send({ message: "Harmonogram added." });
     }).catch(err => {
@@ -50,8 +51,8 @@ exports.add_harmonogram = (req, res) => {
     });
 };
 
-exports.one_harmonogram = (req, res) => {
-    Harmonogram.findOne({
+exports.one_harmonogram = async (req, res) => {
+    await Harmonogram.findOne({
         where: {id: req.params.id}
     }).then(harmonogram => {
         res.status(200).send(harmonogram);
@@ -60,8 +61,8 @@ exports.one_harmonogram = (req, res) => {
     });
 };
 
-exports.edit_harmonogram = (req, res) => {
-    Harmonogram.findOne({
+exports.edit_harmonogram = async (req, res) => {
+    await Harmonogram.findOne({
         where: {id: req.params.id}
     }).then(harmonogram => {
         console.log(harmonogram);
@@ -78,8 +79,8 @@ exports.edit_harmonogram = (req, res) => {
     });
 };
 
-exports.delete_harmonogram = (req, res) => {
-    Harmonogram.findOne({
+exports.delete_harmonogram = async (req, res) => {
+    await Harmonogram.findOne({
         where: {id: req.params.id}
     }).then(harmonogram => {
         harmonogram.destroy();
@@ -89,8 +90,8 @@ exports.delete_harmonogram = (req, res) => {
     });
 }
 
-exports.accept_harmonogram = (req, res) => {
-    Harmonogram.findOne({
+exports.accept_harmonogram = async (req, res) => {
+    await Harmonogram.findOne({
         where: {id: req.params.id}
     }).then(harmonogram => {
         harmonogram.set({

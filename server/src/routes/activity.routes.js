@@ -25,13 +25,13 @@ router.post(
 );
 
 router.put(
-    '/edit',
+    '/edit/:id',
     [authJwt.verifyToken, authJwt.isEmployee],
     controller.edit_activity
 );
 
 router.delete(
-    '/delete',
+    '/delete/:id',
     [authJwt.verifyToken, authJwt.isEmployee],
     controller.delete_activity
 );

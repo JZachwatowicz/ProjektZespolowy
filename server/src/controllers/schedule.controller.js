@@ -1,20 +1,18 @@
-const { schedule, harmonogram } = require("../models");
 const db = require("../models");
-const { refreshToken } = require("./auth.controller");
 const { user: User, harmonogram: Harmonogram, schedule: Schedule } = db;
 
 const Op = db.Sequelize.Op;
 
-exports.all_schedules = (req, res) => {
-    Schedule.findAll({include: "users"}).then(schedules => {
+exports.all_schedules = async (req, res) => {
+    await Schedule.findAll({include: "users"}).then(schedules => {
         res.status(200).send(schedules)
     }).catch(err => {
         res.status(500).send({ message: err.message });
     });
 };
 
-exports.add_schedule = (req, res) => {
-    Harmonogram.findOne({
+exports.add_schedule = async (req, res) => {
+    await Harmonogram.findOne({
         where: {id: req.body.harmonogram_id}
     }).then(harmonogram => {
         if (harmonogram.admin_consent) {
@@ -37,8 +35,8 @@ exports.add_schedule = (req, res) => {
 
 };
 
-exports.one_schedule = (req, res) => {
-    Schedule.findOne({
+exports.one_schedule = async (req, res) => {
+    await Schedule.findOne({
         where: { id: req.params.id },
         include: "users"
     }).then(schedule => {
@@ -48,8 +46,8 @@ exports.one_schedule = (req, res) => {
     });
 };
 
-exports.edit_schedule = (req, res) => {
-    User.findOne({
+exports.edit_schedule = async (req, res) => {
+    await User.findOne({
         where: { id: req.body.user_id }
     }).then(user => {
         Schedule.findOne({
@@ -66,8 +64,8 @@ exports.edit_schedule = (req, res) => {
     });
 };
 
-exports.delete_schedule = (req, res) => {
-    Schedule.findOne({
+exports.delete_schedule = async (req, res) => {
+    await Schedule.findOne({
         where: { id: req.params.id }
     }).then(schedule => {
         schedule.destroy();
