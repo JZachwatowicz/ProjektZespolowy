@@ -8,6 +8,8 @@ import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import { useStateContext } from '../services/ContextProvider';
 import AuthService from '../services/auth.service';
 
+import AccessabilitySettings from './AccessabilitySettings';
+
 const Sidebar = () => {
 
   const [showEmployeeBoard, setShowEmployeeBoard] = useState(false);
@@ -67,7 +69,7 @@ const Sidebar = () => {
     handleResize();
 
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  });
 
   useEffect(() => {
     if (screenSize <= 900) {
@@ -226,6 +228,7 @@ const Sidebar = () => {
               </NavLink> : null}
             </div> : null}
           </>
+          <AccessabilitySettings />
         </div>
       ) :
 
