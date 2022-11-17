@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { FiShoppingBag } from 'react-icons/fi';
 import { Link, NavLink } from 'react-router-dom';
@@ -12,9 +12,7 @@ import AccessabilitySettings from './AccessabilitySettings';
 
 const Sidebar = () => {
 
-  const [showEmployeeBoard, setShowEmployeeBoard] = useState(false);
-  const [showAdminBoard, setShowAdminBoard] = useState(false);
-  const [currentUser, setCurrentUser] = useState(undefined);
+  const { currentColor, activeMenu, setActiveMenu, screenSize, setScreenSize, showEmployeeBoard, setShowEmployeeBoard, showAdminBoard, setShowAdminBoard,currentUser, setCurrentUser } = useStateContext();
 
   useEffect(() => {
     const user = AuthService.getCurrentUser();
@@ -33,7 +31,6 @@ const Sidebar = () => {
   };
 
 
-  const { currentColor, activeMenu, setActiveMenu, screenSize, setScreenSize } = useStateContext();
 
   const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
     <TooltipComponent content={title} position="BottomCenter">

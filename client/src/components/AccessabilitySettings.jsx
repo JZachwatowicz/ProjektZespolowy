@@ -31,7 +31,13 @@ const themeColors = [
 ];
 
 const AccessabilitySettings = () => {
-    const { setColor, setMode, currentMode, currentColor, setFontSize } = useStateContext();
+
+    const { setColor, setMode, currentMode, setFontSize , fontSize,currentColor } = useStateContext();
+
+    const handleFontSize = (e) => { 
+        // if ((fontSize + e < 24) && (fontSize + e > 16)) 
+        setFontSize(prev => prev + e)
+    }
 
     return (<div>
         <div className="flex-col border-t-2 border-color p-4 ml-4 dark:text-gray-200">
@@ -61,8 +67,8 @@ const AccessabilitySettings = () => {
                 </div>
             </div>
             <div className='flex font-bold justify-center gap-8 mt-2'>
-                <button onClick={() => setFontSize(prev => prev + 0.2)}>A+</button>
-                <button onClick={() => setFontSize(prev => prev - 0.2)}>A-</button>
+                <button onClick={() => handleFontSize(2)}>A+</button>
+                <button onClick={() => handleFontSize(-2)}>A-</button>
             </div>
         </div>
     </div>

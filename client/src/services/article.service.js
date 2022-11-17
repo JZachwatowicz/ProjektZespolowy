@@ -1,5 +1,5 @@
 import axios from "axios";
-import authHeader from "./authHeader";
+import authHeader from "./auth-header";
 const API_URL = "http://localhost:5000/api/article/";
 
 const get_home_articles = () => {
@@ -23,7 +23,7 @@ const update_article = (id, data) => {
 }
 
 const delete_article = (id) => {
-    return axios.put(API_URL + "delete/" + id, { headers: authHeader() });
+    return axios.delete(API_URL + "delete/" + id, { headers: authHeader() });
 }
 /*
 const get_user_articles = (author) => {

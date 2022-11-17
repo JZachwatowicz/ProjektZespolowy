@@ -4,7 +4,7 @@ import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
 
-import Select from 'react-select';
+// import Select from 'react-select';
 
 import { Country, State, City } from 'country-state-city';
 

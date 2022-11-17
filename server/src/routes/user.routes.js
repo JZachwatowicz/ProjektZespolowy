@@ -12,6 +12,8 @@ router.use((req, res, next) => {
 });
 
 router.get("/all", controller.allAccess);
+router.get("/all/get", controller.all_users);
+router.get("/all/get/:id", controller.one_user);
 
 router.get(
     "/user",

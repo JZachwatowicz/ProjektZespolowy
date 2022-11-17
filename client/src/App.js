@@ -9,12 +9,11 @@ import { useStateContext } from './services/ContextProvider';
 import AddActivity from './components/AddActivity'
 import EditActivity from './components/EditActivity'
 import ShowActivities from './components/ShowActivities'
-import AccessabilitySettings from './components/AccessabilitySettings';
 
 
 const App = () => {
 
-  const { setCurrentColor, setCurrentMode, currentMode, activeMenu, themeSettings, fontSize } = useStateContext();
+  const { setCurrentColor, setCurrentMode, currentMode, activeMenu} = useStateContext();
 
   useEffect(() => {
     const currentThemeColor = localStorage.getItem('colorMode');
@@ -25,11 +24,10 @@ const App = () => {
     }
   }, []);
 
-
   return (
     <div className={currentMode === 'Dark' ? 'dark' : ''}>
       <BrowserRouter>
-        <div className="flex-1 relative dark:bg-main-dark-bg dark:text-gray-200" style={{fontSize: fontSize + 'rem'}}>
+        <div className="flex-1 relative dark:bg-main-dark-bg dark:text-gray-200" >
           {activeMenu ? (
             <div className="w-72 fixed sidebar dark:bg-secondary-dark-bg bg-white ">
               <Sidebar />
