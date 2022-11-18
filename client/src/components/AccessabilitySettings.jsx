@@ -66,7 +66,7 @@ const AccessabilitySettings = () => {
 
                 </div>
             </div>
-            <div className='flex font-bold justify-center gap-8 mt-2'>
+            <div className='flex font-bold justify-center gap-8 mt-2 text-2xl'>
                 <button onClick={() => handleFontSize(2)}>A+</button>
                 <button onClick={() => handleFontSize(-2)}>A-</button>
             </div>
