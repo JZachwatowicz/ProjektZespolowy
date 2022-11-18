@@ -115,7 +115,7 @@ const AddActivity = ({ history }) => {
                   </div>
                 )}
           <div className={`p-11 shadow-2xl mb-20  ${screenSize <= 800 ? 'w-full' : 'w-10/12'}`}>
-            <h1 className="mb-8 text-center text-3xl text-stone-800 font-semibold">Dodaj Aktywność</h1>
+            <h1 className="mb-8 text-center text-3xl  font-semibold">Dodaj Aktywność</h1>
             <hr />
             
               <Form onSubmit={addActivityHandler} ref={form} className="pt-4 flex-2 text-center">
