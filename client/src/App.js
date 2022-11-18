@@ -13,22 +13,21 @@ import ShowActivities from './components/ShowActivities'
 
 const App = () => {
 
-  const { setCurrentColor, setCurrentMode, currentMode, activeMenu } = useStateContext();
+  const { setCurrentColor, setCurrentMode, currentMode, activeMenu} = useStateContext();
 
-  // useEffect(() => {
-  //   const currentThemeColor = localStorage.getItem('colorMode');
-  //   const currentThemeMode = localStorage.getItem('themeMode');
-  //   if (currentThemeColor && currentThemeMode) {
-  //     setCurrentColor(currentThemeColor);
-  //     setCurrentMode(currentThemeMode);
-  //   }
-  // }, []);
-
+  useEffect(() => {
+    const currentThemeColor = localStorage.getItem('colorMode');
+    const currentThemeMode = localStorage.getItem('themeMode');
+    if (currentThemeColor && currentThemeMode) {
+      setCurrentColor(currentThemeColor);
+      setCurrentMode(currentThemeMode);
+    }
+  }, []);
 
   return (
     <div className={currentMode === 'Dark' ? 'dark' : ''}>
       <BrowserRouter>
-        <div className="flex-1 relative dark:bg-main-dark-bg">
+        <div className="flex-1 relative dark:bg-main-dark-bg dark:text-gray-200" >
           {activeMenu ? (
             <div className="w-72 fixed sidebar dark:bg-secondary-dark-bg bg-white ">
               <Sidebar />
@@ -72,8 +71,9 @@ const App = () => {
 
 
             </Routes>
+            <Footer />
+
           </div>
-          <Footer />
         </div>
       </BrowserRouter>
     </div>
