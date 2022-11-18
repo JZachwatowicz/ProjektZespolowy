@@ -6,9 +6,9 @@ import './App.css'
 
 import { useStateContext } from './services/ContextProvider';
 
-import AddActivity from './components/AddActivity'
-import EditActivity from './components/EditActivity'
-import ShowActivities from './components/ShowActivities'
+import AddActivity from './pages/AddActivity'
+import EditActivity from './pages/EditActivity'
+import ShowActivities from './pages/ShowActivities'
 
 
 const App = () => {
@@ -65,8 +65,8 @@ const App = () => {
               <Route exact path="/admin" element={<AdminBoard />} />
               <Route exact path="/schedule" element={<Schedule />} />
 
-              <Route exact path='/addActivity' element={<AddActivity />} />
-              <Route exact path='/editActivity/:id' element={<EditActivity />} />
+              <Route exact path='/activities/add' element={<AddActivity />} />
+              <Route exact path='/activities/edit/:id' element={<EditActivity />} />
               <Route exact path="/activities" element={<ShowActivities />} />
 
 

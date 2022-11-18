@@ -15,13 +15,13 @@ const addActivity = (name, description) => {
     }, { headers: authHeader() });
 };
 const editActivity = (id, name, description) => {
-    return axios.put(API_URL + "edit" + id, {
+    return axios.put(API_URL + "edit/" + id, {
         name: name,
         description: description,
     }, { headers: authHeader() });
 };
 const getActivity = (id) => {
-    return axios.get(API_URL + "getActivity/" + id, { headers: authHeader() });
+    return axios.get(API_URL + "get/" + id, { headers: authHeader() });
 };
 
 const ActivityService = {

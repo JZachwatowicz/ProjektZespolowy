@@ -185,7 +185,7 @@ const Sidebar = () => {
                 })}
                 className={({ isActive }) => (isActive ? activeLink : normalLink)}>
                 {<FiShoppingBag />}
-                <span className="capitalize ">Activity</span>
+                <span className="capitalize ">Aktywności</span>
               </NavLink>
             </div>
             {currentUser ? 
