@@ -1,42 +1,83 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.css";
+import React, { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Sidebar, Footer, Navbar } from './components';
+import { Home, Login, Register, Profile, Schedule, AdminBoard, EmployeeBoard, UserBoard, About, Contact, News } from './pages';
+import './App.css'
 
-import Navbar from './screens/Navbar'
-import AddActivity from './components/add_activity.component'
-import ShowActivities from './components/show_activities.component'
-import EditActivity from './components/edit_activity.component'
+import { useStateContext } from './services/ContextProvider';
 
-import Login from "./components/loginComponent";
-import Register from "./components/registerComponent";
-import Home from "./components/homeComponent";
-import Profile from "./components/profileComponent";
-import BoardUser from "./components/userBoardComponent";
-import BoardEmployee from "./components/employeeBoardComponent";
-import BoardAdmin from "./components/adminBoardComponent";
+import AddActivity from './pages/AddActivity'
+import EditActivity from './pages/EditActivity'
+import ShowActivities from './pages/ShowActivities'
 
 
 const App = () => {
 
-  return (
-    <Router>
-      <Navbar />
-      <Switch>
-        <Route exact path={"/"} component={Home} />
-        <Route exact path={"/home"} component={Home} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/register" component={Register} />
-        <Route exact path="/profile" component={Profile} />
-        <Route exact path="/user" component={BoardUser} />
-        <Route exact path="/employee" component={BoardEmployee} />
-        <Route exact path="/admin" component={BoardAdmin} />
-        <Route exact path='/addActivity' component={AddActivity} />
-        <Route exact path='/editActivity/:id' component={EditActivity} />
-        <Route exact path='/activities' component={ShowActivities} />
-      </Switch>
-    </Router>
-  );
-};
+  const { setCurrentColor, setCurrentMode, currentMode, activeMenu } = useStateContext();
 
-export default App;
+  // useEffect(() => {
+  //   const currentThemeColor = localStorage.getItem('colorMode');
+  //   const currentThemeMode = localStorage.getItem('themeMode');
+  //   if (currentThemeColor && currentThemeMode) {
+  //     setCurrentColor(currentThemeColor);
+  //     setCurrentMode(currentThemeMode);
+  //   }
+  // }, []);
+
+
+  return (
+    <div className={currentMode === 'Dark' ? 'dark' : ''}>
+      <BrowserRouter>
+        <div className="flex-1 relative dark:bg-main-dark-bg">
+          {activeMenu ? (
+            <div className="w-72 fixed sidebar dark:bg-secondary-dark-bg bg-white ">
+              <Sidebar />
+            </div>
+          ) : (
+            <div className="w-0 dark:bg-secondary-dark-bg">
+              <Sidebar />
+            </div>
+          )}
+          <div
+            className={`dark:bg-main-dark-bg bg-main-bg min-h-screen w-full' 
+             ${activeMenu ? 'md:ml-72' : 'flex-2'}`
+            }
+          >
+            <Routes>
+
+              <Route path="/" element={<Navigate to="/home" />} />
+
+              <Route exact path="/home" element={<Navbar />} >
+                <Route index element={<Home />} />
+                <Route exact path="/home/contact" element={<Contact />} />
+                <Route exact path="/home/about" element={<About />} />
+                <Route exact path="/home/news" element={<News />} />
+              </Route>
+
+
+
+              <Route exact path="/profile" element={<Profile />} />
+              <Route exact path="/login" element={<Login />} />
+              <Route exact path="/register" element={<Register />} />
+
+
+              <Route exact path="/user" element={<UserBoard />} />
+              <Route exact path="/employee" element={<EmployeeBoard />} />
+              <Route exact path="/admin" element={<AdminBoard />} />
+              <Route exact path="/schedule" element={<Schedule />} />
+
+              <Route exact path='/activities/add' element={<AddActivity />} />
+              <Route exact path='/activities/edit/:id' element={<EditActivity />} />
+              <Route exact path="/activities" element={<ShowActivities />} />
+
+
+            </Routes>
+          </div>
+          <Footer />
+        </div>
+      </BrowserRouter>
+    </div>
+  )
+}
+
+export default App
