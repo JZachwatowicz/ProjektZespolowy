@@ -55,17 +55,6 @@ const News = () => {
     setContent(e.target.value);
   };
 
-  useEffect(() => {
-    UserService.get_all_users()
-      .then(response => {
-        setUsers(response.data)
-      }).catch(error => {
-        console.error(error)
-        setMessage(prev => prev + error.message);
-      })
-
-  }, []);
-
   const fetchData = () => {
     ArticleService.get_all_articles()
       .then(response => {
@@ -77,7 +66,18 @@ const News = () => {
       })
   }
 
-  useEffect(() => fetchData(), []);
+  useEffect(() => {
+    UserService.get_all_users()
+      .then(response => {
+        setUsers(response.data.map(e => {return {id: e.id, username:  e.username}}))
+      }).catch(error => {
+        console.error(error)
+        setMessage(error.message);
+      })
+
+    fetchData()
+  }, []);
+
 
 
   const handleAddArticle = (e) => {
@@ -110,12 +110,15 @@ const News = () => {
 
   const handleUpdateArticle = (id) => {
     setMessage("");
+    form.current.validateAll();
+    if (checkBtn.current.context._errors.length === 0) {
     ArticleService.update_article(id, { title, content })
       .then(() => fetchData())
       .catch(error => {
         setMessage(error.message);
         console.error('There was an error!', error);
       });
+    }
   }
 
   return (
