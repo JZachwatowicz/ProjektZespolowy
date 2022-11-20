@@ -12,7 +12,7 @@ exports.all_items = async (req, res) => {
 };
 
 exports.delete_item = async (req, res) => {
-    await Item.destroy({ where: { id: req.body.id } })
+    await Item.destroy({ where: { id:  req.params.id } })
         .then(() => {
             res.status(200).send({ message: "Successfully deleted item." });
         }).catch((err) => {
@@ -52,7 +52,7 @@ exports.add_item = async (req, res) => {
 exports.edit_item = async (req, res) => {
 
     await Item.findOne({
-        where: { id: req.body.id }
+        where: { id: req.params.id }
     }).then(async (item) => {
         let data = {
             name: req.body.name,

@@ -68,8 +68,8 @@ const ShowActivities = () => {
 
     ActivityService.deleteActivity(id).then(
       () => {
-        setSuccessful(true);
-        setMessage("Successfully deleted activity.")
+        navigate('/activities', { state: { message: "Successfully delted activity.", successful: true } });
+        window.location.reload();
       },
       (error) => {
         const resMessage =

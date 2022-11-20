@@ -10,6 +10,12 @@ import AddActivity from './pages/AddActivity'
 import EditActivity from './pages/EditActivity'
 import ShowActivities from './pages/ShowActivities'
 
+import EditItem from './pages/EditItem'
+import AddItem from './pages/AddItem'
+import ShowItems from './pages/ShowItems'
+
+import ItemTypes from './pages/ItemTypes'
+
 
 const App = () => {
 
@@ -68,6 +74,12 @@ const App = () => {
               <Route exact path='/activities/add' element={<AddActivity />} />
               <Route exact path='/activities/edit/:id' element={<EditActivity />} />
               <Route exact path="/activities" element={<ShowActivities />} />
+
+              <Route exact path='/items/add' element={<AddItem />} />
+              <Route exact path='/items/edit/:id' element={<EditItem />} />
+              <Route exact path="/items" element={<ShowItems />} />
+
+              <Route exact path="/items/item_types" element={<ItemTypes />} />
 
 
             </Routes>

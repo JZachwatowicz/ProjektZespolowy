@@ -23,13 +23,13 @@ router.post(
 );
 
 router.put(
-    '/edit',
+    '/edit/:id',
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.edit_item_type
 );
 
 router.delete(
-    '/delete',
+    '/delete/:id',
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.delete_item_type
 );
