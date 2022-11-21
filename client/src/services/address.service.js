@@ -23,11 +23,11 @@ const getAddress = (id) => {
 };
 
 const ActivityService = {
-    showActivities: showAddress,
-    addActivity: addAddress,
-    deleteActivity: deleteAddress,
-    editActivity: editAddress,
-    getActivity: getAddress
+    showAddress,
+    addAddress,
+    deleteAddress,
+    editAddress,
+    getAddress
 }
 
 export default ActivityService;
