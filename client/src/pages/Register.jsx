@@ -4,7 +4,7 @@ import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
 
-import Select from 'react-select';
+// import Select from 'react-select';
 
 import { Country, State, City } from 'country-state-city';
 
@@ -140,7 +140,7 @@ const Register = (props) => {
 
 
       <div className="p-11  shadow-2xl">
-        <h1 className="mb-8 text-center text-3xl text-stone-800 font-semibold">Rejestracja</h1>
+        <h1 className="mb-8 text-center font-semibold">Rejestracja</h1>
 
         <Form onSubmit={handleRegister} ref={form} className="flex-2 text-center">
           {!successful && (

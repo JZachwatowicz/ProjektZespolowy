@@ -6,29 +6,28 @@ import './App.css'
 
 import { useStateContext } from './services/ContextProvider';
 
-import AddActivity from './components/AddActivity'
-import EditActivity from './components/EditActivity'
-import ShowActivities from './components/ShowActivities'
+import AddActivity from './pages/AddActivity'
+import EditActivity from './pages/EditActivity'
+import ShowActivities from './pages/ShowActivities'
 
 
 const App = () => {
 
-  const { setCurrentColor, setCurrentMode, currentMode, activeMenu } = useStateContext();
+  const { setCurrentColor, setCurrentMode, currentMode, activeMenu} = useStateContext();
 
-  // useEffect(() => {
-  //   const currentThemeColor = localStorage.getItem('colorMode');
-  //   const currentThemeMode = localStorage.getItem('themeMode');
-  //   if (currentThemeColor && currentThemeMode) {
-  //     setCurrentColor(currentThemeColor);
-  //     setCurrentMode(currentThemeMode);
-  //   }
-  // }, []);
-
+  useEffect(() => {
+    const currentThemeColor = localStorage.getItem('colorMode');
+    const currentThemeMode = localStorage.getItem('themeMode');
+    if (currentThemeColor && currentThemeMode) {
+      setCurrentColor(currentThemeColor);
+      setCurrentMode(currentThemeMode);
+    }
+  }, []);
 
   return (
     <div className={currentMode === 'Dark' ? 'dark' : ''}>
       <BrowserRouter>
-        <div className="flex-1 relative dark:bg-main-dark-bg">
+        <div className="flex-1 relative dark:bg-main-dark-bg dark:text-gray-200" >
           {activeMenu ? (
             <div className="w-72 fixed sidebar dark:bg-secondary-dark-bg bg-white ">
               <Sidebar />
@@ -66,14 +65,15 @@ const App = () => {
               <Route exact path="/admin" element={<AdminBoard />} />
               <Route exact path="/schedule" element={<Schedule />} />
 
-              <Route exact path='/addActivity' element={<AddActivity />} />
-              <Route exact path='/editActivity/:id' element={<EditActivity />} />
+              <Route exact path='/activities/add' element={<AddActivity />} />
+              <Route exact path='/activities/edit/:id' element={<EditActivity />} />
               <Route exact path="/activities" element={<ShowActivities />} />
 
 
             </Routes>
+            <Footer />
+
           </div>
-          <Footer />
         </div>
       </BrowserRouter>
     </div>

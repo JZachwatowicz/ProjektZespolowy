@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { FiShoppingBag } from 'react-icons/fi';
 import { Link, NavLink } from 'react-router-dom';
@@ -8,11 +8,11 @@ import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import { useStateContext } from '../services/ContextProvider';
 import AuthService from '../services/auth.service';
 
+import AccessabilitySettings from './AccessabilitySettings';
+
 const Sidebar = () => {
 
-  const [showEmployeeBoard, setShowEmployeeBoard] = useState(false);
-  const [showAdminBoard, setShowAdminBoard] = useState(false);
-  const [currentUser, setCurrentUser] = useState(undefined);
+  const { currentColor, activeMenu, setActiveMenu, screenSize, setScreenSize, showEmployeeBoard, setShowEmployeeBoard, showAdminBoard, setShowAdminBoard,currentUser, setCurrentUser } = useStateContext();
 
   useEffect(() => {
     const user = AuthService.getCurrentUser();
@@ -31,7 +31,6 @@ const Sidebar = () => {
   };
 
 
-  const { currentColor, activeMenu, setActiveMenu, screenSize, setScreenSize } = useStateContext();
 
   const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
     <TooltipComponent content={title} position="BottomCenter">
@@ -67,7 +66,7 @@ const Sidebar = () => {
     handleResize();
 
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  });
 
   useEffect(() => {
     if (screenSize <= 900) {
@@ -186,7 +185,7 @@ const Sidebar = () => {
                 })}
                 className={({ isActive }) => (isActive ? activeLink : normalLink)}>
                 {<FiShoppingBag />}
-                <span className="capitalize ">Activity</span>
+                <span className="capitalize ">Aktywności</span>
               </NavLink>
             </div>
             {currentUser ? 
@@ -226,6 +225,7 @@ const Sidebar = () => {
               </NavLink> : null}
             </div> : null}
           </>
+          <AccessabilitySettings />
         </div>
       ) :
 

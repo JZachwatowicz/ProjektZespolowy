@@ -17,6 +17,7 @@ const required = (value) => {
 };
 
 const Login = () => {
+
   const form = useRef();
   const checkBtn = useRef();
 
@@ -67,9 +68,9 @@ const Login = () => {
     <div className="flex flex-wrap justify-center min-h-screen content-center">
 
       <div className="p-11  shadow-2xl mb-20">
-        <h1 className="mb-8 text-center text-3xl text-stone-800 font-semibold">Logowanie</h1>
+        <h1 className="mb-8 text-center font-semibold">Logowanie</h1>
 
-        <Form onSubmit={handleLogin} ref={form} className="flex-2 text-center">
+        <Form onSubmit={handleLogin} ref={form} className="flex-2 text-center text-black">
 
           <Input
             type="text"
@@ -92,7 +93,7 @@ const Login = () => {
           />
 
 
-          <button className="p-4 shadow-xl m-2 rounded-lg border-1 hover:bg-gray-600 hover:text-white">
+          <button className={"p-4 shadow-xl m-2 rounded-lg border-1 hover:bg-gray-600 hover:text-white"}>
             Zaloguj
           </button>
 

@@ -2,9 +2,8 @@ import React from 'react'
 
 const Faq = () => {
   return (
-    <div>
-      this is faq component
-    </div>
+   
+      <>this is faq component</>
   )
 }
 
