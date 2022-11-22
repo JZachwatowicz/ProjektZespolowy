@@ -65,7 +65,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-wrap justify-center min-h-screen content-center">
+    <div className="flex flex-wrap justify-center content-center">
 
       <div className="p-11  shadow-2xl mb-20">
         <h1 className="mb-8 text-center font-semibold">Logowanie</h1>

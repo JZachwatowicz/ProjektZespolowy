@@ -38,10 +38,11 @@ const App = () => {
             </div>
           )}
           <div
-            className={`dark:bg-main-dark-bg bg-main-bg min-h-screen w-full' 
+            className={`dark:bg-main-dark-bg bg-main-bg w-full' 
              ${activeMenu ? 'md:ml-72' : 'flex-2'}`
             }
           >
+            <div className='min-h-screen'>
             <Routes>
 
               <Route path="/" element={<Navigate to="/home" />} />
@@ -71,6 +72,7 @@ const App = () => {
 
 
             </Routes>
+            </div>
             <Footer />
 
           </div>
