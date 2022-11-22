@@ -2,7 +2,7 @@ const db = require("../models");
 const { item_type: ItemType } = db
 
 exports.all_item_types = async (req, res) => {
-    await ItemType.findAll({})
+    await ItemType.findAll({order: [['name', 'ASC']]})
         .then((types) => {
             res.status(200).send(types);
         }).catch((err) => {

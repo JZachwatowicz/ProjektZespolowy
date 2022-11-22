@@ -45,7 +45,7 @@ const deleteItemType = (id) => {
     return axios.delete(TYPE_API_URL + "delete/" + id, { headers: authHeader() });
 };
 const getItemType = (id) => {
-    return axios.get(ITEM_API_URL + "get/id:" + id, { headers: authHeader() });
+    return axios.get(TYPE_API_URL + "get/id:" + id, { headers: authHeader() });
 };
 
 const ItemService = {

@@ -16,6 +16,12 @@ import ShowItems from './pages/ShowItems'
 
 import ItemTypes from './pages/ItemTypes'
 
+import EditRoom from './pages/EditRoom'
+import AddRoom from './pages/AddRoom'
+import ShowRooms from './pages/ShowRooms'
+
+import RoomTypes from './pages/RoomTypes'
+
 
 const App = () => {
 
@@ -81,6 +87,11 @@ const App = () => {
 
               <Route exact path="/items/item_types" element={<ItemTypes />} />
 
+              <Route exact path='/rooms/add' element={<AddRoom />} />
+              <Route exact path='/rooms/edit/:id' element={<EditRoom />} />
+              <Route exact path="/rooms" element={<ShowRooms />} />
+
+              <Route exact path="/rooms/room_types" element={<RoomTypes />} />
 
             </Routes>
             <Footer />

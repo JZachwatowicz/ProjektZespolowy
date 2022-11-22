@@ -5,7 +5,7 @@ import { useNavigate, useLocation} from 'react-router-dom';
 import Input from "react-validation/build/input";
 import Form from "react-validation/build/form";
 import CheckButton from "react-validation/build/button";
-import ItemService from "../services/item.service.js";
+import RoomService from "../services/room.service.js";
 
 const required = (value) => {
     if (!value) {
@@ -27,7 +27,6 @@ const required = (value) => {
     }
   };
 
-
   const ItemTypes = () => {
 
     const AddForm = useRef();
@@ -36,13 +35,13 @@ const required = (value) => {
     const EditCheckBtn = useRef();
     const [showEdit, setShowEdit] = useState(-1)
   const [types, setTypes] = useState([])
-  const [filteredItems, setFiltered] = useState([])
+  const [filteredRooms, setFiltered] = useState([])
   const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage] = useState(10);
   const indexOfLastRecord = currentPage * recordsPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
-  const currentRecords = filteredItems.slice(indexOfFirstRecord, indexOfLastRecord);
-  const nPages = Math.ceil(filteredItems.length / recordsPerPage);
+  const currentRecords = filteredRooms.slice(indexOfFirstRecord, indexOfLastRecord);
+  const nPages = Math.ceil(filteredRooms.length / recordsPerPage);
   const [addName, setAddName] = useState('')
   const [editName, setEditName] = useState('')
   const navigate = useNavigate();
@@ -79,7 +78,7 @@ const required = (value) => {
 
 
   useEffect(() => {
-    ItemService.getItemTypes().then(
+    RoomService.getRoomTypes().then(
         (response) => {
           console.log(response.data)
           setTypes(response.data);
@@ -104,9 +103,9 @@ const required = (value) => {
 
         AddForm.current.validateAll();
         if (AddCheckBtn.current.context._errors.length === 0) {
-            ItemService.addItemType(addName).then(
+            RoomService.addRoomType(addName).then(
                 ()=> {
-                    navigate("/items/item_types", { state: { message: "Successfully added item type.", successful: true } })
+                    navigate("/rooms/room_types", { state: { message: "Successfully added room type.", successful: true } })
                     window.location.reload();
 
                 },
@@ -135,9 +134,9 @@ const required = (value) => {
 
         AddForm.current.validateAll();
         if (EditCheckBtn.current.context._errors.length === 0) {
-            ItemService.editItemType(id, editName).then(
+            RoomService.editRoomType(id, editName).then(
                 ()=> {
-                    navigate("/items/item_types", { state: { message: "Successfully edited item type.", successful: true } })
+                    navigate("/rooms/room_types", { state: { message: "Successfully edited room type.", successful: true } })
                     window.location.reload();
 
                 },
@@ -158,16 +157,16 @@ const required = (value) => {
       }
 
       const handleCancel = () => {
-        navigate("/items");
+        navigate("/rooms");
     };
 
     function deleteItemHandler(id) {
       setMessage("");
       setSuccessful(false);
       
-      ItemService.deleteItemType(id).then(
+      RoomService.deleteRoomType(id).then(
           ()=> {
-            navigate('/items/item_types', { state: { message: "Successfully delted item type.", successful: true } });
+            navigate('/rooms/room_types', { state: { message: "Successfully delted room type.", successful: true } });
             window.location.reload();
           },
           (error) => {
@@ -191,7 +190,7 @@ const required = (value) => {
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
       <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
     </svg>
-              </button><h1 className="mb-8 text-center text-3xl font-semibold">Typy sprzętu</h1>
+              </button><h1 className="mb-8 text-center text-3xl font-semibold">Typy pokoi</h1>
           <div className=' grid grid-cols-2 content-center'>
             <div className="flex items-center ">
               <input className="form-control shadow-md dark:text-black p-3 rounded-l-lg w-4/5  w-max" 

@@ -2,7 +2,7 @@ const db = require("../models");
 const { activity: Activity } = db;
 
 exports.all_activities = async (req, res) => {
-    await Activity.findAll({})
+    await Activity.findAll({order: [['name', 'ASC']]})
         .then((activities) => {
             res.status(200).send(activities);
         }).catch((err) => {

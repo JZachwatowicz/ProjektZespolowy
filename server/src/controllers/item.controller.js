@@ -3,7 +3,7 @@ const db = require("../models");
 const { item: Item } = db;
 
 exports.all_items = async (req, res) => {
-    await Item.findAll({})
+    await Item.findAll({order: [['name', 'ASC']]})
         .then((items) => {
             res.status(200).send(items);
         }).catch((err) => {

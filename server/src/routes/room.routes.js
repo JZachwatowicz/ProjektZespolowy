@@ -17,6 +17,12 @@ router.get(
     controller.all_rooms
 );
 
+router.get(
+    '/getDepartments',
+    [authJwt.verifyToken, authJwt.isEmployee],
+    controller.departments
+);
+
 router.post(
     '/add',
     [authJwt.verifyToken, authJwt.isEmployee],
