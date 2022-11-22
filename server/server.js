@@ -29,6 +29,7 @@ app.use('/api/item_type', require('./src/routes/item_type.routes.js'))
 app.use('/api/activity', require('./src/routes/activity.routes.js'))
 app.use('/api/harmogram', require('./src/routes/harmonogram.routes.js'))
 app.use('/api/schedule', require('./src/routes/schedule.routes.js'))
+app.use('/api/address', require('./src/routes/address.routes.js'))
 
 //static Images Folder
 
