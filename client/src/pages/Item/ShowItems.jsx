@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useStateContext } from '../services/ContextProvider';
-import Pagination from "../components/Pagination.jsx";
+import { useStateContext } from '../../services/ContextProvider';
+import Pagination from "../../components/Pagination.jsx";
 import { useNavigate, useLocation} from 'react-router-dom';
 
-import ItemService from "../services/item.service.js";
-import AuthService from "../services/auth.service.js";
+import ItemService from "../../services/item.service.js";
+import AuthService from "../../services/auth.service.js";
 
   const ShowItems = () => {
   const [items, setItems] = useState([])

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 
 import UserService from "../../services/user.service";
 
+//Dodawanie, odczytywanie opisów użytkowników, przeglądanie pacjentów (ogarniczone dane), rezerwacja sali (CRUD harmonogram), zapisanie/wypisanie pajenta z zajęć
+
 const EmployeeBoard = () => {
   const [content, setContent] = useState("");
 

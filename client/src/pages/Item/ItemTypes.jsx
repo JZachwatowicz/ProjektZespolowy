@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useStateContext } from '../services/ContextProvider';
-import Pagination from "../components/Pagination.jsx";
+import { useStateContext } from '../../services/ContextProvider';
+import Pagination from "../../components/Pagination.jsx";
 import { useNavigate, useLocation} from 'react-router-dom';
 import Input from "react-validation/build/input";
 import Form from "react-validation/build/form";
 import CheckButton from "react-validation/build/button";
-import ItemService from "../services/item.service.js";
+import ItemService from "../../services/item.service.js";
 
 const required = (value) => {
     if (!value) {

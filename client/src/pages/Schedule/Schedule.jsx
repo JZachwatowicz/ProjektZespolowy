@@ -2,6 +2,8 @@ import React from 'react';
 
 import { ScheduleComponent, Day, Week, WorkWeek, Month, Agenda, Inject, Resize, DragAndDrop } from '@syncfusion/ej2-react-schedule';
 
+//CRUD + odczywytanie w tabeli
+
 // https://ej2.syncfusion.com/react/documentation/schedule/getting-started/ <-dokumentacja
 const Schedule = () => {
   const data = [

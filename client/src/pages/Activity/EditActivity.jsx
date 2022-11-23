@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect} from 'react';
 import { useParams } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
-import { useStateContext } from '../services/ContextProvider';
+import { useStateContext } from '../../services/ContextProvider';
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import Textarea from "react-validation/build/textarea";
 import CheckButton from "react-validation/build/button";
-import ActivityService from '../services/activity.service';
+import ActivityService from '../../services/activity.service';
 
 const required = (value) => {
     if (!value) {

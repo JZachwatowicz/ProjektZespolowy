@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 
 import UserService from "../../services/user.service";
 
+//Odczyt opisów, przeglądanie harmonogramu, rezerwacja sprzętów, zapisanie/wypisanie się z zajęć, edycja profilu
+
 const UserBoard = () => {
   const [content, setContent] = useState("");
 

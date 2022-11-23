@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useStateContext } from '../services/ContextProvider';
-import Pagination from "../components/Pagination.jsx";
+import { useStateContext } from '../../services/ContextProvider';
+import Pagination from "../../components/Pagination.jsx";
 import { useNavigate, useLocation} from 'react-router-dom';
 
-import RoomService from "../services/room.service.js";
-import AuthService from "../services/auth.service.js";
-import AdressService from '../services/address.service';
+import RoomService from "../../services/room.service.js";
+import AuthService from "../../services/auth.service.js";
+import AdressService from '../../services/address.service';
 
   const ShowRooms = () => {
   const [rooms, setRooms] = useState([])
