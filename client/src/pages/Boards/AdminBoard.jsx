@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import UserService from "../../services/user.service";
+import ShowUsers from "../User/ShowUsers";
 
 //CRUD użytkowników, akceptacja harmonogramu (odczyt, funkcja accept), CRUD aktywności, CRUD pokoje + departament, CRUD typy
 
@@ -27,7 +28,7 @@ const AdminBoard = () => {
 
   return (
     <div className="container">
-        <h3>{content}</h3>
+        <h3><ShowUsers /></h3>
     </div>
   );
 };
