@@ -26,6 +26,10 @@ const get_one_user = (id) => {
     return axios.get(API_URL + "all/get/" + id)
 }
 
+const edit_user = (id, data) => {
+    return axios.put(API_URL + "" + id, data, {headers: authHeader()})
+}
+
 
 const UserService = {
     getPublicContent,
@@ -33,7 +37,8 @@ const UserService = {
     getEmployeeBoard,
     getAdminBoard,
     get_all_users,
-    get_one_user
+    get_one_user,
+    edit_user
 }
 
 export default UserService;
