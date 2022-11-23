@@ -119,7 +119,7 @@ const EditActivity = () => {
 
     return (
       <>
-        <div className='flex flex-wrap justify-center min-h-screen content-center p-3'>
+        <div className='flex flex-wrap justify-center content-center p-3'>
           {message && successful === false && (
                   <div className="form-group">
                     <div

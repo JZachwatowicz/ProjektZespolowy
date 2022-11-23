@@ -139,7 +139,7 @@ const Register = (props) => {
 
 
 
-      <div className="p-11  shadow-2xl">
+      <div className="p-11 shadow-2xl">
         <h1 className="mb-8 text-center font-semibold">Rejestracja</h1>
 
         <Form onSubmit={handleRegister} ref={form} className="flex-2 text-center">
