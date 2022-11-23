@@ -4,6 +4,7 @@ const { user: User, refreshToken: RefreshToken, address: Address, street: Street
 const { createUser } = require('../services/user.service');
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
+const { address, city } = require("../models");
 
 exports.signup = async (req, res) => {
 
@@ -92,14 +93,40 @@ exports.signin = (req, res) => {
       var authorities = [];
       user.getRole().then(role => {
         authorities.push("ROLE_" + role.name.toUpperCase());
-        res.status(200).send({
-          id: user.id,
-          username: user.username,
-          email: user.email,
-          roles: authorities,
-          accessToken: token,
-          refreshToken: refreshToken,
-        });
+
+        var address_text = "";
+
+        address.findOne({
+          where: { id: user.address_id }
+        }).then(addre => {
+          Street.findOne({
+            where: { id: addre.street_id }
+          }).then(stree => {
+            address_text += stree.name + " " + addre.building_number;
+            if (addre.apartment_number) {
+              address_text += "/" + addre.apartment_number;
+            }
+
+            City.findOne({
+              where: { id: stree.city_id }
+            }).then(cit => {
+              address_text += ", " + cit.name;
+              res.status(200).send({
+                id: user.id,
+                username: user.username,
+                first_name: user.first_name,
+                last_name: user.last_name,
+                email: user.email,
+                roles: authorities,
+                accessToken: token,
+                refreshToken: refreshToken,
+                address: address_text
+              })
+            })
+          })
+        })
+
+
       });
     })
     .catch(err => {

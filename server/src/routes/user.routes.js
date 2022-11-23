@@ -15,6 +15,24 @@ router.get("/all", controller.allAccess);
 router.get("/all/get", controller.all_users);
 router.get("/all/get/:id", controller.one_user);
 
+router.put(
+    "/edit/:id",
+    [authJwt.verifyToken],
+    controller.edit_user
+);
+
+router.put(
+    "/edit_address/:id",
+    [authJwt.verifyToken],
+    controller.edit_user_address
+);
+
+router.put(
+    "/edit_roles/:id",
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.edit_user_roles
+);
+
 router.get(
     "/user",
     [authJwt.verifyToken],
@@ -32,4 +50,7 @@ router.get(
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.adminBoard
 );
+
+
+
 module.exports = router
