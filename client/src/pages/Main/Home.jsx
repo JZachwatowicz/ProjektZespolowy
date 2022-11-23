@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import UserService from "../services/user.service";
+import UserService from "../../services/user.service";
 
-
+//3 najnowsze newsy
 const Home = () => {
   const [content, setContent] = useState("");
 

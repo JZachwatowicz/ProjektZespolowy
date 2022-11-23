@@ -1,13 +1,13 @@
 import React, { useState, useRef , useEffect} from 'react'
-import { useStateContext } from '../services/ContextProvider';
+import { useStateContext } from '../../services/ContextProvider';
 import { useNavigate } from 'react-router-dom';
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import Select from 'react-validation/build/select';
 
-import RoomService from '../services/room.service';
-import AdressService from '../services/address.service';
+import RoomService from '../../services/room.service';
+import AdressService from '../../services/address.service';
 
 const required = (value) => {
     if (!value) {

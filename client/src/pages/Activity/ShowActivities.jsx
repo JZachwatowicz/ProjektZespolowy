@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useStateContext } from '../services/ContextProvider';
-import ActivityService from "../services/activity.service.js";
-import Pagination from "../components/Pagination.jsx";
+import { useStateContext } from '../../services/ContextProvider';
+import ActivityService from "../../services/activity.service.js";
+import Pagination from "../../components/Pagination.jsx";
 import { useNavigate, useLocation} from 'react-router-dom';
 
 const ShowActivities = () => {

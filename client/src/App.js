@@ -6,21 +6,21 @@ import './App.css'
 
 import { useStateContext } from './services/ContextProvider';
 
-import AddActivity from './pages/AddActivity'
-import EditActivity from './pages/EditActivity'
-import ShowActivities from './pages/ShowActivities'
+import AddActivity from './pages/Activity/AddActivity'
+import EditActivity from './pages/Activity/EditActivity'
+import ShowActivities from './pages/Activity/ShowActivities'
 
-import EditItem from './pages/EditItem'
-import AddItem from './pages/AddItem'
-import ShowItems from './pages/ShowItems'
+import EditItem from './pages/Item/EditItem'
+import AddItem from './pages/Item/AddItem'
+import ShowItems from './pages/Item/ShowItems'
 
-import ItemTypes from './pages/ItemTypes'
+import ItemTypes from './pages/Item/ItemTypes'
 
-import EditRoom from './pages/EditRoom'
-import AddRoom from './pages/AddRoom'
-import ShowRooms from './pages/ShowRooms'
+import EditRoom from './pages/Room/EditRoom'
+import AddRoom from './pages/Room/AddRoom'
+import ShowRooms from './pages/Room/ShowRooms'
 
-import RoomTypes from './pages/RoomTypes'
+import RoomTypes from './pages/Room/RoomTypes'
 
 
 const App = () => {

@@ -3,9 +3,11 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import Textarea from "react-validation/build/textarea";
 import CheckButton from "react-validation/build/button"
-import ArticleService from '../services/article.service'
-import { useStateContext } from '../services/ContextProvider';
-import UserService from '../services/user.service';
+import ArticleService from '../../services/article.service'
+import { useStateContext } from '../../services/ContextProvider';
+import UserService from '../../services/user.service';
+
+//Podział na strony
 
 const required = (value) => {
   if (!value) {

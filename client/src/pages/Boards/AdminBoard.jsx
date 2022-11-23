@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 
 import UserService from "../../services/user.service";
 
+//CRUD użytkowników, akceptacja harmonogramu (odczyt, funkcja accept), CRUD aktywności, CRUD pokoje + departament, CRUD typy
+
 const AdminBoard = () => {
   const [content, setContent] = useState("");
 

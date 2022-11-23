@@ -4,8 +4,8 @@ import Input from "react-validation/build/input";
 import Textarea from "react-validation/build/textarea";
 import CheckButton from "react-validation/build/button"
 import { useNavigate } from 'react-router-dom';
-import ActivityService from '../services/activity.service'
-import { useStateContext } from '../services/ContextProvider';
+import ActivityService from '../../services/activity.service'
+import { useStateContext } from '../../services/ContextProvider';
 
 const required = (value) => {
     if (!value) {
