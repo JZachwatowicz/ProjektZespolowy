@@ -22,6 +22,9 @@ import ShowRooms from './pages/Room/ShowRooms'
 
 import RoomTypes from './pages/Room/RoomTypes'
 
+import ShowDeprtments from './pages/Department/ShowDepartments'
+import AddDepartment from './pages/Department/AddDepartment'
+
 
 const App = () => {
 
@@ -92,6 +95,9 @@ const App = () => {
               <Route exact path="/rooms" element={<ShowRooms />} />
 
               <Route exact path="/rooms/room_types" element={<RoomTypes />} />
+
+              <Route exact path="/departments" element={<ShowDeprtments />} />
+              <Route exact path="/departments/add" element={<AddDepartment />} />
 
             </Routes>
             <Footer />

@@ -111,8 +111,8 @@ exports.add_address = async (req, res) => {
             apartment_number: apartmentNumber,
             street_id: street.id
         }
-    }).then(() => {
-        res.status(200).send({ message: "Successfully created adress." });
+    }).then((data) => {
+        res.status(200).send(data);
     }).catch((err) => {
         res.status(500).send({ message: err.message });
     })
