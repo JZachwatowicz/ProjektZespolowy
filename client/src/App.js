@@ -42,7 +42,6 @@ const App = () => {
              ${activeMenu ? 'md:ml-72' : 'flex-2'}`
             }
           >
-            <div className='min-h-screen'>
             <Routes>
 
               <Route path="/" element={<Navigate to="/home" />} />
@@ -72,7 +71,6 @@ const App = () => {
 
 
             </Routes>
-            </div>
             <Footer />
 
           </div>

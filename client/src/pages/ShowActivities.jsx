@@ -86,7 +86,7 @@ const ShowActivities = () => {
     );
   }
   return (
-    <div className='flex gap-10 flex-wrap justify-center'>
+    <div className='flex gap-10 flex-wrap justify-center min-h-screen'>
       <div className="p-11 mb-20 flex-grow ">
         <h1 className="mb-8 text-center text-3xl font-semibold">Lista Aktywności</h1>
           <div className=' grid grid-cols-3'>

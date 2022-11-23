@@ -135,7 +135,7 @@ const Register = (props) => {
   //               <Select name="countryCode" value={formData.countryCode} onChange={onChange} className={formStyle} options={countries} /> 
 
   return (
-    <div className="flex flex-wrap justify-center content-center">
+    <div className="flex flex-wrap justify-center min-h-screen content-center">
 
 
 
