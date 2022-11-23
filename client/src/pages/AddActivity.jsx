@@ -101,7 +101,7 @@ const AddActivity = ({ history }) => {
 
     return (
       <>
-        <div className='flex flex-wrap justify-center min-h-screen content-center p-3'>
+        <div className='flex flex-wrap justify-center content-center p-3'>
               {message &&  (
                   <div className="form-group">
                     <div
