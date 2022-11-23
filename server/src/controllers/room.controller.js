@@ -1,8 +1,17 @@
 const db = require("../models");
-const { room: Room } = db;
+const { room: Room , department_has_address: Department_Has_Address, department: Department} = db;
 
 exports.all_rooms = async (req, res) => {
-    await Room.findAll({})
+    await Room.findAll({order: [['name', 'ASC']]})
+        .then((rooms) => {
+            res.status(200).send(rooms);
+        }).catch((err) => {
+            res.status(500).send({ message: err.message });
+        })
+};
+
+exports.departments = async (req, res) => {
+    await Department_Has_Address.findAll({include: [{model: Department , as : 'department'}]})
         .then((rooms) => {
             res.status(200).send(rooms);
         }).catch((err) => {
@@ -27,7 +36,7 @@ exports.add_room = async (req, res) => {
         name: req.body.name,
         capacity: req.body.capacity,
         room_type_id: req.body.room_type_id,
-        department_has_address_id: req.body.department_has_address_id
+        department_has_address_id: req.body.department_id
     }
     if (data.name == "" || data.name == null) {
         res.status(400).send({ message: "Name cannot be empty." });
@@ -58,7 +67,7 @@ exports.edit_room = async (req, res) => {
             name: req.body.name,
             capacity: req.body.capacity,
             room_type_id: req.body.room_type_id,
-            department_has_address_id: req.body.department_has_address_id
+            department_has_address_id: req.body.department_id
         }
 
         if (data.name == "" || data.name == null) {

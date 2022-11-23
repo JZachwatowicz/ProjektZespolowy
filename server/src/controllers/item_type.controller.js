@@ -2,7 +2,7 @@ const db = require("../models");
 const { item_type: ItemType } = db
 
 exports.all_item_types = async (req, res) => {
-    await ItemType.findAll({})
+    await ItemType.findAll({order: [['name', 'ASC']]})
         .then((types) => {
             res.status(200).send(types);
         }).catch((err) => {
@@ -29,7 +29,7 @@ exports.add_item_type = async (req, res) => {
 };
 
 exports.delete_item_type = async (req, res) => {
-    await ItemType.destroy({ where: { id: req.body.id } })
+    await ItemType.destroy({ where: { id:  req.params.id } })
         .then(() => {
             res.status(200).send({ message: "Successfully deleted item type." });
         }).catch((err) => {
@@ -41,7 +41,7 @@ exports.delete_item_type = async (req, res) => {
 exports.edit_item_type = async (req, res) => {
 
     await ItemType.findOne({
-        where: { id: req.body.id }
+        where: { id:  req.params.id }
     }).then(async (item_type) => {
         let data = {
             name: req.body.name

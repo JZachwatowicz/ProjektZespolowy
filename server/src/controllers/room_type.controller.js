@@ -2,7 +2,7 @@ const db = require("../models");
 const { room_type: RoomType } = db;
 
 exports.all_room_types = async (req, res) => {
-    await RoomType.findAll({})
+    await RoomType.findAll({order: [['name', 'ASC']]})
         .then((types) => {
             res.status(200).send(types);
         }).catch((err) => {
