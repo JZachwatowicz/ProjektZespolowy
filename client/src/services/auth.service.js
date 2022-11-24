@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API_URL = "http://localhost:3000/api/auth/";
 
-const register = (username, email, password, firstName, lastName, pesel, contactNumber, buildingNumber, apartmentNumber, streetName, cityName ,voivodeshipName, countryName, countryCode) => {
+const register = (username, email, password, firstName, lastName, pesel, contactNumber, building_number, apartment_number, street_name, city_name ,voivodeship_name, country_name, country_code) => {
   return axios.post(API_URL + "signup", {
     username,
     email,
@@ -11,13 +11,13 @@ const register = (username, email, password, firstName, lastName, pesel, contact
     lastName,
     pesel,
     contactNumber,
-    buildingNumber,
-    apartmentNumber,
-    streetName,
-    cityName,
-    voivodeshipName,
-    countryName,
-    countryCode
+    building_number,
+    apartment_number,
+    street_name,
+    city_name,
+    voivodeship_name,
+    country_name,
+    country_code
   });
 };
 

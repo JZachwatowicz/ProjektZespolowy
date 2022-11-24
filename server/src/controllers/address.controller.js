@@ -1,10 +1,5 @@
 const db = require("../models");
 const { address: Address, street: Street, city: City, voivodeship: Voivodeship, country: Country } = db;
-const { createUser } = require('../services/user.service');
-const { street, article, address } = require("../models");
-
-
-
 
 
 
@@ -29,12 +24,6 @@ exports.one_address = async (req, res) => {
     }).catch((err) => {
         res.status(500).send({ message: err.message });
     })
-
-        .then((addresses) => {
-            res.status(200).send(addresses);
-        }).catch((err) => {
-            res.status(500).send({ message: err.message });
-        })
 };
 
 
@@ -75,24 +64,24 @@ exports.delete_address = async (req, res) => {
 
 exports.add_address = async (req, res) => {
 
-    const { countryName, countryCode, voivodeshipName, cityName, streetName, buildingNumber, apartmentNumber } = req.body
+    const { country_name, country_code, voivodeship_name, city_name, street_name, building_number, apartment_number } = req.body
     const [country, isCountryCreated] = await Country.findOrCreate({
         where: {
-            name: countryName,
-            code: countryCode,
+            name: country_name,
+            code: country_code,
         }
     })
 
     const [voivodeship, isVoivodeshipCreated] = await Voivodeship.findOrCreate({
         where: {
-            name: voivodeshipName,
+            name: voivodeship_name,
             country_id: country.id
         }
     })
 
     const [city, isCityCreated] = await City.findOrCreate({
         where: {
-            name: cityName,
+            name: city_name,
             voivodeship_id: voivodeship.id
         }
     })
@@ -100,19 +89,19 @@ exports.add_address = async (req, res) => {
 
     const [street, isStreetCreated] = await Street.findOrCreate({
         where: {
-            name: streetName,
+            name: street_name,
             city_id: city.id
         }
     })
 
     await Address.findOrCreate({
         where: {
-            building_number: buildingNumber,
-            apartment_number: apartmentNumber,
+            building_number: building_number,
+            apartment_number: apartment_number,
             street_id: street.id
         }
-    }).then(() => {
-        res.status(200).send({ message: "Successfully created adress." });
+    }).then((address) => {
+        res.status(200).send(address[0])
     }).catch((err) => {
         res.status(500).send({ message: err.message });
     })
@@ -120,24 +109,24 @@ exports.add_address = async (req, res) => {
 }
 exports.edit_address = async (req, res) => {
 
-    const { countryName, countryCode, voivodeshipName, cityName, streetName, buildingNumber, apartmentNumber } = req.body
+    const { country_name, country_code, voivodeship_name, city_name, street_name, building_number, apartment_number } = req.body
     const [country, isCountryCreated] = await Country.findOrCreate({
         where: {
-            name: countryName,
-            code: countryCode,
+            name: country_name,
+            code: country_code,
         }
     })
 
     const [voivodeship, isVoivodeshipCreated] = await Voivodeship.findOrCreate({
         where: {
-            name: voivodeshipName,
+            name: voivodeship_name,
             country_id: country.id
         }
     })
 
     const [city, isCityCreated] = await City.findOrCreate({
         where: {
-            name: cityName,
+            name: city_name,
             voivodeship_id: voivodeship.id
         }
     })
@@ -145,7 +134,7 @@ exports.edit_address = async (req, res) => {
 
     const [street, isStreetCreated] = await Street.findOrCreate({
         where: {
-            name: streetName,
+            name: street_name,
             city_id: city.id
         }
     })
@@ -165,50 +154,35 @@ exports.edit_address = async (req, res) => {
             }]
         }]
     }).then(async data => {
-        await data.update({id: req.params.id,
-        building_number: buildingNumber,
-        apartment_number: apartmentNumber,
-        street_id: street.id,
-        street: {
-            id: street.id,
-            name: streetName,
-            city_id: city.id,
-            city: {
-                id: city.id,
-                name: cityName,
-                voivodeship_id: voivodeship.id,
-                voivodeship: {
-                    id: voivodeship.id,
-                    name: voivodeshipName,
-                    country_id: country.id,
-                    country: {
-                        id: country.id,
-                        name: countryName,
-                        code: countryCode,
+        await data.update({
+            id: req.params.id,
+            building_number: building_number,
+            apartment_number: apartment_number,
+            street_id: street.id,
+            street: {
+                id: street.id,
+                name: street_name,
+                city_id: city.id,
+                city: {
+                    id: city.id,
+                    name: city_name,
+                    voivodeship_id: voivodeship.id,
+                    voivodeship: {
+                        id: voivodeship.id,
+                        name: voivodeship_name,
+                        country_id: country.id,
+                        country: {
+                            id: country.id,
+                            name: country_name,
+                            code: country_code,
+                        }
                     }
                 }
             }
-        }})
-        res.status(200).send("Update address.");
+        })
+        res.status(200).send(res => res);
     }).catch(err => {
         res.status(500).send({ message: err.message });
     });
-
-    // await Article.findOne({
-    //     where: { id: req.params.id }
-    // }).then(article => {
-    //     console.log(article);
-    //     article.set({
-    //         title: req.body.title,
-    //         content: req.body.content
-    //     });
-
-    //     article.save({
-    //         fields: ['title', 'content']
-    //     });
-    //     res.status(200).send("Update article.");
-    // }).catch(err => {
-    //     res.status(500).send({ message: err.message });
-    // });
 
 }

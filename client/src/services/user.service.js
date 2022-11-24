@@ -17,28 +17,36 @@ const getEmployeeBoard = () => {
 const getAdminBoard = () => {
     return axios.get(API_URL + "admin", { headers: authHeader() });
 };
-
-const get_all_users = () => {
+const showUsers = () => {
     return axios.get(API_URL + "all/get");
 }
-
-const get_one_user = (id) => {
+const getUser = (id) => {
     return axios.get(API_URL + "all/get/" + id)
 }
-
-const edit_user = (id, data) => {
-    return axios.put(API_URL + "" + id, data, {headers: authHeader()})
+const addUser = (data) => {
+    return axios.post(API_URL + "add", data, {headers: authHeader()})
 }
-
+const editUser = (id, data) => {
+    return axios.put(API_URL + "edit/" + id, data, {headers: authHeader()})
+}
+const editUserAddress = (id, data) => {
+    return axios.put(API_URL + "editaddress/" + id, data, {headers: authHeader()})
+}
+const deleteUser = (id) => {
+    return axios.delete(API_URL + "delete/" + id, { headers: authHeader() });
+};
 
 const UserService = {
     getPublicContent,
     getUserBoard,
     getEmployeeBoard,
     getAdminBoard,
-    get_all_users,
-    get_one_user,
-    edit_user
+    showUsers,
+    getUser,
+    editUser,
+    editUserAddress,
+    addUser,
+    deleteUser
 }
 
 export default UserService;

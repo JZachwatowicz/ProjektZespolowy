@@ -20,6 +20,23 @@ const createUser = async (
     })
 }
 
+const createUserRole = async (
+    username, email, password, firstName, lastName,
+    pesel, contactNumber, role_id) => {
+    await User.create({
+        username: username,
+        email: email,
+        password: bcrypt.hashSync(password, 8),
+        first_name: firstName,
+        last_name: lastName,
+        birth_date: new Date(),
+        pesel: pesel,
+        contact_number: contactNumber,
+        role_id: role_id,
+    })
+}
+
 module.exports = {
-    createUser
+    createUser,
+    createUserRole
 }

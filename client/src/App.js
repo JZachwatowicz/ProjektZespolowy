@@ -21,6 +21,9 @@ import AddRoom from './pages/Room/AddRoom'
 import ShowRooms from './pages/Room/ShowRooms'
 
 import RoomTypes from './pages/Room/RoomTypes'
+import AddUser from './pages/User/AddUser';
+import EditUser from './pages/User/EditUser';
+import EditUserAddress from './pages/User/EditUserAddress';
 
 
 const App = () => {
@@ -76,6 +79,9 @@ const App = () => {
               <Route exact path="/employee" element={<EmployeeBoard />} />
               <Route exact path="/admin" element={<AdminBoard />} />
               <Route exact path="/schedule" element={<Schedule />} />
+              <Route exact path="/admin/add" element={<AddUser />} />
+              <Route exact path="/admin/edit/:id" element={<EditUser />} />
+              <Route exact path="/admin/editaddress/:id" element={<EditUserAddress />} />
 
               <Route exact path='/activities/add' element={<AddActivity />} />
               <Route exact path='/activities/edit/:id' element={<EditActivity />} />

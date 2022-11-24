@@ -8,25 +8,25 @@ const { address, city } = require("../models");
 
 exports.signup = async (req, res) => {
 
-  const { username, email, password, firstName, lastName, pesel, contactNumber, countryName, countryCode, voivodeshipName, cityName, streetName, buildingNumber, apartmentNumber } = req.body
+  const { username, email, password, firstName, lastName, pesel, contactNumber, country_name, country_code, voivodeship_name, city_name, street_name, building_number, apartment_number } = req.body
 
   const [country, isCountryCreated] = await Country.findOrCreate({
     where: {
-      name: countryName,
-      code: countryCode,
+      name: country_name,
+      code: country_code,
     }
   })
 
   const [voivodeship, isVoivodeshipCreated] = await Voivodeship.findOrCreate({
     where: {
-      name: voivodeshipName,
+      name: voivodeship_name,
       country_id: country.id
     }
   })
 
   const [city, isCityCreated] = await City.findOrCreate({
     where: {
-      name: cityName,
+      name: city_name,
       voivodeship_id: voivodeship.id
     }
   })
@@ -34,21 +34,21 @@ exports.signup = async (req, res) => {
 
   const [street, isStreetCreated] = await Street.findOrCreate({
     where: {
-      name: streetName,
+      name: street_name,
       city_id: city.id
     }
   })
 
   const [address, isAddresCreated] = await Address.findOrCreate({
     where: {
-      building_number: buildingNumber,
-      apartment_number: apartmentNumber,
+      building_number: building_number,
+      apartment_number: apartment_number,
       street_id: street.id
     }
   })
 
   //Save User to Database
-  console.log(username, email, password, firstName, lastName, pesel, countryName)
+  console.log(username, email, password, firstName, lastName, pesel, country_name)
   await createUser(username, email, password, firstName, lastName, pesel, contactNumber, address.id)
     .then(() => {
       res.send({ message: "User was registered successfully!" });
@@ -91,26 +91,9 @@ exports.signin = (req, res) => {
       console.log("refresh token - createToken");
 
       var authorities = [];
-      user.getRole().then(role => {
+      user.getRole()
+      .then(role => {
         authorities.push("ROLE_" + role.name.toUpperCase());
-
-        var address_text = "";
-
-        address.findOne({
-          where: { id: user.address_id }
-        }).then(addre => {
-          Street.findOne({
-            where: { id: addre.street_id }
-          }).then(stree => {
-            address_text += stree.name + " " + addre.building_number;
-            if (addre.apartment_number) {
-              address_text += "/" + addre.apartment_number;
-            }
-
-            City.findOne({
-              where: { id: stree.city_id }
-            }).then(cit => {
-              address_text += ", " + cit.name;
               res.status(200).send({
                 id: user.id,
                 username: user.username,
@@ -120,10 +103,6 @@ exports.signin = (req, res) => {
                 roles: authorities,
                 accessToken: token,
                 refreshToken: refreshToken,
-                address: address_text
-              })
-            })
-          })
         })
 
 
