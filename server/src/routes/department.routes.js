@@ -29,6 +29,16 @@ router.post(
     [authJwt.verifyToken, authJwt.isEmployee],
     controller.AddressToDepartment
 );
+router.put(
+    '/AddressToDepartment/:id',
+    [authJwt.verifyToken, authJwt.isEmployee],
+    controller.AddressToDepartmentEdit
+);
+router.get(
+    '/AddressToDepartment/get/:id',
+    [authJwt.verifyToken, authJwt.isEmployee],
+    controller.get_address_id
+);
 
 router.put(
     '/edit/:id',

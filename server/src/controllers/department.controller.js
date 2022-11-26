@@ -1,8 +1,8 @@
 const db = require("../models");
-const { department: Department, address: Address, department_has_address:  Department_Has_Address} = db;
+const { department: Department, address: Address, department_has_address: Department_Has_Address } = db;
 
 exports.all_departments = async (req, res) => {
-    await Department.findAll({order: [['name', 'ASC']]})
+    await Department.findAll({ order: [['name', 'ASC']] })
         .then((departments) => {
             res.status(200).send(departments);
         }).catch((err) => {
@@ -24,7 +24,7 @@ exports.delete_department = async (req, res) => {
         }).catch((err) => {
             res.status(500).send({ message: err.message });
         })
-    
+
 };
 
 exports.add_department = async (req, res) => {
@@ -94,15 +94,43 @@ exports.one_department = async (req, res) => {
 exports.AddressToDepartment = async (req, res) => {
 
     let data = {
-        department_id : req.body.department_id,
+        department_id: req.body.department_id,
         address_id: req.body.address_id
     }
 
     await Department_Has_Address.create(data)
-    .then(() => {
-        res.status(200);
-    }).catch((err) => {
+        .then(() => {
+            res.status(200);
+        }).catch((err) => {
+            res.status(500).send({ message: err.message });
+        })
+
+}
+exports.AddressToDepartmentEdit = async (req, res) => {
+
+    await Department_Has_Address.findOne({
+        where: { id: req.params.id }
+    }).then(async data => {
+        await data.update({
+            department_id: req.body.department_id,
+            address_id: req.body.address_id
+        })
+        res.status(200).send("Updated AddressToDepartmentEdit.");
+    }).catch(err => {
         res.status(500).send({ message: err.message });
-    })
+    });
+
+
+}
+exports.get_address_id = async (req, res) => {
+
+    await Department_Has_Address.findOne({
+        where: { id: req.params.id }
+    }).then(data => {
+        res.status(200).send(data);
+    }).catch(err => {
+        res.status(500).send({ message: err.message });
+    });
+
 
 }

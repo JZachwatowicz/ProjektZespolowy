@@ -60,6 +60,9 @@ const ShowActivities = () => {
   }, []);
 
 
+  function editDepartmentHandler(id) {
+    navigate('/departments/edit/' + id)
+  }
   function deleteDepartmentHandler(id) {
     setMessage("");
     setSuccessful(false);
@@ -130,7 +133,10 @@ const ShowActivities = () => {
                     <div className="col-span-3 flex p-1 items-center break-words">{dep.description}</div>
                       <div className=" flex justify-end items-center pr-2">
                         <div className={screenSize <= 1200 ? 'flex flex-col' : 'flex flex-row'}>
-                          <button onClick={() => deleteDepartmentHandler(dep.id)} className="flex text-center items-center p-3 shadow-xl m-1 rounded-lg  text-white bg-red-600 border border-red-700 hover:bg-red-800 ">
+                        <button onClick={() => editDepartmentHandler(dep.id)} className=" p-3 shadow-xl m-1 rounded-lg  bg-gray-600 text-white hover:bg-gray-400 hover:text-black ">
+                          Edytuj
+                        </button>
+                          <button onClick={() => deleteDepartmentHandler(dep.id)} className="flex text-center items-center justify-center p-3 shadow-xl m-1 rounded-lg  text-white bg-red-600 border border-red-700 hover:bg-red-800 ">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-x" viewBox="0 0 16 16">
                             <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/></svg>
                           </button>

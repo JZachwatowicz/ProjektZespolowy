@@ -24,6 +24,7 @@ import RoomTypes from './pages/Room/RoomTypes'
 
 import ShowDeprtments from './pages/Department/ShowDepartments'
 import AddDepartment from './pages/Department/AddDepartment'
+import EditDepartment from './pages/Department/EditDepartment';
 
 
 const App = () => {
@@ -98,6 +99,7 @@ const App = () => {
 
               <Route exact path="/departments" element={<ShowDeprtments />} />
               <Route exact path="/departments/add" element={<AddDepartment />} />
+              <Route exact path="/departments/edit/:id" element={<EditDepartment />} />
 
             </Routes>
             <Footer />

@@ -48,15 +48,14 @@ const AddDepartment = () => {
     const [formData, setFormData] = useState({
         name: "",
         description: "",
-        buildingNumber: "09",
-        apartmentNumber: "09",
-        streetName: "Dog",
-        cityName: "",
-        voivodeshipName: "",
-        voivodeshipCode: "",
-        countryName: "",
-        countryCode: "",
-    
+        country_code: "",
+        building_number: "",
+        apartment_number: "",
+        street_name: "",
+        city_name: "",
+        voivodeship_name: "",
+        country_name: "",
+        voivodeship_code: "",
       });
     const [successful, setSuccessful] = useState(false);
     const [message, setMessage] = useState("");
@@ -78,7 +77,7 @@ const AddDepartment = () => {
 
       form.current.validateAll();
       if (checkBtn.current.context._errors.length === 0) {
-          DepartmentService.addDepartment(formData.name,formData.description, formData.apartmentNumber, formData.buildingNumber, formData.streetName, formData.cityName, formData.voivodeshipName, formData.countryName, formData.countryCode).then(
+          DepartmentService.addDepartment(formData.name,formData.description, formData.apartment_number, formData.building_number, formData.street_name, formData.city_name, formData.voivodeship_name, formData.country_name, formData.country_code).then(
               ()=> {
                   //navigate("/departments", { state: { message: "Successfully added department.", successful: true } })
                  // window.location.reload();
@@ -101,7 +100,7 @@ const AddDepartment = () => {
     }
 
     const handleCancel = () => {
-      navigate("/department");
+      navigate("/departments");
   };
 
 
@@ -142,61 +141,61 @@ const AddDepartment = () => {
                     validations={[vdesc]}
                     />
                 <Input  className="form-control p-3 m-2 border-b-2 shadow-md w-full max-w-3xl"
-                    value={formData.apartmentNumber}
-                    name="aprtment"
+                    value={formData.apartment_number}
+                    name="apartment_number"
                     placeholder="Nr mieszkania"
                     onChange={onChange}
                     type="text"
                     validations={[required]}
                   />
                   <Input  className="form-control p-3 m-2 border-b-2 shadow-md w-full max-w-3xl"
-                    value={formData.buildingNumber}
-                    name="building"
+                    value={formData.building_number}
+                    name="building_number"
                     placeholder="Numer budynku"
                     onChange={onChange}
                     type="text"
                     validations={[required]}
                   />
                   <Input  className="form-control p-3 m-2 border-b-2 shadow-md w-full max-w-3xl"
-                    value={formData.streetName}
-                    name="street"
+                    value={formData.street_name}
+                    name="street_name"
                     placeholder="Ulica"
                     onChange={onChange}
                     type="text"
                     validations={[required]}
                   />
-                  <select name="countryCode" value={formData.countryCode} onChange={onChange} className="form-control p-3 m-2 border-b-2 shadow-md">
+                  <select name="country_code" value={formData.country_code} onChange={onChange} className="form-control p-3 m-2 border-b-2 shadow-md">
 
                 {Country.getAllCountries().map(e => <option key={e.isoCode} value={e.isoCode}>{e.name}</option>)}
                 </select>
 
-                {formData.countryCode ?
-                <input hidden type="text" onChange={onChange} name={formData.countryName} value={formData.countryName = Country.getCountryByCode(formData.countryCode).name} />
+                {formData.country_code ?
+                <input hidden type="text" onChange={onChange} name={formData.country_name} value={formData.country_name = Country.getCountryByCode(formData.country_code).name} />
                 : null}
-                {State.getStatesOfCountry(formData.countryCode).length !== 0 ?
+                {State.getStatesOfCountry(formData.country_code).length !== 0 ?
 
                 <>
-                <select name="voivodeshipCode" value={formData.voivodeshipCode} onChange={onChange} className="form-control p-3 m-2 border-b-2 shadow-md">
-                    {State.getStatesOfCountry(formData.countryCode).map(e => <option key={e.isoCode} value={e.isoCode}>{e.name}</option>)}
+                <select name="voivodeship_code" value={formData.voivodeship_code} onChange={onChange} className="form-control p-3 m-2 border-b-2 shadow-md">
+                    {State.getStatesOfCountry(formData.country_code).map(e => <option key={e.isoCode} value={e.isoCode}>{e.name}</option>)}
                 </select>
-                {formData.voivodeshipCode ?
-                    <input hidden type="text" onChange={onChange} name={formData.voivodeshipName} value={formData.voivodeshipName = State.getStateByCode(formData.voivodeshipCode).name} />
+                {formData.voivodeship_code ?
+                    <input hidden type="text" onChange={onChange} name={formData.voivodeship_name} value={formData.voivodeship_name = State.getStateByCode(formData.voivodeship_code).name} />
                     : null}
                 </>
                 :
                 <>
-                {City.getCitiesOfCountry(formData.countryCode).length !== 0 ?
+                {City.getCitiesOfCountry(formData.country_code).length !== 0 ?
                     <>
-                    <select name="cityName" value={formData.cityName} onChange={onChange} className="form-control p-3 m-2 border-b-2 shadow-md">
-                        {City.getCitiesOfCountry(formData.countryCode).map(e => <option key={e.isoCode} value={e.isoCode}>{e.name}</option>)}
+                    <select name="city_name" value={formData.city_name} onChange={onChange} className="form-control p-3 m-2 border-b-2 shadow-md">
+                        {City.getCitiesOfCountry(formData.country_code).map(e => <option key={e.isoCode} value={e.isoCode}>{e.name}</option>)}
                     </select>
                     </>
                     : null}
                 </>}
-                {City.getCitiesOfState(formData.countryCode, formData.voivodeshipCode).length !== 0 ?
+                {City.getCitiesOfState(formData.country_code, formData.voivodeship_code).length !== 0 ?
                 <>
-                <select name="cityName" value={formData.cityName} onChange={onChange} className="form-control p-3 m-2 border-b-2 shadow-md">
-                    {City.getCitiesOfState(formData.countryCode, formData.voivodeshipCode).map(e => <option key={e.isoCode} value={e.isoCode}>{e.name}</option>)}
+                <select name="city_name" value={formData.city_name} onChange={onChange} className="form-control p-3 m-2 border-b-2 shadow-md">
+                    {City.getCitiesOfState(formData.country_code, formData.voivodeship_code).map(e => <option key={e.isoCode} value={e.isoCode}>{e.name}</option>)}
                 </select>
                 </>
                 : null}

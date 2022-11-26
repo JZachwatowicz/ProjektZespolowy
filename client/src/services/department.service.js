@@ -9,15 +9,15 @@ const showDepartments = () => {
 const deleteDepartment = (id) => {
     return axios.delete(DEP_API_URL + "delete/" + id, { headers: authHeader() });
 };
-const addDepartment = async (name, description, apartmentNumber,  buildingNumber, streetName, cityName ,voivodeshipName, countryName, countryCode) => {
+const addDepartment = async (name, description, apartment_number,  building_number, street_name, city_name ,voivodeship_name, country_name, country_code) => {
     const address = await axios.post(ADD_API_URL + "add", {
-        buildingNumber,
-        apartmentNumber,
-        streetName,
-        cityName,
-        voivodeshipName,
-        countryName,
-        countryCode
+        building_number,
+        apartment_number,
+        street_name,
+        city_name,
+        voivodeship_name,
+        country_name,
+        country_code
     }, { headers: authHeader() });
 
     const department = await axios.post(DEP_API_URL + "add", {
@@ -34,12 +34,18 @@ const addDepartment = async (name, description, apartmentNumber,  buildingNumber
         address_id
     }, { headers: authHeader() });
 };
-const editDepartment = (id, name, description,  buildingNumber, apartmentNumber, streetName, cityName ,voivodeshipName, countryName, countryCode) => {
-    return axios.put(DEP_API_URL + "edit/" + id, {
-        name: name,
-        description: description,
-        
+const editDepartment = async (id, data, address) => {
+    const department = await axios.put(DEP_API_URL + "edit/" + id, data, { headers: authHeader() });
+    const department_id = department.data.id;
+    const address_id = address[0].id;
+    return axios.put(DEP_API_URL + "AddressToDepartment/"+ id, {
+        department_id,
+        address_id
     }, { headers: authHeader() });
+};
+const getDepartmentAddressId = (id) => {
+
+    return axios.get(DEP_API_URL + "AddressToDepartment/get/"+ id, { headers: authHeader() });
 };
 const getDepartment = (id) => {
     return axios.get(DEP_API_URL + "get/" + id, { headers: authHeader() });
@@ -50,7 +56,8 @@ const DepartmentService = {
     addDepartment,
     deleteDepartment,
     editDepartment,
-    getDepartment
+    getDepartment,
+    getDepartmentAddressId
 }
 
 export default DepartmentService;
