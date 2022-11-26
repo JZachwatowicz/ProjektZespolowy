@@ -1,10 +1,5 @@
 const db = require("../models");
 const { address: Address, street: Street, city: City, voivodeship: Voivodeship, country: Country } = db;
-const { createUser } = require('../services/user.service');
-const { street, article, address } = require("../models");
-
-
-
 
 
 
@@ -105,8 +100,8 @@ exports.add_address = async (req, res) => {
             apartment_number: apartment_number,
             street_id: street.id
         }
-    }).then((data) => {
-        res.status(200).send(data);
+    }).then((address) => {
+        res.status(200).send(address[0])
     }).catch((err) => {
         res.status(500).send({ message: err.message });
     })
@@ -159,50 +154,35 @@ exports.edit_address = async (req, res) => {
             }]
         }]
     }).then(async data => {
-        await data.update({id: req.params.id,
-        building_number: building_number,
-        apartment_number: apartment_number,
-        street_id: street.id,
-        street: {
-            id: street.id,
-            name: street_name,
-            city_id: city.id,
-            city: {
-                id: city.id,
-                name: city_name,
-                voivodeship_id: voivodeship.id,
-                voivodeship: {
-                    id: voivodeship.id,
-                    name: voivodeship_name,
-                    country_id: country.id,
-                    country: {
-                        id: country.id,
-                        name: country_name,
-                        code: country_code,
+        await data.update({
+            id: req.params.id,
+            building_number: building_number,
+            apartment_number: apartment_number,
+            street_id: street.id,
+            street: {
+                id: street.id,
+                name: street_name,
+                city_id: city.id,
+                city: {
+                    id: city.id,
+                    name: city_name,
+                    voivodeship_id: voivodeship.id,
+                    voivodeship: {
+                        id: voivodeship.id,
+                        name: voivodeship_name,
+                        country_id: country.id,
+                        country: {
+                            id: country.id,
+                            name: country_name,
+                            code: country_code,
+                        }
                     }
                 }
             }
-        }})
-        res.status(200).send("Update address.");
+        })
+        res.status(200).send(res => res);
     }).catch(err => {
         res.status(500).send({ message: err.message });
     });
-
-    // await Article.findOne({
-    //     where: { id: req.params.id }
-    // }).then(article => {
-    //     console.log(article);
-    //     article.set({
-    //         title: req.body.title,
-    //         content: req.body.content
-    //     });
-
-    //     article.save({
-    //         fields: ['title', 'content']
-    //     });
-    //     res.status(200).send("Update article.");
-    // }).catch(err => {
-    //     res.status(500).send({ message: err.message });
-    // });
 
 }

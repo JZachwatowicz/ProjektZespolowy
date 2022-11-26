@@ -91,26 +91,9 @@ exports.signin = (req, res) => {
       console.log("refresh token - createToken");
 
       var authorities = [];
-      user.getRole().then(role => {
+      user.getRole()
+      .then(role => {
         authorities.push("ROLE_" + role.name.toUpperCase());
-
-        var address_text = "";
-
-        address.findOne({
-          where: { id: user.address_id }
-        }).then(addre => {
-          Street.findOne({
-            where: { id: addre.street_id }
-          }).then(stree => {
-            address_text += stree.name + " " + addre.building_number;
-            if (addre.apartment_number) {
-              address_text += "/" + addre.apartment_number;
-            }
-
-            City.findOne({
-              where: { id: stree.city_id }
-            }).then(cit => {
-              address_text += ", " + cit.name;
               res.status(200).send({
                 id: user.id,
                 username: user.username,
@@ -120,10 +103,7 @@ exports.signin = (req, res) => {
                 roles: authorities,
                 accessToken: token,
                 refreshToken: refreshToken,
-                address: address_text
-              })
-            })
-          })
+                address_id: user.address_id
         })
 
 

@@ -7,16 +7,12 @@ import { renderMatches, useNavigate, useParams } from 'react-router-dom';
 
 import UserService from "../../services/user.service"
 import AddressService from "../../services/address.service"
-import AuthService from "../../services/auth.service"
 import { useEffect } from "react";
-import { useStateContext } from "../../services/ContextProvider";
 
 
-const EditAddress = () => {
+const EditUserAddress = () => {
 
-    const currentUser = AuthService.getCurrentUser();
-
-    let id = currentUser.id;
+  let { id } = useParams();
 
   const navigate = useNavigate()
   const form = useRef();
@@ -73,7 +69,7 @@ const EditAddress = () => {
       AddressService.addAddress(formData)
         .then(res => {
           UserService.editUserAddress(editedUser.id, { address_id: res.data.id })
-            .then(() => navigate('/profile'))
+            .then(() => navigate('/admin/users'))
         })
 
         .catch(error => console.error(error));
@@ -176,4 +172,4 @@ const EditAddress = () => {
   );
 }
 
-export default EditAddress
+export default EditUserAddress

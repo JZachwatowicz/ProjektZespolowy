@@ -81,7 +81,7 @@ const News = () => {
   }
 
   useEffect(() => {
-    UserService.get_all_users()
+    UserService.showUsers()
       .then(response => {
         setUsers(response.data.map(e => { return { id: e.id, username: e.username } }))
       }).catch(error => {

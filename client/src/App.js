@@ -21,6 +21,12 @@ import AddRoom from './pages/Room/AddRoom'
 import ShowRooms from './pages/Room/ShowRooms'
 
 import RoomTypes from './pages/Room/RoomTypes'
+import AddUser from './pages/User/AddUser';
+import EditUser from './pages/User/EditUser';
+import EditUserAddress from './pages/User/EditUserAddress';
+import ShowUsers from './pages/User/ShowUsers';
+import EditAddress from './pages/Profile/EditAddress';
+import EditProfile from './pages/Profile/EditProfile';
 
 import ShowDeprtments from './pages/Department/ShowDepartments'
 import AddDepartment from './pages/Department/AddDepartment'
@@ -72,6 +78,9 @@ const App = () => {
 
 
               <Route exact path="/profile" element={<Profile />} />
+              <Route exact path="/profile" element={<Profile />} />
+              <Route exact path="/profile/edit" element={<EditProfile />} />
+              <Route exact path="/profile/editaddress" element={<EditAddress />} />
               <Route exact path="/login" element={<Login />} />
               <Route exact path="/register" element={<Register />} />
 
@@ -80,6 +89,10 @@ const App = () => {
               <Route exact path="/employee" element={<EmployeeBoard />} />
               <Route exact path="/admin" element={<AdminBoard />} />
               <Route exact path="/schedule" element={<Schedule />} />
+              <Route exact path="/admin/users" element={<ShowUsers />} />
+              <Route exact path="/admin/users/add" element={<AddUser />} />
+              <Route exact path="/admin/users/edit/:id" element={<EditUser />} />
+              <Route exact path="/admin/users/editaddress/:id" element={<EditUserAddress />} />
 
               <Route exact path='/activities/add' element={<AddActivity />} />
               <Route exact path='/activities/edit/:id' element={<EditActivity />} />
