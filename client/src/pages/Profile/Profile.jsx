@@ -10,6 +10,7 @@ import { useState } from "react";
 const Profile = () => {
   const currentUser = AuthService.getCurrentUser();
 
+  console.log(currentUser);
   const navigate = useNavigate();
 
   function editUserHandler() {

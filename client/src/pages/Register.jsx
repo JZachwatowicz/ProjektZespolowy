@@ -66,7 +66,7 @@ const Register = (props) => {
     street_name: "",
     city_name: "",
     voivodeship_name: "",
-    voivodeshipCode: "",
+    voivodeship_code: "",
     country_name: "",
     country_code: "",
 
@@ -80,6 +80,7 @@ const Register = (props) => {
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+  
   const handleRegister = (e) => {
     e.preventDefault();
 
@@ -241,11 +242,11 @@ const Register = (props) => {
               {State.getStatesOfCountry(formData.country_code).length !== 0 ?
 
                 <>
-                  <select name="voivodeshipCode" value={formData.voivodeshipCode} onChange={onChange} className={formStyle}>
+                  <select name="voivodeship_code" value={formData.voivodeship_code} onChange={onChange} className={formStyle}>
                     {State.getStatesOfCountry(formData.country_code).map(e => <option key={e.isoCode} value={e.isoCode}>{e.name}</option>)}
                   </select>
-                  {formData.voivodeshipCode ?
-                    <input hidden type="text" onChange={onChange} name={formData.voivodeship_name} value={formData.voivodeship_name = State.getStateByCode(formData.voivodeshipCode).name} />
+                  {formData.voivodeship_code ?
+                    <input hidden type="text" onChange={onChange} name={formData.voivodeship_name} value={formData.voivodeship_name = State.getStateByCode(formData.voivodeship_code).name} />
                     : null}
                 </>
                 :
@@ -258,10 +259,10 @@ const Register = (props) => {
                     </>
                     : null}
                 </>}
-              {City.getCitiesOfState(formData.country_code, formData.voivodeshipCode).length !== 0 ?
+              {City.getCitiesOfState(formData.country_code, formData.voivodeship_code).length !== 0 ?
                 <>
                   <select name="city_name" value={formData.city_name} onChange={onChange} className={formStyle}>
-                    {City.getCitiesOfState(formData.country_code, formData.voivodeshipCode).map(e => <option key={e.isoCode} value={e.isoCode}>{e.name}</option>)}
+                    {City.getCitiesOfState(formData.country_code, formData.voivodeship_code).map(e => <option key={e.isoCode} value={e.isoCode}>{e.name}</option>)}
                   </select>
                 </>
                 : null}

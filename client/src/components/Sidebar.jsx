@@ -207,6 +207,16 @@ const Sidebar = () => {
                 {<FiShoppingBag />}
                 <span className="capitalize ">Pokoje</span>
               </NavLink>
+              <NavLink
+                to={`/departments`}
+                onClick={handleCloseSideBar}
+                style={({ isActive }) => ({
+                  backgroundColor: isActive ? currentColor : '',
+                })}
+                className={({ isActive }) => (isActive ? activeLink : normalLink)}>
+                {<FiShoppingBag />}
+                <span className="capitalize ">Wydziały</span>
+              </NavLink>
             </div>
             {currentUser ? 
             <div className="mt-10 ">
