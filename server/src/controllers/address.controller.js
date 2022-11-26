@@ -29,12 +29,6 @@ exports.one_address = async (req, res) => {
     }).catch((err) => {
         res.status(500).send({ message: err.message });
     })
-
-        .then((addresses) => {
-            res.status(200).send(addresses);
-        }).catch((err) => {
-            res.status(500).send({ message: err.message });
-        })
 };
 
 
@@ -75,24 +69,24 @@ exports.delete_address = async (req, res) => {
 
 exports.add_address = async (req, res) => {
 
-    const { countryName, countryCode, voivodeshipName, cityName, streetName, buildingNumber, apartmentNumber } = req.body
+    const { country_name, country_code, voivodeship_name, city_name, street_name, building_number, apartment_number } = req.body
     const [country, isCountryCreated] = await Country.findOrCreate({
         where: {
-            name: countryName,
-            code: countryCode,
+            name: country_name,
+            code: country_code,
         }
     })
 
     const [voivodeship, isVoivodeshipCreated] = await Voivodeship.findOrCreate({
         where: {
-            name: voivodeshipName,
+            name: voivodeship_name,
             country_id: country.id
         }
     })
 
     const [city, isCityCreated] = await City.findOrCreate({
         where: {
-            name: cityName,
+            name: city_name,
             voivodeship_id: voivodeship.id
         }
     })
@@ -100,19 +94,19 @@ exports.add_address = async (req, res) => {
 
     const [street, isStreetCreated] = await Street.findOrCreate({
         where: {
-            name: streetName,
+            name: street_name,
             city_id: city.id
         }
     })
 
     await Address.findOrCreate({
         where: {
-            building_number: buildingNumber,
-            apartment_number: apartmentNumber,
+            building_number: building_number,
+            apartment_number: apartment_number,
             street_id: street.id
         }
-    }).then(() => {
-        res.status(200).send({ message: "Successfully created adress." });
+    }).then((data) => {
+        res.status(200).send(data);
     }).catch((err) => {
         res.status(500).send({ message: err.message });
     })
@@ -120,24 +114,24 @@ exports.add_address = async (req, res) => {
 }
 exports.edit_address = async (req, res) => {
 
-    const { countryName, countryCode, voivodeshipName, cityName, streetName, buildingNumber, apartmentNumber } = req.body
+    const { country_name, country_code, voivodeship_name, city_name, street_name, building_number, apartment_number } = req.body
     const [country, isCountryCreated] = await Country.findOrCreate({
         where: {
-            name: countryName,
-            code: countryCode,
+            name: country_name,
+            code: country_code,
         }
     })
 
     const [voivodeship, isVoivodeshipCreated] = await Voivodeship.findOrCreate({
         where: {
-            name: voivodeshipName,
+            name: voivodeship_name,
             country_id: country.id
         }
     })
 
     const [city, isCityCreated] = await City.findOrCreate({
         where: {
-            name: cityName,
+            name: city_name,
             voivodeship_id: voivodeship.id
         }
     })
@@ -145,7 +139,7 @@ exports.edit_address = async (req, res) => {
 
     const [street, isStreetCreated] = await Street.findOrCreate({
         where: {
-            name: streetName,
+            name: street_name,
             city_id: city.id
         }
     })
@@ -166,25 +160,25 @@ exports.edit_address = async (req, res) => {
         }]
     }).then(async data => {
         await data.update({id: req.params.id,
-        building_number: buildingNumber,
-        apartment_number: apartmentNumber,
+        building_number: building_number,
+        apartment_number: apartment_number,
         street_id: street.id,
         street: {
             id: street.id,
-            name: streetName,
+            name: street_name,
             city_id: city.id,
             city: {
                 id: city.id,
-                name: cityName,
+                name: city_name,
                 voivodeship_id: voivodeship.id,
                 voivodeship: {
                     id: voivodeship.id,
-                    name: voivodeshipName,
+                    name: voivodeship_name,
                     country_id: country.id,
                     country: {
                         id: country.id,
-                        name: countryName,
-                        code: countryCode,
+                        name: country_name,
+                        code: country_code,
                     }
                 }
             }

@@ -61,14 +61,14 @@ const Register = (props) => {
     lastName: "",
     pesel: "",
     contactNumber: "",
-    buildingNumber: "",
-    apartmentNumber: "",
-    streetName: "",
-    cityName: "",
-    voivodeshipName: "",
-    voivodeshipCode: "",
-    countryName: "",
-    countryCode: "",
+    building_number: "",
+    apartment_number: "",
+    street_name: "",
+    city_name: "",
+    voivodeship_name: "",
+    voivodeship_code: "",
+    country_name: "",
+    country_code: "",
 
   });
   const form = useRef();
@@ -80,6 +80,7 @@ const Register = (props) => {
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+  
   const handleRegister = (e) => {
     e.preventDefault();
 
@@ -96,13 +97,13 @@ const Register = (props) => {
         formData.lastName,
         formData.pesel,
         formData.contactNumber,
-        formData.buildingNumber,
-        formData.apartmentNumber,
-        formData.streetName,
-        formData.cityName,
-        formData.voivodeshipName,
-        formData.countryName,
-        formData.countryCode
+        formData.building_number,
+        formData.apartment_number,
+        formData.street_name,
+        formData.city_name,
+        formData.voivodeship_name,
+        formData.country_name,
+        formData.country_code
 
       ).then(
         (response) => {
@@ -132,7 +133,7 @@ const Register = (props) => {
   //   }
   // })
   // console.log(countries)
-  //               <Select name="countryCode" value={formData.countryCode} onChange={onChange} className={formStyle} options={countries} /> 
+  //               <Select name="country_code" value={formData.country_code} onChange={onChange} className={formStyle} options={countries} /> 
 
   return (
     <div className="flex flex-wrap justify-center min-h-screen content-center">
@@ -210,58 +211,58 @@ const Register = (props) => {
               <Input
                 type="text"
                 className={formStyle}
-                name="streetName"
+                name="street_name"
                 placeholder="Ulica"
-                value={formData.streetName}
+                value={formData.street_name}
                 onChange={onChange}
                 validations={[required]} />
               <Input
                 type="text"
                 className={formStyle}
-                name="buildingNumber"
+                name="building_number"
                 placeholder="Nr domu"
-                value={formData.buildingNumber}
+                value={formData.building_number}
                 onChange={onChange}
                 validations={[required]} />
               <Input
                 type="text"
                 className={formStyle}
-                name="apartmentNumber"
+                name="apartment_number"
                 placeholder="Nr mieszkania"
-                value={formData.apartmentNumber}
+                value={formData.apartment_number}
                 onChange={onChange} />
-              <select name="countryCode" value={formData.countryCode} onChange={onChange} className={formStyle}>
+              <select name="country_code" value={formData.country_code} onChange={onChange} className={formStyle}>
 
                 {Country.getAllCountries().map(e => <option key={e.isoCode} value={e.isoCode}>{e.name}</option>)}
               </select>
 
-              {formData.countryCode ?
-                <input hidden type="text" onChange={onChange} name={formData.countryName} value={formData.countryName = Country.getCountryByCode(formData.countryCode).name} />
+              {formData.country_code ?
+                <input hidden type="text" onChange={onChange} name={formData.country_name} value={formData.country_name = Country.getCountryByCode(formData.country_code).name} />
                 : null}
-              {State.getStatesOfCountry(formData.countryCode).length !== 0 ?
+              {State.getStatesOfCountry(formData.country_code).length !== 0 ?
 
                 <>
-                  <select name="voivodeshipCode" value={formData.voivodeshipCode} onChange={onChange} className={formStyle}>
-                    {State.getStatesOfCountry(formData.countryCode).map(e => <option key={e.isoCode} value={e.isoCode}>{e.name}</option>)}
+                  <select name="voivodeship_code" value={formData.voivodeship_code} onChange={onChange} className={formStyle}>
+                    {State.getStatesOfCountry(formData.country_code).map(e => <option key={e.isoCode} value={e.isoCode}>{e.name}</option>)}
                   </select>
-                  {formData.voivodeshipCode ?
-                    <input hidden type="text" onChange={onChange} name={formData.voivodeshipName} value={formData.voivodeshipName = State.getStateByCode(formData.voivodeshipCode).name} />
+                  {formData.voivodeship_code ?
+                    <input hidden type="text" onChange={onChange} name={formData.voivodeship_name} value={formData.voivodeship_name = State.getStateByCode(formData.voivodeship_code).name} />
                     : null}
                 </>
                 :
                 <>
-                  {City.getCitiesOfCountry(formData.countryCode).length !== 0 ?
+                  {City.getCitiesOfCountry(formData.country_code).length !== 0 ?
                     <>
-                      <select name="cityName" value={formData.cityName} onChange={onChange} className={formStyle}>
-                        {City.getCitiesOfCountry(formData.countryCode).map(e => <option key={e.isoCode} value={e.isoCode}>{e.name}</option>)}
+                      <select name="city_name" value={formData.city_name} onChange={onChange} className={formStyle}>
+                        {City.getCitiesOfCountry(formData.country_code).map(e => <option key={e.isoCode} value={e.isoCode}>{e.name}</option>)}
                       </select>
                     </>
                     : null}
                 </>}
-              {City.getCitiesOfState(formData.countryCode, formData.voivodeshipCode).length !== 0 ?
+              {City.getCitiesOfState(formData.country_code, formData.voivodeship_code).length !== 0 ?
                 <>
-                  <select name="cityName" value={formData.cityName} onChange={onChange} className={formStyle}>
-                    {City.getCitiesOfState(formData.countryCode, formData.voivodeshipCode).map(e => <option key={e.isoCode} value={e.isoCode}>{e.name}</option>)}
+                  <select name="city_name" value={formData.city_name} onChange={onChange} className={formStyle}>
+                    {City.getCitiesOfState(formData.country_code, formData.voivodeship_code).map(e => <option key={e.isoCode} value={e.isoCode}>{e.name}</option>)}
                   </select>
                 </>
                 : null}
