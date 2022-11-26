@@ -103,6 +103,7 @@ exports.signin = (req, res) => {
                 roles: authorities,
                 accessToken: token,
                 refreshToken: refreshToken,
+                address_id: user.address_id
         })
 
 

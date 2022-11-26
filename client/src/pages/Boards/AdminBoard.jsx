@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import {Link} from 'react-router-dom';
 import UserService from "../../services/user.service";
 import ShowUsers from "../User/ShowUsers";
 
@@ -27,8 +27,8 @@ const AdminBoard = () => {
   }, []);
 
   return (
-    <div className="container">
-        <h3><ShowUsers /></h3>
+    <div className="flex flex-wrap justify-center min-h-screen content-center">
+    <Link to={'/admin/users'}>goto users</Link>
     </div>
   );
 };

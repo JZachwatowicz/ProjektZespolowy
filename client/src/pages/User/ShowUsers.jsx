@@ -5,8 +5,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 import UserService from "../../services/user.service"
 import AdressService from '../../services/address.service';
-
 const ShowUsers = () => {
+
     const [users, setUsers] = useState([])
     const [addresses, setAddresses] = useState([])
     const [filterBy, setFilterBy] = useState("")
@@ -80,13 +80,13 @@ const ShowUsers = () => {
     }, []);
 
     const handleEditUser = (id) => {
-        navigate('/admin/edit/' + id)
+        navigate('/admin/users/edit/' + id)
     }
     const handleEditUserAddress = (id) => {
-        navigate('/admin/editaddress/' + id)
+        navigate('/admin/users/editaddress/' + id)
     }
     const handleAddUser = () => {
-        navigate('/admin/add')
+        navigate('/admin/users/add')
     }
 
     const handleDeleteUser = (id) => {
@@ -100,6 +100,7 @@ const ShowUsers = () => {
 
     return (
         <div className="flex flex-wrap justify-center min-h-screen content-center">
+            <button onClick={() => navigate('/admin')}>Wróć</button>
             <button onClick={() => handleAddUser()}>Dodaj użytkownika</button>
             <table>
                 <tbody>

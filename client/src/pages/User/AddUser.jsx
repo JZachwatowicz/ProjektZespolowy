@@ -79,7 +79,7 @@ const AddUser = () => {
     form.current.validateAll();
     if (checkBtn.current.context._errors.length === 0) {
       UserService.addUser(formData)
-      .then(() => navigate('/admin'))
+      .then(() => navigate('/admin/users'))
       .catch(error=> console.log(error));
     }
   };

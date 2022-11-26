@@ -2,7 +2,10 @@ import React from "react";
 import AuthService from "../../services/auth.service";
 
 import { useNavigate, useLocation } from 'react-router-dom';
-
+import { useStateContext } from "../../services/ContextProvider";
+import { useEffect } from "react";
+import AddressService from '../../services/address.service'
+import { useState } from "react";
 
 const Profile = () => {
   const currentUser = AuthService.getCurrentUser();
@@ -10,13 +13,21 @@ const Profile = () => {
   const navigate = useNavigate();
 
   function editUserHandler() {
-    navigate("/user/edit/" + currentUser.id);
+    navigate("/profile/edit");
   }
 
   function editUserAddressHandler() {
-    navigate("/user/edit_address/" + currentUser.id);
+    navigate("/profile/editaddress");
   }
+  const [address, setAddress] = useState({})
 
+  useEffect(() => {
+    AddressService.getAddress(currentUser.address_id)
+      .then(res => {
+        setAddress(res.data)
+      })
+      .catch(error => console.error(error));
+  }, [])
   return (
     <div className="container">
       <header className="jumbotron">
@@ -41,7 +52,18 @@ const Profile = () => {
         </tr>
         <tr>
           <td><strong>Adres zamieszkania:</strong></td>
-          <td>{currentUser.address}</td>
+          {/* <td>{currentUser.address}</td> */}
+          {currentUser?.address_id ?  
+              <td>
+              
+                    {address?.street?.name} {address?.building_number}{address?.apartment_number !== "" ? '/' + address?.apartment_number : null}
+                    {address?.street?.city?.name}
+                     woj.{address?.street?.city?.voivodeship?.name}
+                     {address?.street?.city?.voivodeship?.country?.name}
+              </td>
+              :<td>brak</td> 
+          }
+
         </tr>
         <tr>
           <td><strong>Uprawnienia:</strong></td>
