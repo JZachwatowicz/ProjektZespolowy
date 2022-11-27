@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 
 import UserService from "../../services/user.service";
+import {Link} from 'react-router-dom';
+
 
 //Dodawanie, odczytywanie opisów użytkowników, przeglądanie pacjentów (ogarniczone dane), rezerwacja sali (CRUD harmonogram), zapisanie/wypisanie pajenta z zajęć
 
@@ -28,6 +30,7 @@ const EmployeeBoard = () => {
   return (
     <div className="container">
         <h3>{content}</h3>
+        <Link to={'/employee/descriptions'}>goto user descriptions</Link>
     </div>
   );
 };

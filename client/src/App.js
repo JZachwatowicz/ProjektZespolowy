@@ -31,6 +31,8 @@ import EditProfile from './pages/Profile/EditProfile';
 import ShowDeprtments from './pages/Department/ShowDepartments'
 import AddDepartment from './pages/Department/AddDepartment'
 import EditDepartment from './pages/Department/EditDepartment';
+import ShowDescriptions from './pages/User/ShowDescriptions';
+import AddDescription from './pages/User/AddDescription';
 
 
 const App = () => {
@@ -87,6 +89,8 @@ const App = () => {
 
               <Route exact path="/user" element={<UserBoard />} />
               <Route exact path="/employee" element={<EmployeeBoard />} />
+              <Route exact path="/employee/descriptions" element={<ShowDescriptions />} />
+              <Route exact path="/employee/descriptions/add" element={<AddDescription />} />
               <Route exact path="/admin" element={<AdminBoard />} />
               <Route exact path="/schedule" element={<Schedule />} />
               <Route exact path="/admin/users" element={<ShowUsers />} />
