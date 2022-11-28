@@ -16,10 +16,6 @@ module.exports = (sequelize, Sequelize) => {
       author: {
         type: Sequelize.STRING(100),
         allowNull: false
-      },
-      date: {
-        type: Sequelize.DATEONLY,
-        allowNull: false
       }
     });
   
