@@ -4,30 +4,30 @@ const { harmonogram: Harmonogram } = db;
 const Op = db.Sequelize.Op;
 
 exports.all_harmonograms = async (req, res) => {
-    var begin_date = req.query.begin_date ? {begin_date: {[Op.gte]: req.query.begin_date}}: {};
-    var end_date = req.query.end_date ? {end_date: {[Op.lte]: req.query.end_date}}: {};
+    var begin = req.query.begin_date ? {begin_date: {[Op.gte]: req.query.begin_date}}: {};
+    var end = req.query.end_date ? {end_date: {[Op.lte]: req.query.end_date}}: {};
     var user_id = req.query.user_id ? {user_id: req.query.user_id}: {};
     var admin_consent = req.query.admin_consent ? {admin_consent: req.query.admin_consent}: {};
     var room_id = req.query.room_id ? {room_id: req.query.room_id}: {};
     var item_id = req.query.item_id ? {item_id: req.query.item_id}: {};
 
-    var condition = begin_date + end_date + user_id + admin_consent + room_id + item_id;
-    if(condition != ""){
-        condition = {where: {
+    var now = new Date();
+
+    var condition = {
+        where: {
             [Op.and]: [
-                begin_date,
-                end_date,
+                begin,
+                end,
                 user_id,
                 admin_consent,
                 room_id,
-                item_id
+                item_id,
+                {end_date: {[Op.lte]: now}}
             ]
-        }};
-    } else {
-        condition = {};
-    }
+        }, order: [['begin_date', 'ASC']]
+    };
 
-    await Harmonogram.findAll(condition)
+    await Harmonogram.findAll({condition})
     .then(harmonograms => {
         res.status(200).send(harmonograms)
     }).catch(err => {
@@ -53,7 +53,8 @@ exports.add_harmonogram = async (req, res) => {
 
 exports.one_harmonogram = async (req, res) => {
     await Harmonogram.findOne({
-        where: {id: req.params.id}
+        where: {id: req.params.id},
+        //include: ["users", "rooms", "items"]
     }).then(harmonogram => {
         res.status(200).send(harmonogram);
     }).catch(err => {

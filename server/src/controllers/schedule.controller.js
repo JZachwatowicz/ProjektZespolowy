@@ -4,7 +4,9 @@ const { user: User, harmonogram: Harmonogram, schedule: Schedule } = db;
 const Op = db.Sequelize.Op;
 
 exports.all_schedules = async (req, res) => {
-    await Schedule.findAll({include: "users"}).then(schedules => {
+    await Schedule.findAll({
+       //include: ["harmonograms"]
+    }).then(schedules => {
         res.status(200).send(schedules)
     }).catch(err => {
         res.status(500).send({ message: err.message });
