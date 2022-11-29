@@ -3,37 +3,31 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import Textarea from "react-validation/build/textarea";
 import CheckButton from "react-validation/build/button"
-import ScheduleService from '../../services/schedule.service'
-import HarmonogramService from '../../services/harmonogram.service'
 import { useStateContext } from '../../services/ContextProvider';
-import UserService from '../../services/user.service';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { ScheduleComponent, Day, Week, WorkWeek, Month, Agenda, Inject, Resize, DragAndDrop } from '@syncfusion/ej2-react-schedule';
 
+import ScheduleService from '../../services/schedule.service'
+import HarmonogramService from '../../services/harmonogram.service'
+import UserService from '../../services/user.service';
 import RoomService from '../../services/room.service';
-import ActivityService from '../../services/address.service';
+import ActivityService from '../../services/activity.service';
 //CRUD + odczywytanie w tabeli
 
 
 const Schedule = () => {
   const { currentUser, showAdminBoard, showEmployeeBoard } = useStateContext();
 
-  //const [schedules, setSchedules] = useState([])
+  const navigate = useNavigate();
+
+  const [schedules, setSchedules] = useState([])
   const [users, setUsers] = useState([])
   const [harmonograms, setHarmonograms] = useState([])
+  const [rooms, setRooms] = useState([])
+  const [activities, setActivities] = useState([])
   const [message, setMessage] = useState("")
-/*
-  const fetchSchedules = () => {
-    ScheduleService.showSchedules()
-      .then(response => {
-        setSchedules(response.data);
-      })
-      .catch(error => {
-        console.error(error)
-        setMessage(error.message);
-      })
-  }*/
 
-  const fetchHarmonograms = () => {
+  const fetchHarmonogram = () => {
     HarmonogramService.showHarmonograms()
       .then(response => {
         setHarmonograms(response.data);
@@ -41,44 +35,81 @@ const Schedule = () => {
       .catch(error => {
         console.error(error)
         setMessage(error.message);
+      });
+  }
+
+  const fetchRoom = () => {
+    RoomService.showRooms()
+      .then(response => {
+        setRooms(response.data.map(e => { return { id: e.id, name: e.name } }));
       })
+      .catch(error => {
+        console.error(error)
+        setMessage(error.message);
+      });
   }
 
-  function getRoomName(id) {
-    RoomService.getRoom(id).then(response => {
-      return response[0].name;
-    })
+  const fetchActivity = () => {
+    ActivityService.showActivities()
+      .then(response => {
+        setActivities(response.data.map(e => { return { id: e.id, name: e.name } }));
+      })
+      .catch(error => {
+        console.error(error)
+        setMessage(error.message);
+      });
   }
 
-  function getAcitvityName(id) {
-    ScheduleService.getSchedule(id).then(response => {
-      return response[0].activity_id;
-    })
+  const fetchSchedule = () => {
+    ScheduleService.showSchedules()
+      .then(response => {
+        setSchedules(response.data.map(e => { return { id: e.id, activity_id: e.activity_id, harmonogram_id: e.harmonogram_id } }));
+      })
+      .catch(error => {
+        console.error(error)
+        setMessage(error.message);
+      });
   }
 
-  function getUserName(id) {
-    UserService.get_one_user(id).then(response => {
-      return response[0];
-    })
-  }
-
-  useEffect(() => {
+  const fetchUser = () => {
     UserService.get_all_users()
       .then(response => {
-        setUsers(response.data.map(e => { return { id: e.id, username: e.username } }))
+        setUsers(response.data.map(e => { return { id: e.id, first_name: e.first_name, last_name: e.last_name } }))
       }).catch(error => {
         console.error(error)
         setMessage(error.message);
-      })
+      });
+  }
 
-    //fetchSchedules();
-    fetchHarmonograms();
+  useEffect(() => {
+    fetchHarmonogram();
+    fetchRoom();
+    fetchActivity();
+    fetchSchedule();
+    fetchUser();
   }, []);
+
+  function getActivityId(h_id) {
+    if (schedules.find(schedule => schedule.harmonogram_id === h_id)) {
+      return schedules.find(schedule => schedule.harmonogram_id === h_id).activity_id;
+    }
+    return null;
+  }
+
+  function editHarmonogramHandler(id) {
+    navigate('/schedule/edit/' + id);
+  }
+
+  function addHarmonogramHandler() {
+    navigate('/schedule/add');
+  }
 
   return (
     <div>
       Harmonogram
-      <button>Dodaj</button>
+      <button onClick={() => addHarmonogramHandler()} className=" p-3 shadow-xl m-1 rounded-lg  bg-gray-600 text-white hover:bg-gray-400 hover:text-black ">
+        Dodaj
+      </button>
       <table className='w-full text-center'>
         <thead>
           <th>Data rozpoczęcia</th>
@@ -93,11 +124,33 @@ const Schedule = () => {
             <tr key={h.id}>
               <td>{h.begin_date}</td>
               <td>{h.end_date}</td>
-              <td>{getAcitvityName(h.shedule_id)}</td>
-              <td>{getRoomName(h.room_id)}</td>
-              <td>{getUserName(h.user_id)}</td>
-              <td><button>Edytuj</button></td>
-          </tr>
+              <td>
+                {
+                  activities.find(activity => activity.id === getActivityId(h.id)) ?
+                    activities.find(activity => activity.id === getActivityId(h.id)).name :
+                    "brak"
+                }
+              </td>
+              <td>
+                {
+                  rooms.find(room => room.id === h.room_id) ?
+                    rooms.find(room => room.id === h.room_id).name :
+                    "brak"
+                }
+              </td>
+              <td>
+                {
+                  users.find(user => user.id === h.user_id) ?
+                    users.find(user => user.id === h.user_id).first_name + " " + users.find(user => user.id === h.user_id).last_name :
+                    "brak"
+                }
+              </td>
+              <td>
+                <button onClick={() => editHarmonogramHandler(h.id)} className=" p-3 shadow-xl m-1 rounded-lg  bg-gray-600 text-white hover:bg-gray-400 hover:text-black ">
+                  Edytuj
+                </button>
+              </td>
+            </tr>
           )}
         </tbody>
       </table>
