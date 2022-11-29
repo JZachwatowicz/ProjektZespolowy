@@ -15,7 +15,7 @@ describe('article endpoints', () => {
     expect(res.statusCode).toEqual(201);
     // expect(res.body).toHaveProperty('');
   });
-  it('should return forbidden 403', async () => {
+  it('post should return forbidden 403', async () => {
     const res = await request(app)
       .post('/api/article/add')
       .send({
@@ -26,7 +26,7 @@ describe('article endpoints', () => {
     expect(res.statusCode).toEqual(403);
     // expect(res.body).toHaveProperty('');
   });
-  it('should return forbidden 403', async () => {
+  it('put should return forbidden 403', async () => {
     const res = await request(app)
       .put('/api/article/edit/1')
       .send({
@@ -39,16 +39,16 @@ describe('article endpoints', () => {
     // expect(res.body).toHaveProperty('x');
     // expect(res.body.post).toHaveProperty('x', 'updated title');
   });
-  it('should return status code 404', async () => {
-    const res = await request(app)
-      .post('/api/article')
-      .send({
-        title: 'test is cool',
-        content: 'Lorem ipsum',
-      });
-    expect(res.statusCode).toEqual(404);
-    // expect(res.body).toHaveProperty('error');
-  });
+  // it('should return status code 404', async () => {
+  //   const res = await request(app)
+  //     .post('/api/article')
+  //     .send({
+  //       title: 'test is cool',
+  //       content: 'Lorem ipsum',
+  //     });
+  //   expect(res.statusCode).toEqual(404);
+  //   // expect(res.body).toHaveProperty('error');
+  // });
 
   it('should return 404 if item to delete not found', async () => {
     const res = await request(app).delete('/api/article/222');

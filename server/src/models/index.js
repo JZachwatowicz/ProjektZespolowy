@@ -310,8 +310,8 @@ db.schedule.belongsToMany(db.user, {
 // INSERT INTO roles VALUES (2, 'employee', now(), now());
 // INSERT INTO roles VALUES (3, 'admin', now(), now());
 function init_roles() {
-    db.role.findAll().then(roles => {
-        if (roles < 3) {
+    db.role.findAll().then(e => {
+        if (e < 3) {
             db.role.create({ name: "user" });
             db.role.create({ name: "employee" });
             db.role.create({ name: "admin" });
@@ -319,16 +319,86 @@ function init_roles() {
     });
 }
 
+function init_users() {
+    db.user.findAll().then(e => {
+        if (e < 3) {
+            db.user.create({
+                username: "jan",
+                email: "jan@kowalski.pl",
+                password: "$2a$08$HHafX.QQ3pfwCIq6Or8H7uMuLfhgJ9vPvUxX.JNe3nKVFSER0yHt2",
+                first_name: "Jan",
+                birth_date: new Date(),
+                last_name: "Kowalski",
+                pesel: "02321299999",
+                contact_number: "505303202",
+                role_id: 3
+              });
+              db.user.create({
+                username: "adam",
+                email: "adam@nowak.pl",
+                password: "$2a$08$dOss1TzwH8RoB0GDkMS91O3f9Q.IxYtumTTBQrctgMGrsfvmB9ECa",
+                first_name: "Adam",
+                birth_date: new Date(),
+                last_name: "Nowak",
+                pesel: "98021099999",
+                contact_number: "503503202",
+                role_id: 2
+              });
+              db.user.create({
+                username: "anna",
+                email: "anna@grodzka.pl",
+                birth_date: new Date(),
+                password: "$2a$08$tw13uwmpH8x8u6uCAkNe1eB6z8YfMUIyBDv0KhU.86mOMHgpXbLsm",
+                first_name: "Anna",
+                last_name: "Grodzka",
+                pesel: "70081523235",
+                contact_number: "098098098",
+                role_id: 1
+              });
+        }
+    });
+}
+function init_user_descriptions() {
+    db.user_description.findAll().then(e => {
+        if (e < 3) {
+            db.user_description.create({ title: "zdolny", description: "lorem ipsum" , author: "1", user_id: 3});
+            db.user_description.create({ title: "nagana", description: "opis użytkownika" , author: "1", user_id: 2});
+            db.user_description.create({ title: "pochwała", description: "bardzo dobrze", author: "2", user_id: 3  });
+        }
+    });
+}
+function init_room_types() {
+    db.room_type.findAll().then(e => {
+        if (e < 3) {
+            db.room_type.create({ name: "Wykładowa"});
+            db.room_type.create({ name: "Ćwiczeniowa"});
+            db.room_type.create({ name: "Standardowa"});
+        }
+    });
+}
+function init_rooms() {
+    db.room.findAll().then(e => {
+        if (e < 3) {
+            db.room.create({ name: "S102", capacity: "8", department_has_address_id: 1, room_type_id: 1});
+            db.room.create({ name: "G204", capacity: "20", department_has_address_id: 1, room_type_id: 2});
+            db.room.create({ name: "A21", capacity: "15",department_has_address_id: 1,  room_type_id: 2});
+        }
+    });
+}
 
-//alter:true force:false - nie wymazuj wszystkich danych ale stwórz na nowo tabele
-//force:true - wymaż wszystko i stwórz na nowo
-// db.sequelize.sync({
-//     alter: false,
-//     force: false
-// }).then(() => {
-//     console.log('yes re-sync done!');
-//     init_roles();
-// })
+// alter:true force:false - nie wymazuj wszystkich danych ale stwórz na nowo tabele
+// force:true - wymaż wszystko i stwórz na nowo
+db.sequelize.sync({
+    alter: true,
+    force: true
+}).then(() => {
+    console.log('yes re-sync done!');
+    init_roles();
+    init_users();
+    init_user_descriptions();
+    init_room_types();
+    init_rooms();
+})
 
 db.ROLES = ["user", "employee", "admin"];
 
