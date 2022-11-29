@@ -322,13 +322,13 @@ function init_roles() {
 
 //alter:true force:false - nie wymazuj wszystkich danych ale stwórz na nowo tabele
 //force:true - wymaż wszystko i stwórz na nowo
-db.sequelize.sync({
-    alter: true,
-    force: false
-}).then(() => {
-    console.log('yes re-sync done!');
-    init_roles();
-})
+// db.sequelize.sync({
+//     alter: false,
+//     force: false
+// }).then(() => {
+//     console.log('yes re-sync done!');
+//     init_roles();
+// })
 
 db.ROLES = ["user", "employee", "admin"];
 
