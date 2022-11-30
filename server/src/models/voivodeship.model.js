@@ -4,6 +4,10 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING(45),
             unique: "voivodeship_name",
             allowNull: false
+        },
+        code: {
+            type: Sequelize.STRING(5),
+            allowNull: true
         }
     });
 

@@ -64,7 +64,7 @@ exports.delete_address = async (req, res) => {
 
 exports.add_address = async (req, res) => {
 
-    const { country_name, country_code, voivodeship_name, city_name, street_name, building_number, apartment_number } = req.body
+    const { country_name, country_code, voivodeship_name, city_name, street_name, building_number, apartment_number, voivodeship_code } = req.body
     const [country, isCountryCreated] = await Country.findOrCreate({
         where: {
             name: country_name,
@@ -75,6 +75,7 @@ exports.add_address = async (req, res) => {
     const [voivodeship, isVoivodeshipCreated] = await Voivodeship.findOrCreate({
         where: {
             name: voivodeship_name,
+            code: voivodeship_code,
             country_id: country.id
         }
     })
@@ -109,7 +110,7 @@ exports.add_address = async (req, res) => {
 }
 exports.edit_address = async (req, res) => {
 
-    const { country_name, country_code, voivodeship_name, city_name, street_name, building_number, apartment_number } = req.body
+    const { country_name, country_code, voivodeship_name, city_name, street_name, building_number, apartment_number, voivodeship_code } = req.body
     const [country, isCountryCreated] = await Country.findOrCreate({
         where: {
             name: country_name,
@@ -120,7 +121,8 @@ exports.edit_address = async (req, res) => {
     const [voivodeship, isVoivodeshipCreated] = await Voivodeship.findOrCreate({
         where: {
             name: voivodeship_name,
-            country_id: country.id
+            country_id: country.id,
+            code: voivodeship_code
         }
     })
 

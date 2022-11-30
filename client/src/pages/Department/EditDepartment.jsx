@@ -58,7 +58,7 @@ const EditDepartment = () => {
         city_name: "",
         voivodeship_name: "",
         country_name: "",
-        voivodeship_code: "",
+        voivodeship_code: ""
     });
     const [rerender, setRerender] = useState(false);
     const [addressId, setAddressId] = useState(-1);
@@ -78,16 +78,20 @@ const EditDepartment = () => {
             .then(res => {
                 AddressService.getAddress(res.data.address_id)
                     .then(response => {
+                        setAddressId(response?.data?.id);
                         formData.apartment_number = response?.data?.apartment_number
                         formData.building_number = response?.data?.building_number
                         formData.street_name = response?.data?.street?.name
-                        formData.city_name = response?.data?.street?.city?.name
-                        formData.voivodeship_name = response?.data?.street?.city?.voivodeship?.name
                         formData.country_name = response?.data?.street?.city?.voivodeship?.country?.name
                         formData.country_code = response?.data?.street?.city?.voivodeship?.country?.code
+                        formData.voivodeship_name = response?.data?.street?.city?.voivodeship?.name
+                        formData.voivodeship_code = response?.data?.street?.city?.voivodeship?.code
+                        formData.city_name = response?.data?.street?.city?.name
                         setRerender(!rerender);
 
                     })
+
+                    
             }).catch(error => console.error(error));
     }, [])
 
@@ -111,18 +115,23 @@ const EditDepartment = () => {
         form.current.validateAll();
         if (checkBtn.current.context._errors.length === 0) {
             AddressService.addAddress(
-                {
+                    {
                     country_name: formData.country_name,
                     country_code: formData.country_code,
                     voivodeship_name: formData.voivodeship_name,
                     city_name: formData.city_name,
                     street_name: formData.street_name,
                     building_number: formData.building_number,
-                    apartment_number: formData.apartment_number
-                }).then(res => {
-                    DepartmentService.editDepartment(editedDepartment.id, { name: formData.name, description: formData.description }, res.data)
-
-                    navigate('/admin/users')
+                    apartment_number: formData.apartment_number,
+                    voivodeship_code: formData.voivodeship_code
+                    }
+                ).then(res => {
+                    console.log(res)
+                    DepartmentService.editDepartment(editedDepartment.id, { name: formData.name, description: formData.description }, res.data).then( res => {
+                        navigate("/departments", { state: { message: "Successfully edited department.", successful: true } })
+                        window.location.reload();
+                })
+                    
                 }).catch(error => {
                     setMessage(error.message);
                     setSuccessful(false);
@@ -216,21 +225,21 @@ const EditDepartment = () => {
                             </>
                             :
                             <>
-                                {City.getCitiesOfCountry(formData.country_code).length !== 0 ?
-                                    <>
-                                        <select name="city_name" value={formData.city_name} onChange={onChange} className="form-control p-3 m-2 border-b-2 shadow-md">
-                                            {City.getCitiesOfCountry(formData.country_code).map(e => <option key={e.isoCode} value={e.isoCode}>{e.name}</option>)}
-                                        </select>
-                                    </>
-                                    : null}
-                            </>}
-                        {City.getCitiesOfState(formData.country_code, formData.voivodeship_code).length !== 0 ?
+                                    {City.getCitiesOfCountry(formData.country_code).length !== 0 ?
                             <>
-                                <select name="city_name" value={formData.city_name} onChange={onChange} className="form-control p-3 m-2 border-b-2 shadow-md">
-                                    {City.getCitiesOfState(formData.country_code, formData.voivodeship_code).map(e => <option key={e.isoCode} value={e.isoCode}>{e.name}</option>)}
-                                </select>
+                            <select name="city_name" value={formData.city_name} onChange={onChange} className="form-control p-3 m-2 border-b-2 shadow-md">
+                                {City.getCitiesOfCountry(formData.country_code).map(e => <option key={e.name} value={e.isoCode}>{e.name}</option>)}
+                            </select>
                             </>
                             : null}
+                        </>}
+                        {City.getCitiesOfState(formData.country_code, formData.voivodeship_code).length !== 0 ?
+                        <>
+                        <select name="city_name" value={formData.city_name} onChange={onChange} className="form-control p-3 m-2 border-b-2 shadow-md">
+                            {City.getCitiesOfState(formData.country_code, formData.voivodeship_code).map(e => <option key={e.name} value={e.isoCode}>{e.name}</option>)}
+                        </select>
+                        </>
+                        : null}
                         <div className='m-auto'>
                             <button className='p-4 shadow-xl m-2 rounded-lg bg- border-1 bg-gray-600 text-white hover:bg-gray-400 hover:text-black' type="submit">
                                 Dodaj

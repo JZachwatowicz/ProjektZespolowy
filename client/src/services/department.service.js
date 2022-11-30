@@ -9,7 +9,7 @@ const showDepartments = () => {
 const deleteDepartment = (id) => {
     return axios.delete(DEP_API_URL + "delete/" + id, { headers: authHeader() });
 };
-const addDepartment = async (name, description, apartment_number,  building_number, street_name, city_name ,voivodeship_name, country_name, country_code) => {
+const addDepartment = async (name, description, apartment_number,  building_number, street_name, city_name ,voivodeship_name, country_name, country_code, voivodeship_code) => {
     const address = await axios.post(ADD_API_URL + "add", {
         building_number,
         apartment_number,
@@ -17,7 +17,8 @@ const addDepartment = async (name, description, apartment_number,  building_numb
         city_name,
         voivodeship_name,
         country_name,
-        country_code
+        country_code,
+        voivodeship_code
     }, { headers: authHeader() });
 
     const department = await axios.post(DEP_API_URL + "add", {
@@ -26,8 +27,7 @@ const addDepartment = async (name, description, apartment_number,  building_numb
     }, { headers: authHeader() });
 
     const department_id = department.data.id;
-    console.log(address.data[0]);
-    const address_id = address.data[0].id;    
+    const address_id = address.data.id;    
 
     axios.post(DEP_API_URL + "AddressToDepartment", {
         department_id,
@@ -37,7 +37,7 @@ const addDepartment = async (name, description, apartment_number,  building_numb
 const editDepartment = async (id, data, address) => {
     const department = await axios.put(DEP_API_URL + "edit/" + id, data, { headers: authHeader() });
     const department_id = department.data.id;
-    const address_id = address[0].id;
+    const address_id = address.id;
     return axios.put(DEP_API_URL + "AddressToDepartment/"+ id, {
         department_id,
         address_id

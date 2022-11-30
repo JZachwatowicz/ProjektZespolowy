@@ -55,7 +55,7 @@ const AddDepartment = () => {
         city_name: "",
         voivodeship_name: "",
         country_name: "",
-        voivodeship_code: "",
+        voivodeship_code: ""
       });
     const [successful, setSuccessful] = useState(false);
     const [message, setMessage] = useState("");
@@ -77,12 +77,10 @@ const AddDepartment = () => {
 
       form.current.validateAll();
       if (checkBtn.current.context._errors.length === 0) {
-          DepartmentService.addDepartment(formData.name,formData.description, formData.apartment_number, formData.building_number, formData.street_name, formData.city_name, formData.voivodeship_name, formData.country_name, formData.country_code).then(
+          DepartmentService.addDepartment(formData.name,formData.description, formData.apartment_number, formData.building_number, formData.street_name, formData.city_name, formData.voivodeship_name, formData.country_name, formData.country_code, formData.voivodeship_code).then(
               ()=> {
-                  //navigate("/departments", { state: { message: "Successfully added department.", successful: true } })
-                 // window.location.reload();
-                  //setSuccessful(true);
-                  //setMessage("Successfuly added department.");
+                navigate("/departments", { state: { message: "Successfully added department.", successful: true } })
+                 window.location.reload();
               },
               (error) => {
                   const resMessage =
@@ -187,7 +185,7 @@ const AddDepartment = () => {
                 {City.getCitiesOfCountry(formData.country_code).length !== 0 ?
                     <>
                     <select name="city_name" value={formData.city_name} onChange={onChange} className="form-control p-3 m-2 border-b-2 shadow-md">
-                        {City.getCitiesOfCountry(formData.country_code).map(e => <option key={e.isoCode} value={e.isoCode}>{e.name}</option>)}
+                        {City.getCitiesOfCountry(formData.country_code).map(e => <option key={e.name} value={e.isoCode}>{e.name}</option>)}
                     </select>
                     </>
                     : null}
@@ -195,7 +193,7 @@ const AddDepartment = () => {
                 {City.getCitiesOfState(formData.country_code, formData.voivodeship_code).length !== 0 ?
                 <>
                 <select name="city_name" value={formData.city_name} onChange={onChange} className="form-control p-3 m-2 border-b-2 shadow-md">
-                    {City.getCitiesOfState(formData.country_code, formData.voivodeship_code).map(e => <option key={e.isoCode} value={e.isoCode}>{e.name}</option>)}
+                    {City.getCitiesOfState(formData.country_code, formData.voivodeship_code).map(e => <option key={e.name} value={e.isoCode}>{e.name}</option>)}
                 </select>
                 </>
                 : null}

@@ -125,7 +125,7 @@ exports.AddressToDepartmentEdit = async (req, res) => {
 exports.get_address_id = async (req, res) => {
 
     await Department_Has_Address.findOne({
-        where: { id: req.params.id }
+        where: { department_id: req.params.id }
     }).then(data => {
         res.status(200).send(data);
     }).catch(err => {
