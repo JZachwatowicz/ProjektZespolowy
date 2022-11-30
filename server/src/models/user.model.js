@@ -26,7 +26,7 @@ module.exports = (sequelize, Sequelize) => {
       },
       pesel: {
         type: Sequelize.STRING(11),
-        unique: true,
+        unique: 'pesel',
         allowNull: false
       },
       contact_number: {

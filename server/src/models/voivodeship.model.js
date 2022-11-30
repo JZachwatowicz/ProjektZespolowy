@@ -2,7 +2,7 @@ module.exports = (sequelize, Sequelize) => {
     const Voivodeship = sequelize.define("voivodeships", {
         name: {
             type: Sequelize.STRING(45),
-            unique: true,
+            unique: "voivodeship_name",
             allowNull: false
         }
     });
