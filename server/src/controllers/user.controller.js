@@ -96,20 +96,20 @@ exports.edit_user_roles = async (req, res) => {
 
 exports.edit_user_address = async (req, res) => {
 
-        const user = await User.findOne({
-            where: { id: req.params.id }
-        });
+    const user = await User.findOne({
+        where: { id: req.params.id }
+    });
 
-        if (user) {
-            user.address_id = req.body.address_id;
+    if (user) {
+        user.address_id = req.body.address_id;
 
-            await user.save();
-            res.status(200).send("OK");
+        await user.save();
+        res.status(200).send("OK");
 
-        } else {
-            res.status(500).send("USER NOT FOUND");
-        }
+    } else {
+        res.status(500).send("USER NOT FOUND");
     }
+}
 
 
 
@@ -117,29 +117,29 @@ exports.edit_user_address = async (req, res) => {
 
 
 exports.delete_user = async (req, res) => {
-            await User.destroy({
-                where: { id: req.params.id }
-            }).then(() => {
-                res.status(200).send({ message: "Successfully deleted user." });
-            }).catch((err) => {
-                res.status(500).send({ message: err.message });
-            })
+    await User.destroy({
+        where: { id: req.params.id }
+    }).then(() => {
+        res.status(200).send({ message: "Successfully deleted user." });
+    }).catch((err) => {
+        res.status(500).send({ message: err.message });
+    })
 
-        };
-
-
+};
 
 
-    exports.add_user = async (req, res) => {
 
-        const { username, email, password, firstName, lastName, pesel, contactNumber, role_id } = req.body
 
-        await createUserRole(username, email, password, firstName, lastName, pesel, contactNumber, role_id)
-            .then(() => {
-                res.send({ message: "User was registered successfully!" });
-            })
-            .catch(err => {
-                res.status(500).send({ message: err.message, requestData: req.body });
-            });
+exports.add_user = async (req, res) => {
 
-    };
+    const { username, email, password, firstName, lastName, pesel, contactNumber, role_id } = req.body
+
+    await createUserRole(username, email, password, firstName, lastName, pesel, contactNumber, role_id)
+        .then(() => {
+            res.send({ message: "User was registered successfully!" });
+        })
+        .catch(err => {
+            res.status(500).send({ message: err.message, requestData: req.body });
+        });
+
+};
