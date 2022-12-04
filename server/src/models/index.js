@@ -463,10 +463,11 @@ db.sequelize.sync({
     init_room_types();
     init_departments();
     init_users();
-    init_articles();
+
     init_activities();
     init_item_types();
 }).then(() => {
+    init_articles();
     init_items();
     init_departments_has_addresses();
     init_rooms();
