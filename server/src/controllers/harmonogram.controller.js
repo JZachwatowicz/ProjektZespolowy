@@ -24,10 +24,10 @@ exports.all_harmonograms = async (req, res) => {
                 item_id,
                 {end_date: {[Op.lte]: now}}
             ]
-        }, order: [['begin_date', 'ASC']]
+        }
     };
 
-    await Harmonogram.findAll({condition})
+    await Harmonogram.findAll({condition, order: ['begin_date']})
     .then(harmonograms => {
         res.status(200).send(harmonograms)
     }).catch(err => {
@@ -44,7 +44,7 @@ exports.add_harmonogram = async (req, res) => {
         item_id: req.body.item_id
 
     }).then(harmonogram => {
-        res.send({ message: "Harmonogram added." });
+        res.send({ message: "Harmonogram added.", data: harmonogram });
     }).catch(err => {
         console.log(err.message);
         res.status(500).send({ message: err.message });
@@ -66,7 +66,6 @@ exports.edit_harmonogram = async (req, res) => {
     await Harmonogram.findOne({
         where: {id: req.params.id}
     }).then(harmonogram => {
-        console.log(harmonogram);
         harmonogram.set({
             begin_date: req.body.begin_date,
             end_date: req.body.end_date

@@ -91,7 +91,7 @@ const App = () => {
 
               <Route exact path="/schedule" element={<Schedule />} />
               <Route exact path='/schedule/add' element={<AddSchedule />} />
-              <Route exact path='/schedule/edit/:id' element={<EditSchedule />} />
+              <Route exact path='/schedule/edit/:h_id/:s_id' element={<EditSchedule />} />
               
 
               <Route exact path="/items/item_types" element={<ItemTypes />} />

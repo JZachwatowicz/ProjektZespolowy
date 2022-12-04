@@ -11,6 +11,7 @@ const deleteSchedule = (id) => {
 const addSchedule = (data) => {
     return axios.post(API_URL + "add", data, { headers: authHeader() });
 };
+
 const editSchedule = (id, data) => {
     return axios.put(API_URL + "edit/" + id, data, { headers: authHeader() });
 };
