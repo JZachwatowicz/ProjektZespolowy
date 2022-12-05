@@ -144,6 +144,11 @@ const Schedule = () => {
 
   }
 
+  function parseDate(date) {
+    var parsed =  new Date(date).toISOString().split(/[T.]/);
+    parsed = parsed[0] + " " + parsed[1];
+    return parsed;
+  }
 
   return (
     <div>
@@ -164,8 +169,8 @@ const Schedule = () => {
         <tbody>
           {harmonograms.map(h =>
             <tr key={h.id}>
-              <td>{h.begin_date}</td>
-              <td>{h.end_date}</td>
+              <td>{parseDate(h.begin_date)}</td>
+              <td>{parseDate(h.end_date)}</td>
               <td>
                 {
                   activities.find(activity => activity.id === getActivityId(h.id)) ?

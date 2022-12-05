@@ -58,10 +58,19 @@ const EditSchedule = () => {
   const [room_id_v, setRoomId] = useState('');
   const [activity_id_v, setActivityId] = useState('');
 
+  function parseDate(date) {
+    var parsed = new Date(date).toISOString().split('.')[0];
+    return parsed;
+  }
+
   const fetchHarmonograms = () => {
-    HarmonogramService.showHarmonograms()
+    HarmonogramService.getHarmonogram(h_id)
       .then(response => {
+        console.log(response.data);
         setHarmonogram(response.data);
+        setBeginDate(parseDate(response.data.begin_date));
+        setEndDate(parseDate(response.data.end_date));
+        setRoomId(response.data.room_id);
       })
       .catch(error => {
         console.error(error)
@@ -70,9 +79,11 @@ const EditSchedule = () => {
   }
 
   const fetchSchedule = () => {
-    ScheduleService.showSchedules()
+    ScheduleService.getSchedule(s_id)
       .then(response => {
+        console.log(response.data);
         setSchedule(response.data);
+        setActivityId(response.data.activity_id);
       })
       .catch(error => {
         console.error(error)
@@ -227,7 +238,6 @@ const EditSchedule = () => {
               onChange={onChangeRoom}
               validations={[required]}
             >
-              <option value={harmonogram.room_id} key={harmonogram.room_id}>----</option>
               {
                 rooms.length > 0 &&
                 rooms.map(room => (
@@ -240,7 +250,6 @@ const EditSchedule = () => {
               onChange={onChangeActivity}
               validations={[required]}
             >
-              <option value={schedule.activity_id} key={schedule.activity_id}>----</option>
               {
                 activities.length > 0 &&
                 activities.map(activity => (
