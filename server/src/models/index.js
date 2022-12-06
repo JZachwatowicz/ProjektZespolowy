@@ -436,9 +436,37 @@ function init_articles() {
 function init_addresses() {
     db.address.findAll().then(e => {
         if (e < 3) {
-            db.address.create({id: 1, building_number: "3", apartment_number: null });
-            db.address.create({id: 2, building_number: "15", apartment_number: "3"});
-            db.address.create({id: 3, building_number: "140",apartment_number: "2"});
+            db.address.create({id: 1, building_number: "3", apartment_number: null, street_id: 1});
+            db.address.create({id: 2, building_number: "15", apartment_number: "3", street_id: 1});
+            db.address.create({id: 3, building_number: "140",apartment_number: "2", street_id: 1});
+        }
+    });
+}
+function init_streets() {
+    db.street.findAll().then(e => {
+        if (e < 1) {
+            db.street.create({id: 1, name: "Jana Sawy", city_id: 1});
+        }
+    });
+}
+function init_cities() {
+    db.city.findAll().then(e => {
+        if (e < 1) {
+            db.city.create({id: 1, name: "Lublin", voivodeship_id: 1 });
+        }
+    });
+}
+function init_voivodeships() {
+    db.voivodeship.findAll().then(e => {
+        if (e < 1) {
+            db.voivodeship.create({id: 1, name: "Lubelskie", code: "Lub", country_id: 1 });
+        }
+    });
+}
+function init_countries() {
+    db.country.findAll().then(e => {
+        if (e < 1) {
+            db.country.create({id: 1, name: "Poland", code: "PL", });
         }
     });
 }
@@ -459,20 +487,29 @@ db.sequelize.sync({
 }).then(() => {
     console.log('yes re-sync done!');
     init_roles();
-    init_addresses();
     init_room_types();
     init_departments();
     init_users();
-
+    init_countries();
     init_activities();
     init_item_types();
-}).then(() => {
+})
+.then(() => {
+    init_voivodeships();
+})
+.then(() => {
+    init_cities();
+})
+.then(() => {
+    init_streets();
+})
+.then(() => {
+    init_addresses();
     init_articles();
     init_items();
     init_departments_has_addresses();
     init_rooms();
     init_user_descriptions();
-
 })
 
 db.ROLES = ["user", "employee", "admin"];

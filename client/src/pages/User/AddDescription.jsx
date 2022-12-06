@@ -61,7 +61,7 @@ const AddDescription = () => {
     form.current.validateAll();
     if (checkBtn.current.context._errors.length === 0) {
       DescriptionService.post_description(formData)
-        .then(() => navigate('/employee/descriptions'))
+        .then(() => navigate('/descriptions'))
         .catch(error => console.log(error));
     }
   };

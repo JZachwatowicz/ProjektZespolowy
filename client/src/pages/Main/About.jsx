@@ -4,7 +4,7 @@ import image from '../../assets/about_us_img.jpg'
 const About = () => {
     return (
 
-        <div className="flex flex-wrap justify-center min-h-screen content-center mt-7">
+        <div className="flex flex-wrap justify-center min-h-screen content-center">
             <div className="w-full md:max-w-5xl p-4 bg-white border border-gray-200 rounded-lg shadow-2xl sm:p-6 md:p-8 dark:bg-secondary-dark-bg dark:border-gray-700">
 
                 <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none">Kim jesteśmy?</h1>

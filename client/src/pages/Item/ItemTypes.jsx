@@ -194,7 +194,7 @@ const required = (value) => {
               </button><h1 className="mb-8 text-center text-3xl font-semibold">Typy sprzętu</h1>
           <div className=' grid grid-cols-2 content-center'>
             <div className="flex items-center ">
-              <input className="form-control shadow-md dark:text-black p-3 rounded-l-lg w-4/5  w-max" 
+              <input className="form-control shadow-md dark:text-black p-3 rounded-l-lg w-4/5 " 
                 type="search" 
                 placeholder="Search"
                 value={search}

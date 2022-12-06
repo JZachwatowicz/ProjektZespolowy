@@ -190,7 +190,7 @@ import AdressService from '../../services/address.service';
         <h1 className="mb-8 text-center text-3xl font-semibold">Lista Pokoi</h1>
           <div className=' grid grid-cols-3 content-center'>
             <div className="flex items-center ">
-              <input className="form-control  dark:text-black p-3 rounded-l-lg w-4/5 shadow-md  w-max" 
+              <input className="form-control  dark:text-black p-3 rounded-l-lg w-4/5 shadow-md " 
                 type="search" 
                 placeholder="Search"
                 value={search}
@@ -202,7 +202,7 @@ import AdressService from '../../services/address.service';
                 </svg>
               </button>
             </div>
-            <select className="p-3 w-4/5 shadow-md  w-max rounded-lg form-select font-medium  text-black shadow-md  "
+            <select className="p-3 w-4/5 shadow-md rounded-lg form-select font-medium  text-black"
                 value={filterBy || ''}
                 onChange={onChangeFilterBy}
               >

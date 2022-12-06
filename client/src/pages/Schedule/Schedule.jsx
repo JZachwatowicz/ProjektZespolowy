@@ -74,7 +74,7 @@ const Schedule = () => {
   }
 
   const fetchUser = () => {
-    UserService.get_all_users()
+    UserService.showUsers()
       .then(response => {
         setUsers(response.data.map(e => { return { id: e.id, first_name: e.first_name, last_name: e.last_name } }))
       }).catch(error => {

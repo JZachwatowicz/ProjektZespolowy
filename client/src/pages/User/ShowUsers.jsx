@@ -80,13 +80,13 @@ const ShowUsers = () => {
     }, []);
 
     const handleEditUser = (id) => {
-        navigate('/admin/users/edit/' + id)
+        navigate('/users/edit/' + id)
     }
     const handleEditUserAddress = (id) => {
-        navigate('/admin/users/editaddress/' + id)
+        navigate('/users/editaddress/' + id)
     }
     const handleAddUser = () => {
-        navigate('/admin/users/add')
+        navigate('/users/add')
     }
 
     const handleDeleteUser = (id) => {
@@ -100,7 +100,7 @@ const ShowUsers = () => {
 
     return (
         <div className="flex flex-wrap justify-center min-h-screen content-center">
-            <button onClick={() => navigate('/admin')}>Wróć</button>
+            <button onClick={() => navigate('/users')}>Wróć</button>
             <button onClick={() => handleAddUser()}>Dodaj użytkownika</button>
             <table>
                 <tbody>

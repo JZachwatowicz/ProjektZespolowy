@@ -32,7 +32,7 @@ const ShowDescriptions = () => {
 
 
   const handleAddDescription = () => {
-    navigate("/employee/descriptions/add");
+    navigate("/descriptions/add");
   }
 
 
