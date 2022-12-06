@@ -1,9 +1,10 @@
 import React from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
-import { FiShoppingBag } from 'react-icons/fi';
-import { useStateContext } from '../services/ContextProvider';
 
-// dark: text-gray-200 items-center gap-3 ml-3 mt-4 flex text-xl capitalize
+import { BsFillHouseDoorFill } from 'react-icons/bs';
+import { RiContactsBook2Fill, RiNewspaperFill } from 'react-icons/ri';
+import { BiBookOpen } from 'react-icons/bi';
+import { useStateContext } from '../services/ContextProvider';
 
 
 
@@ -27,12 +28,12 @@ const Navbar = () => {
   return (
 
     <>
-      <div className={`${screenSize <= 900 ? 'flex-2' : 'flex'} justify-evenly p-2 md:mx-6 relative pb-10`}>
+      <div className={`${screenSize <= 900 ? 'flex-2' : 'flex'} justify-evenly p-2 md:mx-6 relative`}>
 
-        <NavButton name="home" link="/home" icon={<FiShoppingBag />} />
-        <NavButton name="about" link="/home/about" icon={<FiShoppingBag />} />
-        <NavButton name="contact" link="/home/contact" icon={<FiShoppingBag />} />
-        <NavButton name="news" link="/home/news" icon={<FiShoppingBag />} />
+        <NavButton name="Strona główna" link="/home" icon={<BsFillHouseDoorFill />} />
+        <NavButton name="O&nbsp;nas" link="/home/about" icon={<BiBookOpen />} />
+        <NavButton name="Kontakt" link="/home/contact" icon={<RiContactsBook2Fill />} />
+        <NavButton name="Aktualności" link="/home/news" icon={<RiNewspaperFill />} />
       </div>
       <Outlet />
     </>

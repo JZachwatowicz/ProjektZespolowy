@@ -6,14 +6,15 @@ import CheckButton from "react-validation/build/button"
 import ArticleService from '../../services/article.service'
 import { useStateContext } from '../../services/ContextProvider';
 import UserService from '../../services/user.service';
+import Moment from 'moment';
 
 //Podział na strony
 
 const required = (value) => {
   if (!value) {
     return (
-      <div className="invalid-feedback d-block">
-        This field is required!
+      <div className="text-red-500 font-medium">
+        To pole jest wymagane!
       </div>
     );
   }
@@ -133,7 +134,7 @@ const News = () => {
           console.error('There was an error!', error);
         });
     }
-    
+
     setEditState(-1)
   }
 
@@ -144,83 +145,106 @@ const News = () => {
   }
 
   const updateForm = ({ e }) => {
+    const formStyle = "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 
     return (
-      <>
-        <tr key={e.id}>
-          <td>
-            <input type="text" value={updateTitle} onChange={onChangeUpdateTitle} />
-          </td>
-          <td>
-            <textarea value={updateContent} onChange={onChangeUpdateContent} />
-          </td>
-          <td>{e.createdAt}</td>
-          <td>{e.createdAt !== e.updatedAt ? e.updatedAt : null}</td>
 
-          <td>{users.find(user => user.id === e.user_id) ? users.find(user => user.id === e.user_id).username : null}</td>
+      <div key={e.id} className="w-full md:max-w-5xl p-4 bg-white border border-gray-200 rounded-lg shadow-2xl sm:p-6 md:p-8 dark:bg-main-dark-bg dark:border-gray-700">
+        <div className='text-end text-xs'>{e.createdAt !== e.updatedAt ? "Edytowane: " + Moment(e.updatedAt).format('DD-MM-YYYY') : "Dodane: " + Moment(e.createdAt).format('DD-MM-YYYY')} {users.find(user => user.id === e.user_id) ? users.find(user => user.id === e.user_id).username : null}</div>
+        <h6 className="text-lg font-bold dark:text-white">            <input type="text" value={updateTitle} className={formStyle} onChange={onChangeUpdateTitle} />
+        </h6>
 
-          <td><button onClick={() => handleUpdateArticle(e.id)}>Save</button></td>
-          <td><button onClick={() => handleDeleteArticle(e.id)}>X</button></td>
-
-
-        </tr>
-      </>
+        <p className='mb-3 font-light'>
+          <textarea value={updateContent} className={formStyle} onChange={onChangeUpdateContent} />
+        </p>
+        <div className='flex flex-row justify-end'>
+          <button className="p-3 shadow-xl m-1 rounded-lg  bg-green-700 text-white hover:bg-gray-400 hover:text-black " onClick={() => handleUpdateArticle(e.id)}>Zapisz</button>
+          <button className="p-3 shadow-xl m-1 rounded-lg  text-white bg-red-600 border border-red-700 hover:bg-red-800" onClick={() => handleDeleteArticle(e.id)}>                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-x" viewBox="0 0 16 16"><path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"></path></svg>
+          </button>
+        </div>
+      </div>
     )
   }
+  const formStyle = "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 
   return (
 
-    <div>
-      Aktualności
-      {showAdminBoard || showEmployeeBoard ?
-        <Form onSubmit={handleAddArticle} ref={form} className="flex-2 text-center">
+    <div className="flex flex-wrap justify-center min-h-screen content-center">
+
+      <div className="flex-1 gap-y-4 w-full md:max-w-5xl p-4 bg-white border border-gray-200 rounded-lg shadow-2xl sm:p-6 md:p-8 dark:bg-secondary-dark-bg dark:border-gray-700">
+        <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none">Aktualności</h1>
+
+        {showAdminBoard || showEmployeeBoard ?
+          <div className="w-full md:max-w-5xl p-4 bg-white border border-gray-200 rounded-lg shadow-2xl sm:p-6 md:p-8 dark:bg-main-dark-bg dark:border-gray-700">
+
+            <Form onSubmit={handleAddArticle} ref={form} className="space-y-6">
 
 
-          <>
-            Tytuł<Input
-              value={title}
-              onChange={onChangeTitle}
-              type="text"
-              validations={[required, vtitle]} />
+              <>
+                <div>
+                  <label for="title" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tytuł</label>
+                  <Input
+                    name="title"
+                    value={title}
+                    className={formStyle}
+                    onChange={onChangeTitle}
+                    type="text"
+                    validations={[required, vtitle]} />
+                </div>
+                <div>
+                  <label for="content" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Opis</label>
+                  <Textarea
+                    name="content"
+                    value={content}
+                    className={formStyle}
+                    onChange={onChangeContent}
+                    validations={[required, vcontent]} />
+                </div>
+                <button type="submit" className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Dodaj</button>
 
-            Opis<Textarea
-              value={content}
-              onChange={onChangeContent}
-              validations={[required, vcontent]} /><button className='btn btn-primary' type="submit">
-              Add Article
-            </button></>
+              </>
 
 
-          {message ? (
-            <div className="form-group">
-              <div
-                className={
-                  message ? "alert alert-success" : "alert alert-danger"
-                }
-                role="alert"
-              >
-                {message}
-              </div>
+              {message ? (
+                <div className="form-group">
+                  <div
+                    className={
+                      message ? "alert alert-success" : "alert alert-danger"
+                    }
+                    role="alert"
+                  >
+                    {message}
+                  </div>
+                </div>
+              ) : null}
+              <CheckButton ref={checkBtn} />
+            </Form>
+          </div>
+          : null}
+
+
+
+        {articles.map(e =>
+          editState === e.id ? updateForm({ e }) :
+            <div key={e.id} className="w-full md:max-w-5xl p-4 bg-white border border-gray-200 rounded-lg shadow-2xl sm:p-6 md:p-8 dark:bg-main-dark-bg dark:border-gray-700">
+              <div className='text-end text-xs'>{e.createdAt !== e.updatedAt ? "Edytowane: " + Moment(e.updatedAt).format('DD-MM-YYYY') : "Dodane: " + Moment(e.createdAt).format('DD-MM-YYYY')} {users.find(user => user.id === e.user_id) ? users.find(user => user.id === e.user_id).username : null}</div>
+              <h6 className="text-lg font-bold dark:text-white">{e.title}</h6>
+
+              <p className='mb-3 font-light'>{e.content}</p>
+
+
+
+              {showAdminBoard || showEmployeeBoard ?
+                <div className='flex flex-row justify-end'>
+                  <button className="p-3 shadow-xl m-1 rounded-lg  bg-gray-600 text-white hover:bg-gray-400 hover:text-black " onClick={() => handleEditArticle(e)}>Edytuj</button>
+                  <button className="p-3 shadow-xl m-1 rounded-lg  text-white bg-red-600 border border-red-700 hover:bg-red-800 " onClick={() => handleDeleteArticle(e.id)}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-x" viewBox="0 0 16 16"><path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"></path></svg></button>
+                </div>
+                : null}
+
             </div>
-          ) : null}
-          <CheckButton ref={checkBtn} />
-        </Form>
-        : null}
+        )}
 
-      <table className='w-full text-center'>
-        <tbody>
-          <tr><th>title</th><th>content</th><th>createdAt</th><th>updatedAt</th><th>author</th></tr>
-
-          {articles.map(e =>
-            editState === e.id ? updateForm({ e }) :
-              <tr key={e.id}><td>{e.title}</td><td>{e.content}</td><td>{e.createdAt}</td><td>{e.createdAt !== e.updatedAt ? e.updatedAt : null}</td><td>{users.find(user => user.id === e.user_id) ? users.find(user => user.id === e.user_id).username : null}</td>
-                {showAdminBoard || showEmployeeBoard ? <><td><button onClick={() => handleEditArticle(e)}>Edit</button></td><td>
-                  <button onClick={() => handleDeleteArticle(e.id)}>X</button></td></> : null}
-
-              </tr>
-          )}
-        </tbody>
-      </table>
+      </div>
     </div>
   )
 }
