@@ -9,7 +9,7 @@ import { useStateContext } from '../services/ContextProvider';
 import AuthService from '../services/auth.service';
 
 import AccessabilitySettings from './AccessabilitySettings';
-
+import logo from '../assets/logo.png'
 const Sidebar = () => {
 
   const { currentColor, activeMenu, setActiveMenu, screenSize, setScreenSize, showEmployeeBoard, setShowEmployeeBoard, showAdminBoard, setShowAdminBoard,currentUser, setCurrentUser } = useStateContext();
@@ -77,16 +77,14 @@ const Sidebar = () => {
   }, [screenSize]);
 
   const handleActiveMenu = () => setActiveMenu(!activeMenu);
-
   return (
     <>
       {activeMenu ? (
         <div className="ml-3 h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10">
           <>
-            <div className="flex justify-between items-center">
-              <Link to="/" onClick={handleCloseSideBar}
-                className="items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight dark:text-white text-slate-900">
-                <span>Menu/LOGO</span>
+            <div className="flex justify-center items-center mt-5">
+              <Link to="/" onClick={handleCloseSideBar} >
+                <img src={logo} alt="Logo"className="h-20 md:h-28 lg:h-40"/>
               </Link>
               <TooltipComponent content="Menu" position="BottomCenter">
                 <button
@@ -206,6 +204,16 @@ const Sidebar = () => {
                 className={({ isActive }) => (isActive ? activeLink : normalLink)}>
                 {<FiShoppingBag />}
                 <span className="capitalize ">Pokoje</span>
+              </NavLink>
+              <NavLink
+                to={`/departments`}
+                onClick={handleCloseSideBar}
+                style={({ isActive }) => ({
+                  backgroundColor: isActive ? currentColor : '',
+                })}
+                className={({ isActive }) => (isActive ? activeLink : normalLink)}>
+                {<FiShoppingBag />}
+                <span className="capitalize ">Wydziały</span>
               </NavLink>
             </div>
             {currentUser ? 

@@ -1,10 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
     const UserDescription = sequelize.define("user_descriptions", {
-      id: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        primaryKey: true
-      },
       title: {
         type: Sequelize.STRING(100),
         allowNull: false
@@ -15,10 +10,6 @@ module.exports = (sequelize, Sequelize) => {
       },
       author: {
         type: Sequelize.STRING(100),
-        allowNull: false
-      },
-      date: {
-        type: Sequelize.DATEONLY,
         allowNull: false
       }
     });

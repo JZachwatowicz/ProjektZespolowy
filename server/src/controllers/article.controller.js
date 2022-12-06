@@ -30,7 +30,7 @@ exports.add_article = async (req, res) => {
         content: req.body.content,
         user_id: req.body.user_id
     }).then(article => {
-        res.send({ message: "Article was added successfully!" });
+        res.status(201).send({ message: "Article was added successfully!" });
     }).catch(err => {
         console.log(err.message);
         res.status(500).send({ message: err.message });

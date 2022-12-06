@@ -7,11 +7,11 @@ module.exports = (sequelize, Sequelize) => {
       },
       name: {
         type: Sequelize.STRING(45),
-        unique: true,
+        unique: 'department_name',
         allowNull: false
       },
       description: {
-        type: Sequelize.INTEGER,
+        type:  Sequelize.STRING(250),
         allowNull: false
       }
     });
