@@ -13,7 +13,7 @@ router.use((req, res, next) => {
 
 router.get(
     '/get',
-    [authJwt.verifyToken, authJwt.isEmployee],
+    [authJwt.verifyToken],
     controller.all_addresses
 );
 

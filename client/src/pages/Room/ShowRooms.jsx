@@ -8,6 +8,8 @@ import AuthService from "../../services/auth.service.js";
 import AdressService from '../../services/address.service';
 
   const ShowRooms = () => {
+
+  const currentUser = AuthService.getCurrentUser();
   const [rooms, setRooms] = useState([])
   const [types, setTypes] = useState([])
   const [addr, setAddr] = useState(undefined)
@@ -210,9 +212,11 @@ import AdressService from '../../services/address.service';
                 ))}
               </select>
             <div className='col-span-1 flex justify-end'>
+            { (currentUser.roles.includes("ROLE_EMPLOYEE") || currentUser.roles.includes("ROLE_ADMIN")) && 
               <button onClick={handleAddRoom} className="p-4 shadow-xl m-2 rounded-lg border-1 hover:bg-gray-600 hover:text-white">
                 Dodaj 
               </button>
+              }
               { user.roles.includes("ROLE_ADMIN") ? 
               <button onClick={manageRoomTypes} className="p-4 shadow-xl m-2 rounded-lg border-1 hover:bg-gray-600 hover:text-white">
                 Zarządzaj typami 
@@ -241,6 +245,7 @@ import AdressService from '../../services/address.service';
                   <div className=" flex flex-col p-1 items-center break-words "><b>Pojemność:</b> <>{r.capacity} osób</></div>
                   <div className=" flex flex-col p-1 items-center break-words "><b>Wydział:</b> <> {returnDepartment(r.department_has_address_id)} </></div>
                     <div className=" flex col-span-2 justify-end items-center pr-2">
+                    { (currentUser.roles.includes("ROLE_EMPLOYEE") || currentUser.roles.includes("ROLE_ADMIN")) && 
                       <div className={screenSize <= 1200 ? 'flex flex-col' : 'flex flex-row'}>
                         <button onClick={() => editRoomHandler(r.id)} className=" p-3 shadow-xl m-1 rounded-lg  bg-gray-600 text-white hover:bg-gray-400 hover:text-black ">
                           Edytuj
@@ -250,6 +255,7 @@ import AdressService from '../../services/address.service';
                           <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/></svg>
                         </button>
                       </div>
+                        }
                     </div>
                   </div>
               )))}
