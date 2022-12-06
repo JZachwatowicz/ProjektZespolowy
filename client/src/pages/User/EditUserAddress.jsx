@@ -69,7 +69,7 @@ const EditUserAddress = () => {
       AddressService.addAddress(formData)
         .then(res => {
           UserService.editUserAddress(editedUser.id, { address_id: res.data.id })
-            .then(() => navigate('/admin/users'))
+            .then(() => navigate('/users'))
         })
 
         .catch(error => console.error(error));
