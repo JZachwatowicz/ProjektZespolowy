@@ -23,6 +23,12 @@ router.post(
     controller.add_schedule
 );
 
+router.put(
+    '/addUserSchedule',
+    [authJwt.verifyToken, authJwt.isEmployee],
+    controller.add_user
+);
+
 router.get(
     '/get/:id',
     [authJwt.verifyToken],

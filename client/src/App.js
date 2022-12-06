@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Sidebar, Footer, Navbar } from './components';
-import { Home, Login, Register, Profile, Schedule, AdminBoard, EmployeeBoard, UserBoard, About, Contact, News } from './pages';
+import { Home, Login, Register, Profile, AdminBoard, EmployeeBoard, UserBoard, About, Contact, News } from './pages';
 import './App.css'
 
 import { useStateContext } from './services/ContextProvider';
@@ -19,6 +19,11 @@ import ItemTypes from './pages/Item/ItemTypes'
 import EditRoom from './pages/Room/EditRoom'
 import AddRoom from './pages/Room/AddRoom'
 import ShowRooms from './pages/Room/ShowRooms'
+
+import Schedule from './pages/Schedule/Schedule'
+import EditSchedule from './pages/Schedule/EditSchedule'
+import AddSchedule from './pages/Schedule/AddSchedule'
+//import ShowSchedules from './pages/Schedule/ShowSchedules'
 
 import RoomTypes from './pages/Room/RoomTypes'
 import AddUser from './pages/User/AddUser';
@@ -105,6 +110,11 @@ const App = () => {
               <Route exact path='/items/add' element={<AddItem />} />
               <Route exact path='/items/edit/:id' element={<EditItem />} />
               <Route exact path="/items" element={<ShowItems />} />
+
+              <Route exact path="/schedule" element={<Schedule />} />
+              <Route exact path='/schedule/add' element={<AddSchedule />} />
+              <Route exact path='/schedule/edit/:h_id/:s_id' element={<EditSchedule />} />
+              
 
               <Route exact path="/items/item_types" element={<ItemTypes />} />
 
