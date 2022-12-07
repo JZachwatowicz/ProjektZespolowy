@@ -172,6 +172,7 @@ exports.edit_address = async (req, res) => {
                     voivodeship: {
                         id: voivodeship.id,
                         name: voivodeship_name,
+                        code: voivodeship_code,
                         country_id: country.id,
                         country: {
                             id: country.id,

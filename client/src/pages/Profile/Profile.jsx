@@ -29,7 +29,9 @@ const Profile = () => {
       .catch(error => console.error(error));
   }, [])
   return (
-      <><header>
+    <div className="flex flex-wrap justify-center min-h-screen content-center">
+
+      <header>
       <h3>Profil użytkownika</h3>
     </header><table>
         <tr>
@@ -74,10 +76,11 @@ const Profile = () => {
             Zmień adres
           </button></td>
         </tr>
-      </table><div className="flex flex-wrap justify-center min-h-screen content-center">
+      </table>
+      
 
         <ShowUserDescription />
-      </div></>
+      </div>
   );
 };
 

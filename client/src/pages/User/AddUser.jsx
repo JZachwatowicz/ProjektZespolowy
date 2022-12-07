@@ -62,10 +62,10 @@ const AddUser = () => {
     username: "",
     email: "",
     password: "",
-    firstName: "",
-    lastName: "",
+    first_name: "",
+    last_name: "",
     pesel: "",
-    contactNumber: "",
+    contact_number: "",
     role_id: '1'
   });
 
@@ -127,18 +127,18 @@ const AddUser = () => {
               <Input
                 type="text"
                 className={formStyle}
-                name="firstName"
+                name="first_name"
                 placeholder="Imię"
-                value={formData.firstName}
+                value={formData.first_name}
                 onChange={onChange}
                 validations={[required]} />
 
               <Input
                 type="text"
                 className={formStyle}
-                name="lastName"
+                name="last_name"
                 placeholder="Nazwisko"
-                value={formData.lastName}
+                value={formData.last_name}
                 onChange={onChange}
                 validations={[required]} />
 
@@ -154,9 +154,9 @@ const AddUser = () => {
               <Input
                 type="text"
                 className={formStyle}
-                name="contactNumber"
+                name="contact_number"
                 placeholder="Telefon"
-                value={formData.contactNumber}
+                value={formData.contact_number}
                 onChange={onChange}
                 validations={[required]} />
 

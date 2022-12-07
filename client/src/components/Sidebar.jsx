@@ -217,7 +217,7 @@ const Sidebar = () => {
                     })}
                     className={({ isActive }) => (isActive ? activeLink : normalLink)}>
                     {<FiShoppingBag />}
-                    <span className="capitalize ">Wypożyczenia sprzeętu</span>
+                    <span className="capitalize ">Wypożyczenia sprzętu</span>
                   </NavLink>
                   <NavLink
                     to={`/activities`}

@@ -94,6 +94,7 @@ const EditUser = () => {
       UserService.editUser(id,formData)
         .then(() => navigate('/users'))
         .catch(error => console.log(error));
+
     }
   };
 

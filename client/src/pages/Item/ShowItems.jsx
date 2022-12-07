@@ -136,6 +136,8 @@ import AuthService from "../../services/auth.service.js";
   }
 
   return (
+    <div className="flex flex-wrap justify-center min-h-screen content-center">
+
     <div className='flex gap-10 flex-wrap justify-center'>
       <div className="p-11 mb-20 flex-grow ">
         <h1 className="mb-8 text-center text-3xl font-semibold">Lista Sprzętu</h1>
@@ -221,6 +223,7 @@ import AuthService from "../../services/auth.service.js";
                 </div>
               }
       </div>
+    </div>
     </div>
   );
 }

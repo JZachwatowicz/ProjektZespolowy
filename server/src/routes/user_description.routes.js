@@ -25,7 +25,7 @@ router.post(
 
 router.get(
     '/get/:id',
-    [authJwt.verifyToken, authJwt.isEmployee],
+    // [authJwt.verifyToken],
     controller.one_description
 );
 

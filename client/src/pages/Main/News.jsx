@@ -7,6 +7,7 @@ import ArticleService from '../../services/article.service'
 import { useStateContext } from '../../services/ContextProvider';
 import UserService from '../../services/user.service';
 import Moment from 'moment';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 //Podział na strony
 
@@ -31,10 +32,10 @@ const vtitle = (value) => {
 };
 
 const vcontent = (value) => {
-  if (value.length > 400) {
+  if (value.length > 5000) {
     return (
       <div className="invalid-feedback d-block">
-        Description of the article has to be under 400 characters.
+        Description of the article has to be under 5000 characters.
       </div>
     );
   }
@@ -42,6 +43,7 @@ const vcontent = (value) => {
 
 const News = () => {
 
+  const navigate = useNavigate();
   const { currentUser, showAdminBoard, showEmployeeBoard } = useStateContext();
   const form = useRef();
   const checkBtn = useRef();
@@ -122,11 +124,14 @@ const News = () => {
     setArticles(articles.filter(e => e.id !== id)
     );
   }
+  const handleOneArticle = (id) => {
+    navigate("/news/" + id)
+  }
 
   const handleUpdateArticle = (id) => {
     setMessage("");
 
-    if (updateTitle.length < 100 && updateContent.length < 400 && updateTitle && updateContent) {
+    if (updateTitle.length < 100 && updateContent.length < 5000 && updateTitle && updateContent) {
       ArticleService.update_article(id, { title: updateTitle, content: updateContent })
         .then(() => fetchData())
         .catch(error => {
@@ -226,20 +231,22 @@ const News = () => {
 
         {articles.map(e =>
           editState === e.id ? updateForm({ e }) :
-            <div key={e.id} className="w-full md:max-w-5xl p-4 bg-white border border-gray-200 rounded-lg shadow-2xl sm:p-6 md:p-8 dark:bg-main-dark-bg dark:border-gray-700">
+            <div key={e.id} className="flex-1 w-full md:max-w-5xl p-4 bg-white border border-gray-200 rounded-lg shadow-2xl sm:p-6 md:p-8 dark:bg-main-dark-bg dark:border-gray-700">
               <div className='text-end text-xs'>{e.createdAt !== e.updatedAt ? "Edytowane: " + Moment(e.updatedAt).format('DD-MM-YYYY') : "Dodane: " + Moment(e.createdAt).format('DD-MM-YYYY')} {users.find(user => user.id === e.user_id) ? users.find(user => user.id === e.user_id).username : null}</div>
               <h6 className="text-lg font-bold dark:text-white">{e.title}</h6>
 
-              <p className='mb-3 font-light'>{e.content}</p>
+              <p className='mb-3 font-light line-clamp-2'>{e.content}</p>
 
 
-
-              {showAdminBoard || showEmployeeBoard ?
+              
                 <div className='flex flex-row justify-end'>
-                  <button className="p-3 shadow-xl m-1 rounded-lg  bg-gray-600 text-white hover:bg-gray-400 hover:text-black " onClick={() => handleEditArticle(e)}>Edytuj</button>
-                  <button className="p-3 shadow-xl m-1 rounded-lg  text-white bg-red-600 border border-red-700 hover:bg-red-800 " onClick={() => handleDeleteArticle(e.id)}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-x" viewBox="0 0 16 16"><path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"></path></svg></button>
-                </div>
-                : null}
+                <button className="p-3 shadow-xl m-1 rounded-lg  bg-green-700 text-white hover:bg-gray-400 hover:text-black " onClick={() => handleOneArticle(e.id)}>Szczegóły</button>
+
+                {showAdminBoard || showEmployeeBoard ?
+                  <><button className="p-3 shadow-xl m-1 rounded-lg  bg-gray-600 text-white hover:bg-gray-400 hover:text-black " onClick={() => handleEditArticle(e)}>Edytuj</button><button className="p-3 shadow-xl m-1 rounded-lg  text-white bg-red-600 border border-red-700 hover:bg-red-800 " onClick={() => handleDeleteArticle(e.id)}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-x" viewBox="0 0 16 16"><path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"></path></svg></button></>
+                  : null}
+                  </div>
+                
 
             </div>
         )}

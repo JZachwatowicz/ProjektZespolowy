@@ -52,18 +52,6 @@ router.get(
 );
 
 
-// router.put(
-//     "/edit_address/:id",
-//     [authJwt.verifyToken],
-//     controller.edit_user_address
-// );
-
-// router.put(
-//     "/edit_roles/:id",
-//     [authJwt.verifyToken, authJwt.isAdmin],
-//     controller.edit_user_roles
-// );
-
 router.get(
     "/user",
     [authJwt.verifyToken],

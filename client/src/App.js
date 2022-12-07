@@ -4,7 +4,7 @@ import { Sidebar, Footer } from './components';
 import {
   Home, Login, Profile, About, Contact, News, RoomTypes, AddUser, EditUser, EditUserAddress, ShowUsers, EditAddress, EditProfile,
   ShowDeprtments, AddDepartment, EditDepartment, ShowDescriptions, AddDescription, AddActivity, EditActivity, ShowActivities,
-  EditItem, AddItem, ShowItems, ItemTypes, EditRoom, AddRoom, ShowRooms, Schedule, EditSchedule, AddSchedule
+  EditItem, AddItem, ShowItems, ItemTypes, EditRoom, AddRoom, ShowRooms, Schedule, EditSchedule, AddSchedule, OneNews, ShowDescription
 } from './pages';
 import './App.css'
 
@@ -52,6 +52,7 @@ const App = () => {
               <Route exact path="/contact" element={<Contact />} />
               <Route exact path="/about" element={<About />} />
               <Route exact path="/news" element={<News />} />
+              <Route exact path="/news/:id" element={<OneNews />} />
 
 
 
@@ -63,6 +64,7 @@ const App = () => {
 
               <Route exact path="/descriptions" element={<ShowDescriptions />} />
               <Route exact path="/descriptions/add" element={<AddDescription />} />
+              <Route exact path="/descriptions/:id" element={<ShowDescription />} />
 
               <Route exact path="/schedule" element={<Schedule />} />
               <Route exact path="/booking" element={<Schedule />} />

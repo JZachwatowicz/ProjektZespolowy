@@ -24,14 +24,14 @@ const EditUserAddress = () => {
 
   const [formData, setFormData] = useState({
 
-    country_code: "",
     building_number: "",
     apartment_number: "",
     street_name: "",
     city_name: "",
     voivodeship_name: "",
+    voivodeship_code: "",
     country_name: "",
-    voivodeship_name: "",
+    country_code: "",
   });
   const [rerender, setRerender] = useState(false);
 
@@ -47,6 +47,7 @@ const EditUserAddress = () => {
             formData.street_name = response.data?.street?.name
             formData.city_name = response.data?.street?.city?.name
             formData.voivodeship_name = response.data?.street?.city?.voivodeship?.name
+            formData.voivodeship_code = response.data?.street?.city?.voivodeship?.code
             formData.country_name = response.data?.street?.city?.voivodeship?.country?.name
             formData.country_code = response.data?.street?.city?.voivodeship?.country?.code
             setRerender(!rerender);
@@ -116,7 +117,7 @@ const EditUserAddress = () => {
                 type="text"
                 className={formStyle}
                 name="country_code"
-                placeholder="Ulica"
+                placeholder="country_code"
                 value={formData.country_code}
                 onChange={onChange}
               />
@@ -144,6 +145,14 @@ const EditUserAddress = () => {
                 name="voivodeship_name"
                 placeholder="Wojewodztwo"
                 value={formData.voivodeship_name}
+                onChange={onChange}
+              />
+              <Input
+                type="text"
+                className={formStyle}
+                name="voivodeship_code"
+                placeholder="kod regionu"
+                value={formData.voivodeship_code}
                 onChange={onChange}
               />
 
