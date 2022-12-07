@@ -483,7 +483,7 @@ function init_departments_has_addresses() {
 // force:true - wymaż wszystko i stwórz na nowo
 db.sequelize.sync({
     alter: true,
-    force: true
+    force: false
 }).then(() => {
     console.log('yes re-sync done!');
     init_roles();

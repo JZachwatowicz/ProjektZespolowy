@@ -17,13 +17,28 @@ const editHarmonogram = (id, data) => {
 const getHarmonogram = (id) => {
     return axios.get(API_URL + "get/" + id, { headers: authHeader() });
 };
-
+const getUserReservations = (id) => {
+    return axios.get(API_URL + "getRes/" + id, { headers: authHeader() });
+};
+const getPendingReservations = () => {
+    return axios.get(API_URL + "getPen/", { headers: authHeader() });
+};
+const addReservation = (data) => {
+    return axios.post(API_URL + "add", data , { headers: authHeader() });
+};
+const acceptHarmonogram = (id) => {
+    return axios.patch(API_URL + "accept/" + id,{}, { headers: authHeader() });
+};
 const ScheduleService = {
     showHarmonograms,
     deleteHarmonogram,
     addHarmonogram,
     editHarmonogram,
-    getHarmonogram
+    getHarmonogram,
+    addReservation,
+    getUserReservations,
+    getPendingReservations,
+    acceptHarmonogram
 }
 
 export default ScheduleService;

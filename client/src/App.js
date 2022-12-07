@@ -4,7 +4,7 @@ import { Sidebar, Footer } from './components';
 import {
   Home, Login, Profile, About, Contact, News, RoomTypes, AddUser, EditUser, EditUserAddress, ShowUsers, EditAddress, EditProfile,
   ShowDeprtments, AddDepartment, EditDepartment, ShowDescriptions, AddDescription, AddActivity, EditActivity, ShowActivities,
-  EditItem, AddItem, ShowItems, ItemTypes, EditRoom, AddRoom, ShowRooms, Schedule, EditSchedule, AddSchedule
+  EditItem, AddItem, ShowItems, ItemTypes, EditRoom, AddRoom, ShowRooms, Schedule, EditSchedule, AddSchedule, ReserveItem
 } from './pages';
 import './App.css'
 
@@ -65,7 +65,7 @@ const App = () => {
               <Route exact path="/descriptions/add" element={<AddDescription />} />
 
               <Route exact path="/schedule" element={<Schedule />} />
-              <Route exact path="/booking" element={<Schedule />} />
+              <Route exact path="/booking" element={<ReserveItem />} />
               <Route exact path="/users" element={<ShowUsers />} />
               <Route exact path="/users/add" element={<AddUser />} />
               <Route exact path="/users/edit/:id" element={<EditUser />} />

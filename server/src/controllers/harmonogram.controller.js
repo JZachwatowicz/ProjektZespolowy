@@ -35,6 +35,30 @@ exports.all_harmonograms = async (req, res) => {
     });
 };
 
+exports.all_user_reserved = async (req, res) => {
+    
+    
+
+    await Harmonogram.findAll({where : {user_id :  req.params.id}, order: ['begin_date']})
+    .then(harmonograms => {
+        res.status(200).send(harmonograms)
+    }).catch(err => {
+        res.status(500).send({message: err.message});
+    });
+};
+
+exports.all_pending = async (req, res) => {
+    
+    
+
+    await Harmonogram.findAll({where : {admin_consent : 0}, order: ['begin_date']})
+    .then(harmonograms => {
+        res.status(200).send(harmonograms)
+    }).catch(err => {
+        res.status(500).send({message: err.message});
+    });
+};
+
 exports.add_harmonogram = async (req, res) => {
     await Harmonogram.create({
         begin_date: req.body.begin_date,

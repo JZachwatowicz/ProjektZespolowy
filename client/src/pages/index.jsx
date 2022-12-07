@@ -30,6 +30,7 @@ export {default as EditItem} from './Item/EditItem'
 export {default as AddItem} from './Item/AddItem'
 export {default as ShowItems} from './Item/ShowItems'
 export {default as ItemTypes} from './Item/ItemTypes'
+export {default as ReserveItem} from './Item/ReserveItem'
 
 export {default as EditRoom} from './Room/EditRoom'
 export {default as AddRoom} from './Room/AddRoom'
