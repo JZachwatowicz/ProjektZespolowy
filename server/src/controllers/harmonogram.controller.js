@@ -60,19 +60,47 @@ exports.all_pending = async (req, res) => {
 };
 
 exports.add_harmonogram = async (req, res) => {
-    await Harmonogram.create({
+    let data = {
         begin_date: req.body.begin_date,
         end_date: req.body.end_date,
         user_id: req.body.user_id,
         room_id: req.body.room_id,
         item_id: req.body.item_id
 
-    }).then(harmonogram => {
-        res.send({ message: "Harmonogram added.", data: harmonogram });
-    }).catch(err => {
-        console.log(err.message);
-        res.status(500).send({ message: err.message });
-    });
+    }
+
+    
+    if(data.item_id != null){
+        let harmonograms = await Harmonogram.findAll({where : {item_id: data.item_id , [Op.or] : [
+            { [Op.and] : {begin_date : {[Op.lte] : data.begin_date}, end_date : {[Op.gte] : data.begin_date}}} ,
+            { [Op.and] : {begin_date : {[Op.lte] : data.end_date}, end_date : {[Op.gte] : data.end_date}} },
+            { [Op.and] : {begin_date : {[Op.lte] : data.begin_date}, end_date : {[Op.gte] : data.end_date}}} ]}, });
+        if(harmonograms.length != 0){
+            res.status(500).send({ message: "This item is allready researved for this time." });
+            return;
+        }
+    }
+    if(data.room_id != null){
+        let harmonograms = await Harmonogram.findAll({where : {room_id: data.room_id , [Op.or] : [
+            { [Op.and] : {begin_date : {[Op.lte] : data.begin_date}, end_date : {[Op.gte] : data.begin_date}}} ,
+            { [Op.and] : {begin_date : {[Op.lte] : data.end_date}, end_date : {[Op.gte] : data.end_date}} },
+            { [Op.and] : {begin_date : {[Op.lte] : data.begin_date}, end_date : {[Op.gte] : data.end_date}}} ]}, });
+        if(harmonograms.length != 0){
+            res.status(500).send({ message: "This room is allready researved for this time." });
+            return;
+        }
+    }
+    
+        await Harmonogram.create(data).then(harmonogram => {
+            res.send({ message: "Harmonogram added.", data: harmonogram });
+        }).catch(err => {
+            console.log(err.message);
+            res.status(500).send({ message: err.message  });
+        });
+    
+    
+
+    
 };
 
 exports.one_harmonogram = async (req, res) => {
