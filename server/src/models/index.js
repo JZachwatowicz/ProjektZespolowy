@@ -55,7 +55,7 @@ db.room_type = require('./room_type.model.js')(sequelize, Sequelize);
 db.room = require('./room.model.js')(sequelize, Sequelize);
 db.schedule = require('./schedule.model.js')(sequelize, Sequelize);
 db.user_description = require('./user_description.model.js')(sequelize, Sequelize);
-
+db.user_has_schedule = require('./user_has_schedule.model')(sequelize, Sequelize);
 
 
 // creating associations
@@ -291,17 +291,35 @@ db.article.belongsTo(db.user, {
     as: 'user'
 });
 
-db.user.belongsToMany(db.schedule, {
-    through: "user_has_schedule",
-    as: "schedules",
-    foreignKey: "user_id"
-});
-db.schedule.belongsToMany(db.user, {
-    through: "user_has_schedule",
-    as: "users",
-    foreignKey: "schedule_id"
+db.user.hasMany(db.user_has_schedule, {
+    foreignKey: {
+        name: 'user_id',
+        allowNull: false
+    },
+    as: 'user_has_schedule'
+})
+db.user_has_schedule.belongsTo(db.user, {
+    foreignKey: {
+        name: 'user_id',
+        allowNull: false
+    },
+    as: 'user'
 });
 
+db.schedule.hasMany(db.user_has_schedule, {
+    foreignKey: {
+        name: 'schedule_id',
+        allowNull: false
+    },
+    as: 'user_has_schedule'
+})
+db.user_has_schedule.belongsTo(db.schedule, {
+    foreignKey: {
+        name: 'schedule_id',
+        allowNull: false
+    },
+    as: 'schedule'
+});
 
 
 
@@ -483,7 +501,7 @@ function init_departments_has_addresses() {
 // force:true - wymaż wszystko i stwórz na nowo
 db.sequelize.sync({
     alter: true,
-    force: true
+    force: false
 }).then(() => {
     console.log('yes re-sync done!');
     init_roles();

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 //import Input from "react-validation/build/input";
 //import Textarea from "react-validation/build/textarea";
 //import CheckButton from "react-validation/build/button"
-//import { useStateContext } from '../../services/ContextProvider';
+import { useStateContext } from '../../services/ContextProvider';
 import { useNavigate, useLocation} from 'react-router-dom';
 //import { ScheduleComponent, Day, Week, WorkWeek, Month, Agenda, Inject, Resize, DragAndDrop } from '@syncfusion/ej2-react-schedule';
 
@@ -12,11 +12,12 @@ import HarmonogramService from '../../services/harmonogram.service'
 import UserService from '../../services/user.service';
 import RoomService from '../../services/room.service';
 import ActivityService from '../../services/activity.service';
+import AuthService from '../../services/auth.service';
 //CRUD + odczywytanie w tabeli
 
 
 const Schedule = () => {
-  //const { currentUser, showAdminBoard, showEmployeeBoard } = useStateContext();
+  const { currentUser, showAdminBoard, showEmployeeBoard } = useStateContext();
 
   const navigate = useNavigate();
 
@@ -43,7 +44,7 @@ const Schedule = () => {
   const fetchRoom = () => {
     RoomService.showRooms()
       .then(response => {
-        setRooms(response.data.map(e => { return { id: e.id, name: e.name } }));
+        setRooms(response.data);
       })
       .catch(error => {
         console.error(error)
@@ -105,12 +106,23 @@ const Schedule = () => {
     return null;
   }
 
+  function getRoomSize(r_id) {
+    if (rooms.find(room => room.id === r_id)) {
+      return rooms.find(room => room.id === r_id).capacity;
+    }
+    return 0;
+  }
+
   function editHarmonogramHandler(h_id, s_id) {
     navigate('/schedule/edit/' + h_id + "/" + s_id);
   }
 
   function addHarmonogramHandler() {
     navigate('/schedule/add');
+  }
+
+  function manageUsersHandler(h_id, s_id, r_size) {
+    navigate('/schedule/manageusers/' + h_id + "/" + s_id + "/" + r_size);
   }
 
   function deleteHandler(h_id, s_id) {
@@ -195,6 +207,11 @@ const Schedule = () => {
               <td>
                 <button onClick={() => editHarmonogramHandler(h.id, getScheduleId(h.id))} className=" p-3 shadow-xl m-1 rounded-lg  bg-gray-600 text-white hover:bg-gray-400 hover:text-black ">
                   Edytuj
+                </button>
+              </td>
+              <td>
+                <button onClick={() => manageUsersHandler(h.id, getScheduleId(h.id), getRoomSize(h.room_id))} className=" p-3 shadow-xl m-1 rounded-lg  bg-gray-600 text-white hover:bg-gray-400 hover:text-black ">
+                  Dodaj pacjenta
                 </button>
               </td>
               <td>

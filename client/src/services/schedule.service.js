@@ -12,6 +12,10 @@ const addSchedule = (data) => {
     return axios.post(API_URL + "add", data, { headers: authHeader() });
 };
 
+const addUserSchedule = (id, data) => {
+    return axios.put(API_URL + "addUserSchedule/" + id, data, { headers: authHeader() });
+};
+
 const editSchedule = (id, data) => {
     return axios.put(API_URL + "edit/" + id, data, { headers: authHeader() });
 };
@@ -24,7 +28,8 @@ const ScheduleService = {
     deleteSchedule,
     addSchedule,
     editSchedule,
-    getSchedule
+    getSchedule,
+    addUserSchedule
 }
 
 export default ScheduleService;
