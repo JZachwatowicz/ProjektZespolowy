@@ -24,23 +24,9 @@ const required = (value) => {
         );
     }
 };
-/*
-const vsize = () => {
-    if (count_users > r_size) {
-        return (
-            <div className="text-red-500 font-medium">
-                Podano zbyt wielu pacjentów do tego pokoju.
-            </div>
-        );
-    } else {
-        return true;
-    }
-};
-*/
+
 const EditSchedule = () => {
     let { h_id, s_id, r_size } = useParams();
-
-
 
     const form = useRef();
     const checkBtn = useRef();
@@ -85,8 +71,20 @@ const EditSchedule = () => {
     const fetchUsers = () => {
         UserService.showUsers()
             .then(response => {
-                setUsers(response.data)
-                setCheckedState(new Array(response.data.length).fill(false))
+                setUsers(response.data);
+
+                var newCheckedState = new Array(response.data.length).fill(false);
+                ScheduleService.getScheduleUsers(s_id).then(res => {
+                    for(var i=0; i<response.data.length; i++) {
+                        res.data.forEach(element => {
+                            if(response.data[i].id === element.user_id){
+                                newCheckedState[i] = true;
+                            }
+                        })
+                    }
+                });
+
+                setCheckedState(newCheckedState);
             }).catch(error => {
                 console.error(error)
                 setMessage(error.message);
@@ -139,7 +137,6 @@ const EditSchedule = () => {
             }
 
             if(data.length <= r_size){
-                console.log(data);
                 await ScheduleService.addUserSchedule(s_id, data)
                     .then(() => {
                         navigate("/schedule")
@@ -154,7 +151,7 @@ const EditSchedule = () => {
                         setSuccessful(false);
                     });
             } else {
-                setMessage("Nie można dodać więcej");
+                setMessage("Zbyt mała sala, zmniejsz liczbę pacjentów");
                 setSuccessful(false);
             }
         }
@@ -182,9 +179,10 @@ const EditSchedule = () => {
                                         id={`custom-checkbox-${index}`}
                                         name={username}
                                         value={username}
-                                        //checked={checkedState[index]}
+                                        checked={checkedState[index]}
                                         onChange={() => handleOnChange(index)}
                                     />
+                                    {console.log(checkedState[index])}
                                 </div>
                             )
                         }
