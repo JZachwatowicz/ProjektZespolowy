@@ -8,148 +8,151 @@ import ActivityService from '../../services/activity.service'
 import { useStateContext } from '../../services/ContextProvider';
 
 const required = (value) => {
-    if (!value) {
-      return (
-        <div className="text-red-500 font-medium">
-          To pole jest wymagane!
-        </div>
-      );
-    }
-  };
-  
-  const vname = (value) => {
-    if (value.length > 100) {
-      return (
-        <div className="text-red-500 font-medium">
-          Nazwa aktywności nie może przekraczać 100 znaków.
-        </div>
-      );
-    }
-  };
-  const vdesc = (value) => {
-    if ( value.length > 250) {
-      return (
-        <div className="text-red-500 font-medium">
-          Description of the activity has to be under 250 characters.
-        </div>
-      );
-    }
-  };
-  
-  
+  if (!value) {
+    return (
+      <div className="text-red-500 font-medium">
+        To pole jest wymagane!
+      </div>
+    );
+  }
+};
+
+const vname = (value) => {
+  if (value.length > 100) {
+    return (
+      <div className="text-red-500 font-medium">
+        Nazwa aktywności nie może przekraczać 100 znaków.
+      </div>
+    );
+  }
+};
+const vdesc = (value) => {
+  if (value.length > 250) {
+    return (
+      <div className="text-red-500 font-medium">
+        Description of the activity has to be under 250 characters.
+      </div>
+    );
+  }
+};
+
+
 
 const AddActivity = ({ history }) => {
 
-    const form = useRef();
-    const checkBtn = useRef();
-    const { screenSize } = useStateContext();
-    const navigate = useNavigate();
-    const [name, setName] = useState('')
-    const [description, setDescription] = useState('')
-    const [successful, setSuccessful] = useState(false);
-    const [message, setMessage] = useState("");
+  const form = useRef();
+  const checkBtn = useRef();
+  const { screenSize } = useStateContext();
+  const navigate = useNavigate();
+  const [name, setName] = useState('')
+  const [description, setDescription] = useState('')
+  const [successful, setSuccessful] = useState(false);
+  const [message, setMessage] = useState("");
 
-  
+
 
   const onChangeName = (e) => {
-      const name = e.target.value;
-      setName(name);
-    };
-  
-    const onChangeDescription = (e) => {
-      const description = e.target.value;
-      setDescription(description);
-    };
-  
+    const name = e.target.value;
+    setName(name);
+  };
 
-  const addActivityHandler = async (e) => {
-
-      e.preventDefault()
-
-      setMessage("");
-      setSuccessful(false)
-
-
-      form.current.validateAll();
-      if (checkBtn.current.context._errors.length === 0) {
-          ActivityService.addActivity(name,description).then(
-              ()=> {
-                  navigate("/activities", { state: { message: "Successfully added activity.", successful: true } })
-                  window.location.reload();
-                  setSuccessful(true);
-                  setMessage("Successfuly added activity.");
-              },
-              (error) => {
-                  const resMessage =
-                  (error.response &&
-                      error.response.data &&
-                      error.response.data.message) ||
-                  error.message ||
-                  error.toString();
-      
-                  setMessage(resMessage);
-                  setSuccessful(false);
-              }
-          );
-      }
-    }
-
-    const handleCancel = () => {
-      navigate("/activities");
+  const onChangeDescription = (e) => {
+    const description = e.target.value;
+    setDescription(description);
   };
 
 
-    return (
-      <>
-        <div className='flex flex-wrap justify-center content-center p-3'>
-              {message &&  (
-                  <div className="form-group">
-                    <div
-                      className={
-                      successful ? "alert alert-success" : "alert alert-danger"
-                      }
-                      role="alert"
-                    >
-                      {message}
-                    </div>
-                  </div>
-                )}
-          <div className={`p-11 shadow-2xl mb-20  ${screenSize <= 800 ? 'w-full' : 'w-10/12'}`}>
-            <h1 className="mb-8 text-center text-3xl  font-semibold">Dodaj Aktywność</h1>
-            <hr />
-            
-              <Form onSubmit={addActivityHandler} ref={form} className="pt-4 flex-2 text-center">
-                <Input  className="form-control p-3 m-2 border-b-2 shadow-md w-full max-w-3xl"
-                    value={name}
-                    name="name"
-                    placeholder="Nazwa"
-                    onChange={onChangeName}
-                    type="text"
-                    validations={[required, vname]}
-                  />
-                <Textarea className="form-control p-3 m-2 border-b-2 shadow-md  w-full max-w-3xl "
-                    value={description}
-                    name="description"
-                    rows="3"
-                    placeholder="Opis"
-                    onChange={onChangeDescription}
-                    validations={[vdesc]}
-                    />
-                <div className='m-auto'>
-                  <button  className='p-4 shadow-xl m-2 rounded-lg bg- border-1 bg-gray-600 text-white hover:bg-gray-400 hover:text-black' type="submit">
-                      Dodaj
-                  </button>
-                  <button  className='p-4 shadow-xl m-2 rounded-lg border-1 hover:bg-gray-400 hover:text-white' type="Reset" onClick={handleCancel}>
-                      Anuluj
-                  </button>
-                </div>
-               
-                <CheckButton style={{ display: "none" }} ref={checkBtn} />
-              </Form>
+  const addActivityHandler = async (e) => {
+
+    e.preventDefault()
+
+    setMessage("");
+    setSuccessful(false)
+
+
+    form.current.validateAll();
+    if (checkBtn.current.context._errors.length === 0) {
+      ActivityService.addActivity(name, description).then(
+        () => {
+          navigate("/activities", { state: { message: "Successfully added activity.", successful: true } })
+          window.location.reload();
+          setSuccessful(true);
+          setMessage("Successfuly added activity.");
+        },
+        (error) => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+          setMessage(resMessage);
+          setSuccessful(false);
+        }
+      );
+    }
+  }
+
+  const handleCancel = () => {
+    navigate("/activities");
+  };
+
+  const formStyle = "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+
+  return (
+    <>
+      {message && (
+        <div className="form-group">
+          <div
+            className={
+              successful ? "alert alert-success" : "alert alert-danger"
+            }
+            role="alert"
+          >
+            {message}
           </div>
         </div>
-      </>
-    )
+      )}
+      <div className="flex flex-wrap justify-center min-h-screen content-center">
+        <div className="w-full max-w-xl p-4 bg-white border border-gray-200 rounded-lg shadow-2xl sm:p-6 md:p-8 dark:bg-secondary-dark-bg dark:border-gray-700">
+          <h1 className="mb-8 text-center text-3xl  font-semibold">Dodaj Wydział</h1>
+
+          <Form onSubmit={addActivityHandler} ref={form} className="space-y-6">
+            <hr />
+            <div className="mb-6">
+              <label for="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nazwa</label>
+              <Input
+                type="text"
+                className={formStyle}
+                name="name"
+                placeholder="Nazwa"
+                value={name}
+                onChange={onChangeName}
+                validations={[required, vname]} />
+            </div>
+            <div className="mb-6">
+              <label for="description" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Opis</label>
+              <Textarea
+                className={formStyle}
+                value={description}
+                name="description"
+                rows="3"
+                placeholder="Opis"
+                onChange={onChangeDescription}
+                validations={[vdesc]}
+              />
+            </div>
+            <button type="submit" className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Dodaj</button>
+            <button onClick={handleCancel} className="w-full text-white bg-gray-600 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 text-center py-2.5 dark:hover:bg-gray-100 ">Wróć</button>
+
+
+            <CheckButton style={{ display: "none" }} ref={checkBtn} />
+          </Form>
+        </div>
+      </div>
+    </>
+  )
 }
 
 export default AddActivity

@@ -68,7 +68,7 @@ const ShowDescriptions = () => {
           <table className="w-full text-left  rounded-lg" >
             <caption className="p-5 text-lg font-semibold text-center text-gray-900 bg-white dark:text-white dark:bg-secondary-dark-bg">
             <button onClick={() => handleAddDescription()} className="flex items-left p-3 shadow-xl rounded-lg  text-white bg-green-700 border border-green-700 hover:bg-green-800 ">
-          +
+          Dodaj wpis
         </button>Wpisy użytkowników
             </caption>
             <thead className="uppercase text-white bg-secondary-dark-bg dark:bg-slate-300 dark:text-black">
