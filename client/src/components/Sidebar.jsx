@@ -1,9 +1,15 @@
 import React, { useEffect } from 'react';
-import { AiOutlineMenu } from 'react-icons/ai';
+import { AiOutlineMenu} from 'react-icons/ai';
 import { FiShoppingBag } from 'react-icons/fi';
 import { RiLogoutBoxRLine } from 'react-icons/ri';
-import { BsPersonCircle } from 'react-icons/bs';
-import { FaKey } from 'react-icons/fa';
+import { TbBellSchool,TbWheelchair } from 'react-icons/tb';
+import { HiOutlineBuildingOffice2 } from 'react-icons/hi2';
+import { BsPersonCircle, BsCalendar2CheckFill } from 'react-icons/bs';
+import { FaKey, FaDoorOpen } from 'react-icons/fa';
+import { ImUsers } from 'react-icons/im';
+import { CgBox } from 'react-icons/cg';
+import { GiNotebook } from 'react-icons/gi';
+
 import { Link, NavLink } from 'react-router-dom';
 import { MdOutlineCancel } from 'react-icons/md';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
@@ -206,7 +212,7 @@ const Sidebar = () => {
                       backgroundColor: isActive ? currentColor : '',
                     })}
                     className={({ isActive }) => (isActive ? activeLink : normalLink)}>
-                    {<FiShoppingBag />}
+                    {<BsCalendar2CheckFill/>}
                     <span className="capitalize ">Harmonogram</span>
                   </NavLink>
                   <NavLink
@@ -216,7 +222,7 @@ const Sidebar = () => {
                       backgroundColor: isActive ? currentColor : '',
                     })}
                     className={({ isActive }) => (isActive ? activeLink : normalLink)}>
-                    {<FiShoppingBag />}
+                    {<TbWheelchair />}
                     <span className="capitalize ">Wypożyczenia sprzętu</span>
                   </NavLink>
                   <NavLink
@@ -226,7 +232,7 @@ const Sidebar = () => {
                       backgroundColor: isActive ? currentColor : '',
                     })}
                     className={({ isActive }) => (isActive ? activeLink : normalLink)}>
-                    {<FiShoppingBag />}
+                    {<TbBellSchool />}
                     <span className="capitalize ">Zajęcia</span>
                   </NavLink>
                   <NavLink
@@ -236,7 +242,7 @@ const Sidebar = () => {
                       backgroundColor: isActive ? currentColor : '',
                     })}
                     className={({ isActive }) => (isActive ? activeLink : normalLink)}>
-                    {<FiShoppingBag />}
+                    {<FaDoorOpen />}
                     <span className="capitalize ">Pokoje</span>
                   </NavLink>
 
@@ -248,7 +254,7 @@ const Sidebar = () => {
                         backgroundColor: isActive ? currentColor : '',
                       })}
                       className={({ isActive }) => (isActive ? activeLink : normalLink)}>
-                      {<FiShoppingBag />}
+                      {<ImUsers />}
                       <span className="capitalize ">Użytkownicy</span>
                     </NavLink>
                       <NavLink
@@ -258,7 +264,7 @@ const Sidebar = () => {
                           backgroundColor: isActive ? currentColor : '',
                         })}
                         className={({ isActive }) => (isActive ? activeLink : normalLink)}>
-                        {<FiShoppingBag />}
+                        {<GiNotebook />}
                         <span className="capitalize ">Wpisy użytkowników</span>
                       </NavLink>
                       <NavLink
@@ -268,7 +274,7 @@ const Sidebar = () => {
                           backgroundColor: isActive ? currentColor : '',
                         })}
                         className={({ isActive }) => (isActive ? activeLink : normalLink)}>
-                        {<FiShoppingBag />}
+                        {<CgBox />}
                         <span className="capitalize ">Sprzęt</span>
                       </NavLink>
                       <NavLink
@@ -278,7 +284,7 @@ const Sidebar = () => {
                           backgroundColor: isActive ? currentColor : '',
                         })}
                         className={({ isActive }) => (isActive ? activeLink : normalLink)}>
-                        {<FiShoppingBag />}
+                        {<HiOutlineBuildingOffice2 />}
                         <span className="capitalize ">Wydziały</span>
                       </NavLink>
                     </>

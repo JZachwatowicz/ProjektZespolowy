@@ -113,7 +113,7 @@ const ShowUsers = () => {
     
             
     
-            <div class="overflow-x-auto relative shadow-lg sm:rounded-lg border-1 w-fit">
+            <div className="overflow-x-auto relative shadow-lg sm:rounded-lg border-1 w-fit">
     
               <table className="w-full text-left  rounded-lg" >
                 <caption className="p-5 text-lg font-semibold text-center text-gray-900 bg-white dark:text-white dark:bg-secondary-dark-bg">
@@ -169,7 +169,7 @@ const ShowUsers = () => {
                                             <table>
                                                 <tbody>
                                                     <tr><td>{e.street.name} {e.building_number}{e.apartment_number !== "" ? '/' + e.apartment_number : null}</td></tr>
-                                                    <tr><td>woj.{e.street.city.voivodeship.name},</td><td>{e.street.city.name}</td></tr>
+                                                    <tr><td>{e.street.city.voivodeship.name}, {e.street.city.name}</td></tr>
                                                     <tr><td>{e.street.city.voivodeship.country.name}</td></tr>
                                                 </tbody>
                                             </table>
