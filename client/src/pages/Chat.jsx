@@ -14,8 +14,7 @@ function Chat() {
     const {currentUser} = useStateContext();
     // state
     const username = currentUser.first_name + " " + currentUser.last_name;
-
-    const [connected, setConnected] = useState(false);
+    
     const [message, setMessage] = useState("");
     const [messages, setMessages] = useState([]);
     const [users, setUsers] = useState([]);
@@ -116,7 +115,6 @@ function Chat() {
         setTimeout(() => {
             if (socket.connected) {
                 console.log("socket.connected", socket);
-                setConnected(true);
             }
         }, 1000);
     };
