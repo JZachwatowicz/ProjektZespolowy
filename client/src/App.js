@@ -6,16 +6,18 @@ import {
   ShowDeprtments, AddDepartment, EditDepartment, ShowDescriptions, AddDescription, AddActivity, EditActivity, ShowActivities,
   EditItem, AddItem, ShowItems, ItemTypes, EditRoom, AddRoom, ShowRooms, Schedule, EditSchedule, AddSchedule, OneNews, ShowDescription
 } from './pages';
-import './App.css'
+import './App.css';
+
+
 
 import { useStateContext } from './services/ContextProvider';
+import Chat from './pages/Chat';
 
 //import ShowSchedules from './pages/Schedule/ShowSchedules'
 
 
 
 const App = () => {
-
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu } = useStateContext();
 
   useEffect(() => {
@@ -56,6 +58,7 @@ const App = () => {
 
 
 
+              <Route exact path="/chat" element={<Chat />} />
               <Route exact path="/profile" element={<Profile />} />
               <Route exact path="/profile/edit" element={<EditProfile />} />
               <Route exact path="/profile/editaddress" element={<EditAddress />} />

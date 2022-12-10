@@ -117,6 +117,16 @@ const Sidebar = () => {
               {currentUser ? (
                 <>
                   <NavLink
+                    to={`/chat`}
+                    onClick={handleCloseSideBar}
+                    style={({ isActive }) => ({
+                      backgroundColor: isActive ? currentColor : '',
+                    })}
+                    className={({ isActive }) => (isActive ? activeLink : normalLink)}>
+                    {<FiShoppingBag />}
+                    <span className="capitalize ">Czat</span>
+                  </NavLink>
+                  <NavLink
                     to={`/profile`}
                     onClick={handleCloseSideBar}
                     style={({ isActive }) => ({
