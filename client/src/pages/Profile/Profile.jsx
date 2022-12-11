@@ -37,8 +37,8 @@ const Profile = () => {
         <div className="p-10 flex-column flex justify-around">
       <div className="flex-1 gap-y-4 w-full md:max-w-5xl p-4 bg-white border border-gray-200 rounded-lg shadow-2xl sm:p-6 md:p-8 dark:bg-secondary-dark-bg dark:border-gray-700">
 
-        <div class="w-48 h-48 bg-indigo-100 mt-18 mx-auto rounded-full  flex items-center justify-center text-indigo-500">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24" viewBox="0 0 20 20" fill="currentColor">
+        <div className="w-48 h-48 bg-indigo-100 mt-18 mx-auto rounded-full  flex items-center justify-center text-indigo-500">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-24 w-24" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
               </svg>
             </div>
