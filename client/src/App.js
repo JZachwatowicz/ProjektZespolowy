@@ -1,31 +1,22 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { Sidebar, Footer, Navbar } from './components';
-import { Home, Login, Register, Profile, Schedule, AdminBoard, EmployeeBoard, UserBoard, About, Contact, News } from './pages';
+import { Sidebar, Footer } from './components';
+import {
+  Home, Login, Profile, About, Contact, News, RoomTypes, AddUser, EditUser, EditUserAddress, ShowUsers, EditAddress, EditProfile,
+  ShowDeprtments, AddDepartment, EditDepartment, ShowDescriptions, AddDescription, AddActivity, EditActivity, ShowActivities,
+  EditItem, AddItem, ShowItems, ItemTypes, EditRoom, AddRoom, ShowRooms, Schedule, EditSchedule, AddSchedule
+} from './pages';
 import './App.css'
 
 import { useStateContext } from './services/ContextProvider';
 
-import AddActivity from './pages/AddActivity'
-import EditActivity from './pages/EditActivity'
-import ShowActivities from './pages/ShowActivities'
+//import ShowSchedules from './pages/Schedule/ShowSchedules'
 
-import EditItem from './pages/EditItem'
-import AddItem from './pages/AddItem'
-import ShowItems from './pages/ShowItems'
-
-import ItemTypes from './pages/ItemTypes'
-
-import EditRoom from './pages/EditRoom'
-import AddRoom from './pages/AddRoom'
-import ShowRooms from './pages/ShowRooms'
-
-import RoomTypes from './pages/RoomTypes'
 
 
 const App = () => {
 
-  const { setCurrentColor, setCurrentMode, currentMode, activeMenu} = useStateContext();
+  const { setCurrentColor, setCurrentMode, currentMode, activeMenu } = useStateContext();
 
   useEffect(() => {
     const currentThemeColor = localStorage.getItem('colorMode');
@@ -57,25 +48,28 @@ const App = () => {
             <Routes>
 
               <Route path="/" element={<Navigate to="/home" />} />
-
-              <Route exact path="/home" element={<Navbar />} >
-                <Route index element={<Home />} />
-                <Route exact path="/home/contact" element={<Contact />} />
-                <Route exact path="/home/about" element={<About />} />
-                <Route exact path="/home/news" element={<News />} />
-              </Route>
+              <Route exact path="/home" element={<Home />} />
+              <Route exact path="/contact" element={<Contact />} />
+              <Route exact path="/about" element={<About />} />
+              <Route exact path="/news" element={<News />} />
 
 
 
               <Route exact path="/profile" element={<Profile />} />
+              <Route exact path="/profile/edit" element={<EditProfile />} />
+              <Route exact path="/profile/editaddress" element={<EditAddress />} />
               <Route exact path="/login" element={<Login />} />
-              <Route exact path="/register" element={<Register />} />
 
 
-              <Route exact path="/user" element={<UserBoard />} />
-              <Route exact path="/employee" element={<EmployeeBoard />} />
-              <Route exact path="/admin" element={<AdminBoard />} />
+              <Route exact path="/descriptions" element={<ShowDescriptions />} />
+              <Route exact path="/descriptions/add" element={<AddDescription />} />
+
               <Route exact path="/schedule" element={<Schedule />} />
+              <Route exact path="/booking" element={<Schedule />} />
+              <Route exact path="/users" element={<ShowUsers />} />
+              <Route exact path="/users/add" element={<AddUser />} />
+              <Route exact path="/users/edit/:id" element={<EditUser />} />
+              <Route exact path="/users/editaddress/:id" element={<EditUserAddress />} />
 
               <Route exact path='/activities/add' element={<AddActivity />} />
               <Route exact path='/activities/edit/:id' element={<EditActivity />} />
@@ -85,6 +79,11 @@ const App = () => {
               <Route exact path='/items/edit/:id' element={<EditItem />} />
               <Route exact path="/items" element={<ShowItems />} />
 
+              <Route exact path="/schedule" element={<Schedule />} />
+              <Route exact path='/schedule/add' element={<AddSchedule />} />
+              <Route exact path='/schedule/edit/:h_id/:s_id' element={<EditSchedule />} />
+
+
               <Route exact path="/items/item_types" element={<ItemTypes />} />
 
               <Route exact path='/rooms/add' element={<AddRoom />} />
@@ -92,6 +91,10 @@ const App = () => {
               <Route exact path="/rooms" element={<ShowRooms />} />
 
               <Route exact path="/rooms/room_types" element={<RoomTypes />} />
+
+              <Route exact path="/departments" element={<ShowDeprtments />} />
+              <Route exact path="/departments/add" element={<AddDepartment />} />
+              <Route exact path="/departments/edit/:id" element={<EditDepartment />} />
 
             </Routes>
             <Footer />

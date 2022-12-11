@@ -1,18 +1,23 @@
 import React, { useEffect } from 'react';
 import { AiOutlineMenu } from 'react-icons/ai';
 import { FiShoppingBag } from 'react-icons/fi';
+import { RiLogoutBoxRLine } from 'react-icons/ri';
+import { BsPersonCircle } from 'react-icons/bs';
+import { FaKey } from 'react-icons/fa';
 import { Link, NavLink } from 'react-router-dom';
 import { MdOutlineCancel } from 'react-icons/md';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
-
+import { BsFillHouseDoorFill } from 'react-icons/bs';
+import { RiContactsBook2Fill, RiNewspaperFill } from 'react-icons/ri';
+import { BiBookOpen } from 'react-icons/bi';
 import { useStateContext } from '../services/ContextProvider';
 import AuthService from '../services/auth.service';
 
 import AccessabilitySettings from './AccessabilitySettings';
-
+import logo from '../assets/logo.png'
 const Sidebar = () => {
 
-  const { currentColor, activeMenu, setActiveMenu, screenSize, setScreenSize, showEmployeeBoard, setShowEmployeeBoard, showAdminBoard, setShowAdminBoard,currentUser, setCurrentUser } = useStateContext();
+  const { currentColor, activeMenu, setActiveMenu, screenSize, setScreenSize, showEmployeeBoard, setShowEmployeeBoard, showAdminBoard, setShowAdminBoard, currentUser, setCurrentUser } = useStateContext();
 
   useEffect(() => {
     const user = AuthService.getCurrentUser();
@@ -77,16 +82,14 @@ const Sidebar = () => {
   }, [screenSize]);
 
   const handleActiveMenu = () => setActiveMenu(!activeMenu);
-
   return (
     <>
       {activeMenu ? (
         <div className="ml-3 h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10">
           <>
-            <div className="flex justify-between items-center">
-              <Link to="/" onClick={handleCloseSideBar}
-                className="items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight dark:text-white text-slate-900">
-                <span>Menu/LOGO</span>
+            <div className="flex justify-center items-center mt-5">
+              <Link to="/" onClick={handleCloseSideBar} >
+                <img src={logo} alt="Logo" className="h-20 md:h-28 lg:h-40" />
               </Link>
               <TooltipComponent content="Menu" position="BottomCenter">
                 <button
@@ -101,8 +104,9 @@ const Sidebar = () => {
             </div>
 
             <div className="mt-10 ">
-              <p className="text-gray-400 dark:text-gray-400 m-3 mt-4 uppercase">
-                Akcje
+              <p className="text-gray-400 m-3 mt-4 uppercase">
+                <hr className='p-2'></hr>
+                Autoryzacja
               </p>
               {currentUser ? (
                 <>
@@ -113,7 +117,7 @@ const Sidebar = () => {
                       backgroundColor: isActive ? currentColor : '',
                     })}
                     className={({ isActive }) => (isActive ? activeLink : normalLink)}>
-                    {<FiShoppingBag />}
+                    {<BsPersonCircle />}
                     <span className="capitalize ">Profil</span>
                   </NavLink>
                   <NavLink
@@ -123,39 +127,30 @@ const Sidebar = () => {
                       backgroundColor: isActive ? currentColor : '',
                     })}
                     className={({ isActive }) => (isActive ? activeLink : normalLink)}>
-                    {<FiShoppingBag />}
+                    {<RiLogoutBoxRLine />}
                     <span className="capitalize ">Wyloguj</span>
                   </NavLink>
+
                 </>
               ) : (
-                <>
-                  <NavLink
-                    to={`/login`}
-                    onClick={handleCloseSideBar}
-                    style={({ isActive }) => ({
-                      backgroundColor: isActive ? currentColor : '',
-                    })}
-                    className={({ isActive }) => (isActive ? activeLink : normalLink)}>
-                    {<FiShoppingBag />}
-                    <span className="capitalize ">Zaloguj</span>
-                  </NavLink>
-                  <NavLink
-                    to={`/register`}
-                    onClick={handleCloseSideBar}
-                    style={({ isActive }) => ({
-                      backgroundColor: isActive ? currentColor : '',
-                    })}
-                    className={({ isActive }) => (isActive ? activeLink : normalLink)}>
-                    {<FiShoppingBag />}
-                    <span className="capitalize ">Zarejestruj</span>
-                  </NavLink>
-                </>)
+
+                <NavLink
+                  to={`/login`}
+                  onClick={handleCloseSideBar}
+                  style={({ isActive }) => ({
+                    backgroundColor: isActive ? currentColor : '',
+                  })}
+                  className={({ isActive }) => (isActive ? activeLink : normalLink)}>
+                  {<FaKey />}
+                  <span className="capitalize ">Zaloguj</span>
+                </NavLink>
+
+              )
               }
             </div>
-
             <div className="mt-10 ">
               <p className="text-gray-400 dark:text-gray-400 m-3 mt-4 uppercase">
-                Menu
+                Informacje
               </p>
               <NavLink
                 to={`/home`}
@@ -164,86 +159,137 @@ const Sidebar = () => {
                   backgroundColor: isActive ? currentColor : '',
                 })}
                 className={({ isActive }) => (isActive ? activeLink : normalLink)}>
-                {<FiShoppingBag />}
+                {<BsFillHouseDoorFill />}
                 <span className="capitalize ">Strona główna</span>
               </NavLink>
               <NavLink
-                to={`/schedule`}
+                to={`/about`}
                 onClick={handleCloseSideBar}
                 style={({ isActive }) => ({
                   backgroundColor: isActive ? currentColor : '',
                 })}
                 className={({ isActive }) => (isActive ? activeLink : normalLink)}>
-                {<FiShoppingBag />}
-                <span className="capitalize ">Harmonogram</span>
+                {<BiBookOpen />}
+                <span className="capitalize ">O&nbsp;nas</span>
               </NavLink>
               <NavLink
-                to={`/activities`}
+                to={`/contact`}
                 onClick={handleCloseSideBar}
                 style={({ isActive }) => ({
                   backgroundColor: isActive ? currentColor : '',
                 })}
                 className={({ isActive }) => (isActive ? activeLink : normalLink)}>
-                {<FiShoppingBag />}
-                <span className="capitalize ">Aktywności</span>
+                {<RiContactsBook2Fill />}
+                <span className="capitalize ">Kontakt</span>
               </NavLink>
               <NavLink
-                to={`/items`}
+                to={`/news`}
                 onClick={handleCloseSideBar}
                 style={({ isActive }) => ({
                   backgroundColor: isActive ? currentColor : '',
                 })}
                 className={({ isActive }) => (isActive ? activeLink : normalLink)}>
-                {<FiShoppingBag />}
-                <span className="capitalize ">Sprzęt</span>
-              </NavLink>
-              <NavLink
-                to={`/rooms`}
-                onClick={handleCloseSideBar}
-                style={({ isActive }) => ({
-                  backgroundColor: isActive ? currentColor : '',
-                })}
-                className={({ isActive }) => (isActive ? activeLink : normalLink)}>
-                {<FiShoppingBag />}
-                <span className="capitalize ">Pokoje</span>
+                {<RiNewspaperFill />}
+                <span className="capitalize ">Aktualności</span>
               </NavLink>
             </div>
-            {currentUser ? 
+
             <div className="mt-10 ">
-              <p className="text-gray-400 dark:text-gray-400 m-3 mt-4 uppercase">
-                Panel
-              </p>
-              <NavLink
-                to={`/user`}
-                onClick={handleCloseSideBar}
-                style={({ isActive }) => ({
-                  backgroundColor: isActive ? currentColor : '',
-                })}
-                className={({ isActive }) => (isActive ? activeLink : normalLink)}>
-                {<FiShoppingBag />}
-                <span className="capitalize ">Użytkownik</span>
-              </NavLink>
-              {(showEmployeeBoard || showAdminBoard) ? <NavLink
-                to={`/employee`}
-                onClick={handleCloseSideBar}
-                style={({ isActive }) => ({
-                  backgroundColor: isActive ? currentColor : '',
-                })}
-                className={({ isActive }) => (isActive ? activeLink : normalLink)}>
-                {<FiShoppingBag />}
-                <span className="capitalize ">Pracownik</span>
-              </NavLink> : null}
-              { showAdminBoard ? <NavLink
-                to={`/admin`}
-                onClick={handleCloseSideBar}
-                style={({ isActive }) => ({
-                  backgroundColor: isActive ? currentColor : '',
-                })}
-                className={({ isActive }) => (isActive ? activeLink : normalLink)}>
-                {<FiShoppingBag />}
-                <span className="capitalize ">Administrator</span>
-              </NavLink> : null}
-            </div> : null}
+              {currentUser ? (
+                <><p className="text-gray-400 dark:text-gray-400 m-3 mt-4 uppercase">
+                  Akcje
+                </p>
+                  <NavLink
+                    to={`/schedule`}
+                    onClick={handleCloseSideBar}
+                    style={({ isActive }) => ({
+                      backgroundColor: isActive ? currentColor : '',
+                    })}
+                    className={({ isActive }) => (isActive ? activeLink : normalLink)}>
+                    {<FiShoppingBag />}
+                    <span className="capitalize ">Harmonogram</span>
+                  </NavLink>
+                  <NavLink
+                    to={`/booking`}
+                    onClick={handleCloseSideBar}
+                    style={({ isActive }) => ({
+                      backgroundColor: isActive ? currentColor : '',
+                    })}
+                    className={({ isActive }) => (isActive ? activeLink : normalLink)}>
+                    {<FiShoppingBag />}
+                    <span className="capitalize ">Wypożyczenia sprzeętu</span>
+                  </NavLink>
+                  <NavLink
+                    to={`/activities`}
+                    onClick={handleCloseSideBar}
+                    style={({ isActive }) => ({
+                      backgroundColor: isActive ? currentColor : '',
+                    })}
+                    className={({ isActive }) => (isActive ? activeLink : normalLink)}>
+                    {<FiShoppingBag />}
+                    <span className="capitalize ">Zajęcia</span>
+                  </NavLink>
+                  <NavLink
+                    to={`/rooms`}
+                    onClick={handleCloseSideBar}
+                    style={({ isActive }) => ({
+                      backgroundColor: isActive ? currentColor : '',
+                    })}
+                    className={({ isActive }) => (isActive ? activeLink : normalLink)}>
+                    {<FiShoppingBag />}
+                    <span className="capitalize ">Pokoje</span>
+                  </NavLink>
+
+                  {showEmployeeBoard || showAdminBoard ?
+                    <><NavLink
+                      to={`/users`}
+                      onClick={handleCloseSideBar}
+                      style={({ isActive }) => ({
+                        backgroundColor: isActive ? currentColor : '',
+                      })}
+                      className={({ isActive }) => (isActive ? activeLink : normalLink)}>
+                      {<FiShoppingBag />}
+                      <span className="capitalize ">Użytkownicy</span>
+                    </NavLink>
+                      <NavLink
+                        to={`/descriptions`}
+                        onClick={handleCloseSideBar}
+                        style={({ isActive }) => ({
+                          backgroundColor: isActive ? currentColor : '',
+                        })}
+                        className={({ isActive }) => (isActive ? activeLink : normalLink)}>
+                        {<FiShoppingBag />}
+                        <span className="capitalize ">Wpisy użytkowników</span>
+                      </NavLink>
+                      <NavLink
+                        to={`/items`}
+                        onClick={handleCloseSideBar}
+                        style={({ isActive }) => ({
+                          backgroundColor: isActive ? currentColor : '',
+                        })}
+                        className={({ isActive }) => (isActive ? activeLink : normalLink)}>
+                        {<FiShoppingBag />}
+                        <span className="capitalize ">Sprzęt</span>
+                      </NavLink>
+                      <NavLink
+                        to={`/departments`}
+                        onClick={handleCloseSideBar}
+                        style={({ isActive }) => ({
+                          backgroundColor: isActive ? currentColor : '',
+                        })}
+                        className={({ isActive }) => (isActive ? activeLink : normalLink)}>
+                        {<FiShoppingBag />}
+                        <span className="capitalize ">Wydziały</span>
+                      </NavLink>
+                    </>
+                    : null}
+
+
+
+                </>)
+                : null}
+            </div>
+
           </>
           <AccessabilitySettings />
         </div>

@@ -1,5 +1,7 @@
 const db = require("../models");
 const { user: User } = db;
+const { createUserRole } = require('../services/user.service');
+
 
 exports.allAccess = (req, res) => {
     res.status(200).send("Public Content.");
@@ -38,17 +40,21 @@ exports.all_users = async (req, res) => {
 };
 
 exports.edit_user = async (req, res) => {
+
+    const { username, email, password, firstName, lastName, pesel, contactNumber, role_id } = req.body
+
     await User.findOne({
         where: { id: req.params.id }
     }).then(user => {
         user.set({
-            username: req.body.username,
-            email: req.body.email,
-            password: req.body.password,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            pesel: req.body.pesel,
-            contactNumber: req.body.contactNumber
+            username,
+            email,
+            password,
+            firstName,
+            lastName,
+            pesel,
+            contactNumber,
+            role_id
         });
 
         user.save({
@@ -59,7 +65,8 @@ exports.edit_user = async (req, res) => {
                 'firstName',
                 'lastName',
                 'pesel',
-                'contactNumber'
+                'contactNumber',
+                'role_id'
             ]
         });
 
@@ -68,38 +75,6 @@ exports.edit_user = async (req, res) => {
         res.status(500).send({ message: err.message });
     });
 };
-
-exports.edit_user_address = async (req, res) => {
-    await User.findOne({
-        where: { id: req.params.id }
-    }).then(user => {
-        user.set({
-            username: req.body.username,
-            email: req.body.email,
-            password: req.body.password,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            pesel: req.body.pesel,
-            contactNumber: req.body.contactNumber
-        });
-
-        user.save({
-            fields: [
-                'username',
-                'email',
-                'password',
-                'firstName',
-                'lastName',
-                'pesel',
-                'contactNumber'
-            ]
-        });
-
-        res.status(200).send("Update user.");
-    }).catch(err => {
-        res.status(500).send({ message: err.message });
-    });
-}
 
 exports.edit_user_roles = async (req, res) => {
     await User.findOne({
@@ -118,3 +93,53 @@ exports.edit_user_roles = async (req, res) => {
         res.status(500).send({ message: err.message });
     });
 }
+
+exports.edit_user_address = async (req, res) => {
+
+    const user = await User.findOne({
+        where: { id: req.params.id }
+    });
+
+    if (user) {
+        user.address_id = req.body.address_id;
+
+        await user.save();
+        res.status(200).send("OK");
+
+    } else {
+        res.status(500).send("USER NOT FOUND");
+    }
+}
+
+
+
+
+
+
+exports.delete_user = async (req, res) => {
+    await User.destroy({
+        where: { id: req.params.id }
+    }).then(() => {
+        res.status(200).send({ message: "Successfully deleted user." });
+    }).catch((err) => {
+        res.status(500).send({ message: err.message });
+    })
+
+};
+
+
+
+
+exports.add_user = async (req, res) => {
+
+    const { username, email, password, firstName, lastName, pesel, contactNumber, role_id } = req.body
+
+    await createUserRole(username, email, password, firstName, lastName, pesel, contactNumber, role_id)
+        .then(() => {
+            res.send({ message: "User was registered successfully!" });
+        })
+        .catch(err => {
+            res.status(500).send({ message: err.message, requestData: req.body });
+        });
+
+};

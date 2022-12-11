@@ -8,14 +8,12 @@ const showAddress = () => {
 const deleteAddress = (id) => {
     return axios.delete(API_URL + "delete/" + id, { headers: authHeader() });
 };
-const addAddress = (countryName, countryCode, voivodeshipName, cityName, streetName, buildingNumber, apartmentNumber) => {
-    return axios.post(API_URL + "add", {
-        countryName, countryCode, voivodeshipName, cityName, streetName, buildingNumber, apartmentNumber
-    }, { headers: authHeader() });
+const addAddress = (data) => {
+    return axios.post(API_URL + "add", data, { headers: authHeader() });
 };
-const editAddress = (id, countryName, countryCode, voivodeshipName, cityName, streetName, buildingNumber, apartmentNumber) => {
+const editAddress = (id, country_name, country_code, voivodeship_name, city_name, street_name, building_number, apartment_number) => {
     return axios.put(API_URL + "edit/" + id, {
-        countryName, countryCode, voivodeshipName, cityName, streetName, buildingNumber, apartmentNumber
+        country_name, country_code, voivodeship_name, city_name, street_name, building_number, apartment_number
     }, { headers: authHeader() });
 };
 const getAddress = (id) => {

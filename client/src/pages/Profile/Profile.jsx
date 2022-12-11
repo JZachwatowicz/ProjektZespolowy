@@ -1,28 +1,37 @@
-import React from "react";
+import  React, {useEffect,useState} from "react";
+
 import AuthService from "../../services/auth.service";
 
-import { useNavigate, useLocation } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
+import AddressService from '../../services/address.service'
+import ShowUserDescription from "../User/ShowUserDescription";
 
 const Profile = () => {
   const currentUser = AuthService.getCurrentUser();
 
+  console.log(currentUser);
   const navigate = useNavigate();
 
   function editUserHandler() {
-    navigate("/user/edit/" + currentUser.id);
+    navigate("/profile/edit");
   }
 
   function editUserAddressHandler() {
-    navigate("/user/edit_address/" + currentUser.id);
+    navigate("/profile/editaddress");
   }
+  const [address, setAddress] = useState({})
 
+  useEffect(() => {
+    AddressService.getAddress(currentUser.address_id)
+      .then(res => {
+        setAddress(res.data)
+      })
+      .catch(error => console.error(error));
+  }, [])
   return (
-    <div className="container">
-      <header className="jumbotron">
-        <h3>Profil użytkownika</h3>
-      </header>
-      <table>
+      <><header>
+      <h3>Profil użytkownika</h3>
+    </header><table>
         <tr>
           <td><strong>Login:</strong></td>
           <td>{currentUser.username}</td>
@@ -41,7 +50,17 @@ const Profile = () => {
         </tr>
         <tr>
           <td><strong>Adres zamieszkania:</strong></td>
-          <td>{currentUser.address}</td>
+          {/* <td>{currentUser.address}</td> */}
+          {currentUser?.address_id ?
+            <td>
+
+              {address?.street?.name} {address?.building_number}{address?.apartment_number !== "" ? '/' + address?.apartment_number : null}
+              {address?.street?.city?.name}
+              woj.{address?.street?.city?.voivodeship?.name}
+              {address?.street?.city?.voivodeship?.country?.name}
+            </td>
+            : <td>brak</td>}
+
         </tr>
         <tr>
           <td><strong>Uprawnienia:</strong></td>
@@ -55,8 +74,10 @@ const Profile = () => {
             Zmień adres
           </button></td>
         </tr>
-      </table>
-    </div>
+      </table><div className="flex flex-wrap justify-center min-h-screen content-center">
+
+        <ShowUserDescription />
+      </div></>
   );
 };
 

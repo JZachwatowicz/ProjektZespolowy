@@ -15,23 +15,54 @@ router.get("/all", controller.allAccess);
 router.get("/all/get", controller.all_users);
 router.get("/all/get/:id", controller.one_user);
 
-router.put(
-    "/edit/:id",
-    [authJwt.verifyToken],
-    controller.edit_user
+
+router.get(
+    '/get',
+    [authJwt.verifyToken, authJwt.isEmployee],
+    controller.all_users
+);
+
+router.post(
+    '/add',
+    [authJwt.verifyToken, authJwt.isEmployee],
+    controller.add_user
 );
 
 router.put(
-    "/edit_address/:id",
-    [authJwt.verifyToken],
+    '/edit/:id',
+    [authJwt.verifyToken, authJwt.isEmployee],
+    controller.edit_user
+);
+router.put(
+    '/editaddress/:id',
+    authJwt.verifyToken,
     controller.edit_user_address
 );
 
-router.put(
-    "/edit_roles/:id",
-    [authJwt.verifyToken, authJwt.isAdmin],
-    controller.edit_user_roles
+router.delete(
+    '/delete/:id',
+    [authJwt.verifyToken, authJwt.isEmployee],
+    controller.delete_user
 );
+
+router.get(
+    '/get/:id',
+    [authJwt.verifyToken, authJwt.isEmployee],
+    controller.one_user
+);
+
+
+// router.put(
+//     "/edit_address/:id",
+//     [authJwt.verifyToken],
+//     controller.edit_user_address
+// );
+
+// router.put(
+//     "/edit_roles/:id",
+//     [authJwt.verifyToken, authJwt.isAdmin],
+//     controller.edit_user_roles
+// );
 
 router.get(
     "/user",
