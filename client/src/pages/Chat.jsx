@@ -243,7 +243,7 @@ function Chat() {
                                 <button className={`${selectedUser === null ? "bg-white dark:bg-secondary-dark-bg " : "hover:text-black"} flex flex-row items-center justify-center hover:bg-gray-100 rounded-xl p-2 ml-2 font-semibold`}
                                     onClick={() => setSelectedUser(null)}>Czat ogólny</button>
                                 <div className="flex flex-col overflow-y-auto ">
-                                    {users.length===1 ? null : <span className="pt-8 text-xl">Nikogo tu nie ma!</span>}
+                                    {/* {users.length!==1 ? null : <span className="pt-8 text-xl">Nikogo tu nie ma!</span>} */}
                                     {users.map((user) => (
                                         <div
                                             key={user.userID}
