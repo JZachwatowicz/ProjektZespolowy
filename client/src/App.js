@@ -10,9 +10,7 @@ import './App.css'
 
 import { useStateContext } from './services/ContextProvider';
 
-//import ShowSchedules from './pages/Schedule/ShowSchedules'
-
-
+import ManageScheduleUsers from './pages/Schedule/ManageScheduleUsers';
 
 const App = () => {
 
@@ -82,6 +80,7 @@ const App = () => {
               <Route exact path="/schedule" element={<Schedule />} />
               <Route exact path='/schedule/add' element={<AddSchedule />} />
               <Route exact path='/schedule/edit/:h_id/:s_id' element={<EditSchedule />} />
+              <Route exact path='/schedule/manageusers/:h_id/:s_id/:r_size' element={<ManageScheduleUsers />} />
 
 
               <Route exact path="/items/item_types" element={<ItemTypes />} />
