@@ -18,7 +18,6 @@ exports.add_schedule = async (req, res) => {
     await Harmonogram.findOne({
         where: { id: req.body.harmonogram_id }
     }).then(harmonogram => {
-        //if (harmonogram.admin_consent) {
         Schedule.create({
             activity_id: req.body.activity_id,
             harmonogram_id: req.body.harmonogram_id
@@ -28,9 +27,6 @@ exports.add_schedule = async (req, res) => {
             console.log(err.message);
             res.status(500).send({ message: err.message });
         });
-        //} else {
-        //    res.status(500).send("Harmonogram must be acctepted by admin first");
-        //}
     }).catch(err => {
         res.status(500).send({ message: err.message });
     });
@@ -64,15 +60,17 @@ exports.add_user = async (req, res) => {
     await Schedule.findOne({
         where: { id: req.params.id }
     }).then(schedule => {
-        /*
+        
         UserSchedule.findAll({
             where: {schedule_id: schedule.id}
-        }).then(userSchedule => {
-            userSchedule.destroy();
+        }).then(userSchedules => {
+            userSchedules.forEach(item => {
+                item.destroy();
+            })
         }).catch(err => {
             res.status(500).send({ message: err.message });
         });
-*/
+
         var users = req.body;
         users.forEach(user => {
             User.findOne({

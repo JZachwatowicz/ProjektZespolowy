@@ -71,20 +71,21 @@ const EditSchedule = () => {
     const fetchUsers = () => {
         UserService.showUsers()
             .then(response => {
-                setUsers(response.data);
-
+                var newTotal = 0;
                 var newCheckedState = new Array(response.data.length).fill(false);
                 ScheduleService.getScheduleUsers(s_id).then(res => {
                     for(var i=0; i<response.data.length; i++) {
                         res.data.forEach(element => {
                             if(response.data[i].id === element.user_id){
                                 newCheckedState[i] = true;
+                                newTotal++;
                             }
                         })
                     }
                 });
-
+                setTotal(newTotal);
                 setCheckedState(newCheckedState);
+                setUsers(response.data);
             }).catch(error => {
                 console.error(error)
                 setMessage(error.message);
@@ -92,9 +93,9 @@ const EditSchedule = () => {
     }
 
     useEffect(() => {
+        fetchUsers();
         fetchHarmonograms();
         fetchSchedule();
-        fetchUsers();
     }, []);
 
     const handleCancel = () => {
