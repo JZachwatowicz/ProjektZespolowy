@@ -1,5 +1,6 @@
 const { authJwt } = require("../middleware");
 const controller = require("../controllers/harmonogram.controller");
+const { isAdmin } = require("../middleware/auth_jwt");
 const router = require('express').Router()
 
 
@@ -15,6 +16,18 @@ router.get(
     '/get',
     [authJwt.verifyToken],
     controller.all_harmonograms
+);
+
+router.get(
+    '/getRes/:id',
+    [authJwt.verifyToken],
+    controller.all_user_reserved
+);
+
+router.get(
+    '/getPen',
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.all_pending
 );
 
 router.post(
