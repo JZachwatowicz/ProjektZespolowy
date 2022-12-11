@@ -195,85 +195,100 @@ const EditRoom = () => {
     navigate("/rooms");
   };
 
+  const formStyle = "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 
-    return (
-      <>
-        <div className='flex flex-wrap justify-center min-h-screen content-center p-3'>
-          {message && successful === false && (
-                  <div className="form-group">
-                    <div
-                      className={
-                      successful ? "alert alert-success" : "alert alert-danger"
-                      }
-                      role="alert"
-                    >
-                      {message}
-                    </div>
-                  </div>
-                )}
-          <div className={`p-11 shadow-2xl mb-20  ${screenSize <= 800 ? 'w-full' : 'w-10/12'}`}>
-            <h1 className="mb-8 text-center text-3xl font-semibold">Edytuj Pokój</h1>
-            <hr />
-
-            <Form onSubmit={EditRoomHandler} ref={form} className="pt-4 flex-2 text-center">
-              <Input  className="form-control dark:text-black p-3 m-2 border-b-2 shadow-md w-full max-w-3xl"
-                value={name}
-                name="name"
-                placeholder="Nazwa"
-                onChange={onChangeName}
-                type="text"
-                validations={[required, vname]}
-              />
-              <Input className="form-control dark:text-black p-3 m-2 border-b-2 shadow-md  w-full max-w-3xl "
-                value={capacity}
-                name="capacity"
-                type="number"
-                placeholder="Pojemność pokoju"
-                onChange={onChangeCapacity}
-                validations={[vcap, required]}
-              />
-              <Select  className="form-control dark:text-black p-3 m-2 border-b-2 shadow-md  w-full max-w-3xl"
-                  value={room_type || ''}
-                  
-                  onChange={onChangeRoom_type}
-                  validations={[required]}
-                >
-                  <option value = {null} >----</option>
-                  {
-                   options.length > 0 &&
-                   options.map(opt => (
-                    <option value = {opt.id} key={opt.id}>{opt.name}</option>
-                   ))
-                  }
-              </Select>
-              <Select  className="form-control dark:text-black p-3 m-2 border-b-2 shadow-md  w-full max-w-3xl"
-                  value={department || ''}
-                  onChange={onChangeDepartment}
-                  validations={[required]}
-                >
-                  <option value = {null} >----</option>
-                  {
-                   deps.length > 0 &&
-                   deps.map(d => (
-                    <option value ={d.id} key={d.id}>{d.department.name} - {getDepAddress(d.address_id)}</option>
-                   ))
-                  }
-              </Select>
-              <div className='m-auto'>
-                <button  className='p-4 shadow-xl m-2 rounded-lg bg- border-1 bg-gray-600 text-white hover:bg-gray-400 hover:text-black'    type="submit">
-                    Zatwierdź
-                </button>
-                <button  className='p-4 shadow-xl m-2 rounded-lg border-1 hover:bg-gray-400 hover:text-white' type="Reset" onClick={handleCancel}>
-                    Anuluj
-                </button>
-              </div>
-              
-              <CheckButton style={{ display: "none" }} ref={checkBtn} />
-            </Form>
+  return (
+    <>
+      {message && (
+        <div className="form-group">
+          <div
+            className={
+              successful ? "alert alert-success" : "alert alert-danger"
+            }
+            role="alert"
+          >
+            {message}
           </div>
         </div>
-      </>
-    )
+      )}
+      <div className="flex flex-wrap justify-center min-h-screen content-center">
+        <div className="w-full max-w-xl p-4 bg-white border border-gray-200 rounded-lg shadow-2xl sm:p-6 md:p-8 dark:bg-secondary-dark-bg dark:border-gray-700">
+          <h1 className="mb-8 text-center text-3xl  font-semibold">Edytuj pokój</h1>
+
+          <Form onSubmit={EditRoomHandler} ref={form} className="space-y-6">
+            <hr />
+            <div className="mb-6">
+              <label for="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nazwa</label>
+              <Input
+                type="text"
+                className={formStyle}
+                name="name"
+                placeholder="Nazwa"
+                value={name}
+                onChange={onChangeName}
+                validations={[required, vname]} />
+            </div>
+            <div className="mb-6">
+              <label for="capacity" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pojemność</label>
+              <Input
+                type="text"
+                className={formStyle}
+                name="capacity"
+                placeholder="Pojemność pokoju"
+                value={capacity}
+                onChange={onChangeCapacity}
+                validations={[vcap, required]} />
+            </div>
+            <div className="mb-6">
+              <label for="type" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Typ pokoju</label>
+              <Select
+                type="text"
+                className={formStyle}
+                name="type"
+                value={room_type || ''}
+                onChange={onChangeRoom_type}
+                validations={[required]}>
+                <option value={null} >----</option>
+                {
+                  options.length > 0 &&
+                  options.map(opt => (
+                    <option value={opt.id} key={opt.id}>{opt.name}</option>
+                  ))
+                }
+              </Select>
+            </div>
+            <div className="mb-6">
+              <label for="dep" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Wydział</label>
+              <Select
+                type="text"
+                className={formStyle}
+                name="dep"
+                value={department || ''}
+                onChange={onChangeDepartment}
+                validations={[required]}
+              >
+                <option value={null} >----</option>
+                {
+                  deps.length > 0 &&
+                  deps.map(d => (
+                    <option value={d.id} key={d.id}>{d.department.name} - {getDepAddress(d.address_id)}</option>
+                  ))
+                }
+              </Select>
+            </div>
+
+
+            <button type="submit" className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Zatwierdź</button>
+
+            <button onClick={handleCancel} className="w-full text-white bg-gray-600 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 text-center py-2.5 dark:hover:bg-gray-100 ">Wróć  </button>
+
+
+            <CheckButton style={{ display: "none" }} ref={checkBtn} />
+          </Form>
+        </div>
+      </div>
+    </>
+  )
 }
 
 export default EditRoom

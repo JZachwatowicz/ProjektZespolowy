@@ -25,9 +25,9 @@ const ShowUsers = () => {
     const [message, setMessage] = useState(location.state ? location.state.message : "");
     const [successful, setSuccessful] = useState(location.state ? location.state.successful : false);
     const roles = {
-        1: "user",
-        2: "pracownik",
-        3: "admin"
+        1: "Użytkownik",
+        2: "Pracownik",
+        3: "Administrator"
     }
     // function HandleSearch() {
     //     if (search === "") {
@@ -97,29 +97,79 @@ const ShowUsers = () => {
             });
         setUsers(users.filter(e => e.id !== id))
     }
-
     return (
         <div className="flex flex-wrap justify-center min-h-screen content-center">
-            <button onClick={() => navigate('/users')}>Wróć</button>
-            <button onClick={() => handleAddUser()}>Dodaj użytkownika</button>
-            <table>
+    
+            {message && (
+              <div
+                className={
+                  "m-2 text-red-500 font-medium"
+                }
+                role="alert"
+              >
+                {message}
+              </div>
+            )}
+    
+            
+    
+            <div className="overflow-x-auto relative shadow-lg sm:rounded-lg border-1 w-fit">
+    
+              <table className="w-full text-left  rounded-lg" >
+                <caption className="p-5 text-lg font-semibold text-center text-gray-900 bg-white dark:text-white dark:bg-secondary-dark-bg">
+                <button onClick={() => handleAddUser()} 
+                className="flex items-left p-3 shadow-xl rounded-lg  text-white bg-green-700 border border-green-700 hover:bg-green-800 ">
+                Dodaj użytkownika
+            </button>Użytkownicy
+                </caption>
+                <thead className="uppercase text-white bg-secondary-dark-bg dark:bg-slate-300 dark:text-black">
+                  <tr>
+                    <th scope="col" className="py-3 px-4">
+                    Nazwa użytkownika
+                    </th>
+                    <th scope="col" className="py-3 px-4">
+                    Imię i nazwisko
+                    </th>
+                    <th scope="col" className="py-3 px-4">
+                    Email
+                    </th>
+                    <th scope="col" className="py-3 px-4">
+                    Telefon
+                    </th>
+                    <th scope="col" className="py-3 px-4">
+                    PESEL
+                    </th>
+                    <th scope="col" className="py-3 px-4">
+                    Data urodzenia
+                    </th>
+                    <th scope="col" className="py-3 px-4">
+                    Adres
+                    </th>
+                    <th scope="col" className="py-3 px-4">
+                    Rola
+                    </th>
+                    <th scope="col" className="py-3 px-4">
+                    Akcje
+                    </th>
+                  </tr>
+                </thead>
                 <tbody>
-                    <tr><th>Nazwa użytkownika</th><th>Imię i nazwisko</th><th>Email</th><th>Telefon</th><th>PESEL</th><th>Data urodzenia</th><th>Adres</th></tr>
-                    {users.map((user, index) => {
-                        return (
-
-                            <tr key={index}>
-                                <td>{user.username}</td><td>{user.first_name + " " + user.last_name}</td>
-                                <td>{user.email}</td><td>{user.contact_number}</td>
-                                <td>{user.pesel}</td><td>{user.birth_date}</td>
-                                {addresses.map((e, index) => {
+                  {users ? users.map(user => (
+                    
+                    <tr key={user.id} className="bg-white border-b dark:bg-secondary-dark-bg dark:border-gray-700">
+                      <td className="py-4 px-4">{user.username}</td>
+                      <td className="py-4 px-4">{user.first_name + " " + user.last_name}</td>
+                      <td className="py-4 px-4"> {user.email}</td>
+                      <td className="py-4 px-4"> {user.contact_number}</td>
+                      <td className="py-4 px-4"> {user.pesel}</td>
+                      <td className="py-4 px-4"> {user.birth_date}</td>
+                      {addresses.map((e, index) => {
                                     return (e.id === user.address_id ?
-                                        <td key={index}>
+                                        <td className="py-4 px-4" key={index}>
                                             <table>
                                                 <tbody>
                                                     <tr><td>{e.street.name} {e.building_number}{e.apartment_number !== "" ? '/' + e.apartment_number : null}</td></tr>
-                                                    <tr><td>{e.street.city.name}</td></tr>
-                                                    <tr><td>woj.{e.street.city.voivodeship.name}</td></tr>
+                                                    <tr><td>{e.street.city.voivodeship.name}, {e.street.city.name}</td></tr>
                                                     <tr><td>{e.street.city.voivodeship.country.name}</td></tr>
                                                 </tbody>
                                             </table>
@@ -129,21 +179,25 @@ const ShowUsers = () => {
                                     )
                                 })
                                 }
-                                {user.address_id ? null : <td>brak</td>}
-                                <td>{roles[user.role_id]}</td>
-                                <td><button onClick={() => handleEditUserAddress(user.id)}>EditAddress</button></td>
-                                <td><button onClick={() => handleEditUser(user.id)}>Edit</button></td>
-                                <td><button onClick={() => handleDeleteUser(user.id)}>X</button></td>
-                            </tr>
-
-
-                        )
-                    })
-                    }
+                                {user.address_id ? null : <td className="py-4 px-4">brak</td>}
+                                <td className="py-4 px-4">{roles[user.role_id]}</td>                      <td className="py-4 px-4 flex">
+                        <button className=" p-3 shadow-xl m-1 rounded-lg  bg-gray-600 text-white hover:bg-gray-400 hover:text-black " onClick={() => handleEditUserAddress(user.id)}>EditAddress</button>
+                        <button className=" p-3 shadow-xl m-1 rounded-lg  bg-gray-600 text-white hover:bg-gray-400 hover:text-black " onClick={() => handleEditUser(user.id)}>Edit</button>
+                        <button onClick={() => handleDeleteUser(user.id)} className="p-3 shadow-xl m-1 rounded-lg  text-white bg-red-600 border border-red-700 hover:bg-red-800 ">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-x" viewBox="0 0 16 16">
+                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" /></svg>
+                        </button>
+                      </td>
+    
+                    </tr>
+                  ))
+                    : null}
                 </tbody>
-            </table>
-        </div>
-    )
+              </table>
+            </div>
+    
+          </div>
+      );
 
 }
 

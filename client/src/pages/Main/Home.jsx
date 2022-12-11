@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import ArticleService from '../../services/article.service'
 import Moment from 'moment';
 import logo from '../../assets/logo.png'
-
+import { useNavigate } from "react-router-dom";
 //3 najnowsze newsy
 const Home = () => {
 
+  const navigate = useNavigate();
   const [articles, setArticles] = useState([])
 
 
@@ -37,7 +38,10 @@ const Home = () => {
           <div key={e.id} className="w-full md:max-w-5xl p-4 bg-white border border-gray-200 rounded-lg shadow-2xl sm:p-6 md:p-8 dark:bg-main-dark-bg dark:border-gray-700">
             <div className='text-end text-xs'>{e.createdAt !== e.updatedAt ? "Edytowane: " + Moment(e.updatedAt).format('DD-MM-YYYY') : "Dodane: " + Moment(e.createdAt).format('DD-MM-YYYY')}</div>
             <h6 className="text-lg font-bold dark:text-white">{e.title}</h6>
-            <p className='mb-3 font-light'>{e.content}</p>
+            <p className='mb-3 font-light line-clamp-2'>{e.content}</p>
+            <div className='flex flex-row justify-end'>
+              <button className="p-3 shadow-xl rounded-lg  bg-green-700 text-white hover:bg-gray-400 hover:text-black " onClick={() => navigate("/news/"+ e.id)}>Szczegóły</button>
+            </div>
           </div>
         )}
 

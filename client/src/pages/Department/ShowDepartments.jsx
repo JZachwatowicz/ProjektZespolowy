@@ -93,7 +93,7 @@ const ShowActivities = () => {
         <h1 className="mb-8 text-center text-3xl font-semibold">Lista Wydziałów</h1>
           <div className=' grid grid-cols-3'>
             <div className="flex items-center input-group  d-flex justify-content-between">
-              <input className="form-control p-3 shadow-md  rounded-l-lg w-4/5  w-max" 
+              <input className="form-control p-3 shadow-md  rounded-l-lg w-4/5" 
                 type="search" 
                 placeholder="Search"
                 value={search}

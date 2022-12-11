@@ -3,17 +3,18 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Sidebar, Footer } from './components';
 import {
   Home, Login, Profile, About, Contact, News, RoomTypes, AddUser, EditUser, EditUserAddress, ShowUsers, EditAddress, EditProfile,
-  ShowDeprtments, AddDepartment, EditDepartment, ShowDescriptions, AddDescription, AddActivity, EditActivity, ShowActivities,
-  EditItem, AddItem, ShowItems, ItemTypes, EditRoom, AddRoom, ShowRooms, Schedule, EditSchedule, AddSchedule, ReserveItem
+  ShowDeprtments, AddDepartment, EditDepartment, ShowDescriptions, AddDescription, AddActivity, EditActivity, ShowActivities, OneNews, ShowDescription, EditItem, AddItem, ShowItems, ItemTypes, EditRoom, AddRoom, ShowRooms, Schedule, EditSchedule, AddSchedule, ReserveItem
 } from './pages';
-import './App.css'
+import './App.css';
+
+
 
 import { useStateContext } from './services/ContextProvider';
+import Chat from './pages/Chat';
 
 import ManageScheduleUsers from './pages/Schedule/ManageScheduleUsers';
 
 const App = () => {
-
   const { setCurrentColor, setCurrentMode, currentMode, activeMenu } = useStateContext();
 
   useEffect(() => {
@@ -50,9 +51,11 @@ const App = () => {
               <Route exact path="/contact" element={<Contact />} />
               <Route exact path="/about" element={<About />} />
               <Route exact path="/news" element={<News />} />
+              <Route exact path="/news/:id" element={<OneNews />} />
 
 
 
+              <Route exact path="/chat" element={<Chat />} />
               <Route exact path="/profile" element={<Profile />} />
               <Route exact path="/profile/edit" element={<EditProfile />} />
               <Route exact path="/profile/editaddress" element={<EditAddress />} />
@@ -61,6 +64,7 @@ const App = () => {
 
               <Route exact path="/descriptions" element={<ShowDescriptions />} />
               <Route exact path="/descriptions/add" element={<AddDescription />} />
+              <Route exact path="/descriptions/:id" element={<ShowDescription />} />
 
               <Route exact path="/schedule" element={<Schedule />} />
               <Route exact path="/booking" element={<ReserveItem />} />

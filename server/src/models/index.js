@@ -530,6 +530,7 @@ db.sequelize.sync({
     init_user_descriptions();
 })
 
+
 db.ROLES = ["user", "employee", "admin"];
 
 module.exports = db

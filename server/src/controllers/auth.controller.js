@@ -8,7 +8,7 @@ const { address, city } = require("../models");
 
 exports.signup = async (req, res) => {
 
-  const { username, email, password, firstName, lastName, pesel, contactNumber, country_name, country_code, voivodeship_name, city_name, street_name, building_number, apartment_number } = req.body
+  const { username, email, password, first_name, last_name, pesel, contact_number, country_name, country_code, voivodeship_name, city_name, street_name, building_number, apartment_number } = req.body
 
   const [country, isCountryCreated] = await Country.findOrCreate({
     where: {
@@ -48,8 +48,8 @@ exports.signup = async (req, res) => {
   })
 
   //Save User to Database
-  console.log(username, email, password, firstName, lastName, pesel, country_name)
-  await createUser(username, email, password, firstName, lastName, pesel, contactNumber, address.id)
+  console.log(username, email, password, first_name, last_name, pesel, country_name)
+  await createUser(username, email, password, first_name, last_name, pesel, contact_number, address.id)
     .then(() => {
       res.send({ message: "User was registered successfully!" });
     })
