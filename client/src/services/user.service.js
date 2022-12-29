@@ -20,6 +20,9 @@ const getAdminBoard = () => {
 const showUsers = () => {
     return axios.get(API_URL + "all/get");
 }
+const get_all_users = () => {
+    return axios.get(API_URL + "all/get");
+}
 const getUser = (id) => {
     return axios.get(API_URL + "all/get/" + id)
 }
@@ -41,8 +44,9 @@ const UserService = {
     getUserBoard,
     getEmployeeBoard,
     getAdminBoard,
-    showUsers,
+    get_all_users,
     getUser,
+    showUsers,
     editUser,
     editUserAddress,
     addUser,

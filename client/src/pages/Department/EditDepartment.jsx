@@ -143,6 +143,7 @@ const EditDepartment = () => {
     const handleCancel = () => {
         navigate("/departments");
     };
+    const formStyle = "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 
 
     return (
@@ -160,98 +161,128 @@ const EditDepartment = () => {
                         </div>
                     </div>
                 )}
-                <div className={`p-11 shadow-2xl mb-20  ${screenSize <= 800 ? 'w-full' : 'w-10/12'}`}>
-                    <h1 className="mb-8 text-center text-3xl  font-semibold">Dodaj Wydział</h1>
-                    <hr />
+        <div className="flex flex-wrap justify-center min-h-screen content-center">
+          <div className="w-full max-w-xl p-4 bg-white border border-gray-200 rounded-lg shadow-2xl sm:p-6 md:p-8 dark:bg-secondary-dark-bg dark:border-gray-700">
+            <h1 className="mb-8 text-center text-3xl  font-semibold">Dodaj Wydział</h1>
 
-                    <Form onSubmit={editDepartmentHandler} ref={form} className="pt-4 flex-2 text-center text-black">
-                        <Input className="form-control p-3 m-2 border-b-2 shadow-md w-full max-w-3xl"
-                            value={formData.name}
-                            name="name"
-                            placeholder="Nazwa"
-                            onChange={onChange}
-                            type="text"
-                            validations={[required, vname]}
-                        />
-                        <Textarea className="form-control p-3 m-2 border-b-2 shadow-md  w-full max-w-3xl "
-                            value={formData.description}
-                            name="description"
-                            rows="3"
-                            placeholder="Opis"
-                            onChange={onChange}
-                            validations={[vdesc]}
-                        />
-                        <Input className="form-control p-3 m-2 border-b-2 shadow-md w-full max-w-3xl"
-                            value={formData.apartment_number}
-                            name="apartment_number"
-                            placeholder="Nr mieszkania"
-                            onChange={onChange}
-                            type="text"
-                            validations={[required]}
-                        />
-                        <Input className="form-control p-3 m-2 border-b-2 shadow-md w-full max-w-3xl"
-                            value={formData.building_number}
-                            name="building_number"
-                            placeholder="Numer budynku"
-                            onChange={onChange}
-                            type="text"
-                            validations={[required]}
-                        />
-                        <Input className="form-control p-3 m-2 border-b-2 shadow-md w-full max-w-3xl"
-                            value={formData.street_name}
-                            name="street_name"
-                            placeholder="Ulica"
-                            onChange={onChange}
-                            type="text"
-                            validations={[required]}
-                        />
-                        <select name="country_code" value={formData.country_code} onChange={onChange} className="form-control p-3 m-2 border-b-2 shadow-md">
+            <Form onSubmit={editDepartmentHandler} ref={form} className="space-y-6">
+              <hr />
+              <div className="mb-6">
+                <label for="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nazwa</label>
+                <Input
+                  type="text"
+                  className={formStyle}
+                  name="name"
+                  placeholder="Nazwa"
+                  value={formData.name}
+                  onChange={onChange}
+                  validations={[required, vname]} />
+              </div>
+              <div className="mb-6">
+                <label for="description" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Opis</label>
+                <Textarea
+                  className={formStyle}
+                  value={formData.description}
+                  name="description"
+                  rows="3"
+                  placeholder="Opis"
+                  onChange={onChange}
+                  validations={[vdesc]}
+                />
+              </div>
 
-                            {Country.getAllCountries().map(e => <option key={e.isoCode} value={e.isoCode}>{e.name}</option>)}
-                        </select>
+              <div className="grid gap-4 mb-6 md:grid-cols-2">
+                <div>
+                  <label for="street_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ulica</label>
+                  <Input
+                    type="text"
+                    className={formStyle}
+                    name="street_name"
+                    placeholder="Ulica"
+                    value={formData.street_name}
+                    onChange={onChange}
+                    validations={[required]} />
 
-                        {formData.country_code ?
-                            <input hidden type="text" onChange={onChange} name={formData.country_name} value={formData.country_name = Country.getCountryByCode(formData.country_code).name} />
-                            : null}
-                        {State.getStatesOfCountry(formData.country_code).length !== 0 ?
-
-                            <>
-                                <select name="voivodeship_code" value={formData.voivodeship_code} onChange={onChange} className="form-control p-3 m-2 border-b-2 shadow-md">
-                                    {State.getStatesOfCountry(formData.country_code).map(e => <option key={e.isoCode} value={e.isoCode}>{e.name}</option>)}
-                                </select>
-                                {formData.voivodeship_code ?
-                                    <input hidden type="text" onChange={onChange} name={formData.voivodeship_name} value={formData.voivodeship_name = State.getStateByCode(formData.voivodeship_code).name} />
-                                    : null}
-                            </>
-                            :
-                            <>
-                                    {City.getCitiesOfCountry(formData.country_code).length !== 0 ?
-                            <>
-                            <select name="city_name" value={formData.city_name} onChange={onChange} className="form-control p-3 m-2 border-b-2 shadow-md">
-                                {City.getCitiesOfCountry(formData.country_code).map(e => <option key={e.name} value={e.isoCode}>{e.name}</option>)}
-                            </select>
-                            </>
-                            : null}
-                        </>}
-                        {City.getCitiesOfState(formData.country_code, formData.voivodeship_code).length !== 0 ?
-                        <>
-                        <select name="city_name" value={formData.city_name} onChange={onChange} className="form-control p-3 m-2 border-b-2 shadow-md">
-                            {City.getCitiesOfState(formData.country_code, formData.voivodeship_code).map(e => <option key={e.name} value={e.isoCode}>{e.name}</option>)}
-                        </select>
-                        </>
-                        : null}
-                        <div className='m-auto'>
-                            <button className='p-4 shadow-xl m-2 rounded-lg bg- border-1 bg-gray-600 text-white hover:bg-gray-400 hover:text-black' type="submit">
-                                Dodaj
-                            </button>
-                            <button className='p-4 shadow-xl m-2 rounded-lg border-1 hover:bg-gray-400 hover:text-white' type="Reset" onClick={handleCancel}>
-                                Anuluj
-                            </button>
-                        </div>
-
-                        <CheckButton style={{ display: "none" }} ref={checkBtn} />
-                    </Form>
                 </div>
+                <div className="grid gap-4 grid-cols-2">
+                  <div>
+                    <label for="building_number" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nr domu</label>
+                    <Input
+                      type="text"
+                      className={formStyle}
+                      name="building_number"
+                      placeholder="Nr domu"
+                      value={formData.building_number}
+                      onChange={onChange}
+                      validations={[required]} />
+                  </div>
+                  <div>
+                    <label for="apartment_number" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nr mieszkania</label>
+                    <Input
+                      type="text"
+                      className={formStyle}
+                      name="apartment_number"
+                      placeholder="Nr mieszkania"
+                      value={formData.apartment_number}
+                      onChange={onChange} />
+                  </div>
+                </div>
+              </div>
+              <div className="mb-6">
+                <label for="country_code" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kraj</label>
+                <select name="country_code" value={formData.country_code} onChange={onChange} className={formStyle}>
+                  {Country.getAllCountries().map(e => <option key={e.isoCode} value={e.isoCode}>{e.name}</option>)}
+                </select>
+              </div>
+              {formData.country_code ?
+                <input hidden type="text" onChange={onChange} name={formData.country_name} value={formData.country_name = Country.getCountryByCode(formData.country_code)?.name} />
+                : null}
+              {State.getStatesOfCountry(formData.country_code).length !== 0 ?
+
+                <>
+                  <div className="mb-6">
+                    <label for="voivodeship_code" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Region</label>
+                    <select name="voivodeship_code" value={formData.voivodeship_code} onChange={onChange} className={formStyle}>
+                      {State.getStatesOfCountry(formData.country_code).map(e => <option key={e.isoCode} value={e.isoCode}>{e.name}</option>)}
+                    </select>
+                  </div>
+                  {formData.voivodeship_code ?
+                    <input hidden type="text" onChange={onChange} name={formData.voivodeship_name} value={formData.voivodeship_name = State.getStateByCode(formData.voivodeship_code)?.name} />
+                    : null}
+                </>
+                :
+                <>
+                  {City.getCitiesOfCountry(formData.country_code).length !== 0 ?
+                    <>
+                      <div className="mb-6">
+                        <label for="city_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Miasto</label>
+                        <select name="city_name" value={formData.city_name} onChange={onChange} className={formStyle}>
+                          {City.getCitiesOfCountry(formData.country_code).map(e => <option key={e.isoCode} value={e.isoCode}>{e.name}</option>)}
+                        </select>
+                      </div>
+                    </>
+                    : null}
+                </>}
+              {City.getCitiesOfState(formData.country_code, formData.voivodeship_code).length !== 0 ?
+                <>
+                  <div className="mb-6">
+                    <label for="city_name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Miasto</label>
+                    <select name="city_name" value={formData.city_name} onChange={onChange} className={formStyle}>
+                      {City.getCitiesOfState(formData.country_code, formData.voivodeship_code).map(e => <option key={e.isoCode} value={e.isoCode}>{e.name}</option>)}
+                    </select>
+                  </div>
+                </>
+                : null}
+              <button type="submit" className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Zatwierdź</button>
+
+              <button onClick={handleCancel} className="w-full text-white bg-gray-600 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 text-center py-2.5 dark:hover:bg-gray-100 ">Wróć  </button>
+
+
+
+              <CheckButton style={{ display: "none" }} ref={checkBtn} />
+            </Form>
+          </div>
+        </div>
             </div>
         </>
     )

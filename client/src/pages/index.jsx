@@ -2,6 +2,7 @@ export {default as Home} from './Main/Home';
 export {default as About} from './Main/About';
 export {default as Contact} from './Main/Contact';
 export {default as News} from './Main/News';
+export {default as OneNews} from './Main/OneNews';
 
 export {default as Login} from './Login';
 export {default as Register} from './Register';
@@ -20,6 +21,7 @@ export {default as AddDepartment} from './Department/AddDepartment'
 export {default as EditDepartment} from './Department/EditDepartment';
 
 export {default as ShowDescriptions} from './User/ShowDescriptions';
+export {default as ShowDescription} from './User/ShowDescription';
 export {default as AddDescription} from './User/AddDescription';
 
 export {default as AddActivity} from './Activity/AddActivity'
@@ -30,6 +32,7 @@ export {default as EditItem} from './Item/EditItem'
 export {default as AddItem} from './Item/AddItem'
 export {default as ShowItems} from './Item/ShowItems'
 export {default as ItemTypes} from './Item/ItemTypes'
+export {default as ReserveItem} from './Item/ReserveItem'
 
 export {default as EditRoom} from './Room/EditRoom'
 export {default as AddRoom} from './Room/AddRoom'

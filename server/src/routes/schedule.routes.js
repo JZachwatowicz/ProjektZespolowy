@@ -17,6 +17,12 @@ router.get(
     controller.all_schedules
 );
 
+router.get(
+    '/getScheduleUsers/:id',
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.get_schedule_users
+);
+
 router.post(
     '/add',
     [authJwt.verifyToken, authJwt.isEmployee],
@@ -24,7 +30,7 @@ router.post(
 );
 
 router.put(
-    '/addUserSchedule',
+    '/addUserSchedule/:id',
     [authJwt.verifyToken, authJwt.isEmployee],
     controller.add_user
 );

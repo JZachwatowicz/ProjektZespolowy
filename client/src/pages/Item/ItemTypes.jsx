@@ -185,6 +185,8 @@ const required = (value) => {
       );
   }
     return (
+      <div className="flex flex-wrap justify-center min-h-screen content-center">
+
         <div className='flex gap-10 flex-wrap justify-center'>
       <div className="p-11 mb-20 flex-grow ">
       <button className="p-4 shadow-xl rounded-lg border-1 hover:bg-gray-600 hover:text-white"  onClick={handleCancel}> 
@@ -284,6 +286,7 @@ const required = (value) => {
                 </div>
               }
       </div>
+    </div>
     </div>
       );
 }
