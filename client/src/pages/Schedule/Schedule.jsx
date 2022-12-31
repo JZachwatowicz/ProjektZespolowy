@@ -106,26 +106,6 @@ const Schedule = () => {
     return null;
   }
 
-  function getRoomSize(r_id) {
-    if (rooms.find(room => room.id === r_id)) {
-      return rooms.find(room => room.id === r_id).capacity;
-    }
-    return 0;
-  }
-
-  function getUsersSchedules(s_id) {
-    console.log("Schedule: " + s_id);
-    var usersSchedule = [];
-    ScheduleService.getScheduleUsers(s_id).then(res => {
-      res.data.forEach(us => {
-        usersSchedule.push(us);
-        console.log(us);
-      })
-    });
-
-    return usersSchedule;
-  }
-
   function editHarmonogramHandler(h_id, s_id) {
     navigate('/schedule/edit/' + h_id + "/" + s_id);
   }
@@ -136,10 +116,6 @@ const Schedule = () => {
 
   function deatilsHarmonogramHandler(h_id, s_id) {
     navigate('/schedule/show/' + h_id + "/" + s_id);
-  }
-
-  function manageUsersHandler(h_id, s_id, r_size) {
-    navigate('/schedule/manageusers/' + h_id + "/" + s_id + "/" + r_size);
   }
 
   function deleteHandler(h_id, s_id) {
@@ -158,7 +134,6 @@ const Schedule = () => {
       setMessage(resMessage);
       setSuccessful(false);
     })
-
   }
 
   function parseDate(date) {
@@ -167,27 +142,46 @@ const Schedule = () => {
     return parsed;
   }
 
-  function renderPatients(h_id) {
-    return (getUsersSchedules(getScheduleId(h_id)).map(s =>
-      <ul key={s.id}>
-        <li>
-          {
-            users.find(user => user.id === s.user_id) ?
-              users.find(user => user.id === s.user_id).first_name + " " + users.find(user => user.id === s.user_id).last_name :
-              "brak"
-          }
-        </li>
-      </ul>
-    )
-    )
+  function getPatients(s_id) {
+    var usersSchedule = [];
+    ScheduleService.getScheduleUsers(s_id).then(res => {
+      res.data.forEach(us => {
+        usersSchedule.push(us);
+        console.log(us);
+      })
+    });
+
+    return usersSchedule;
+  }
+
+  function checkIfBelong(h_id) {
+    var h = harmonograms.find(harmonogram => harmonogram.id === h_id);
+    if(h){
+      if(h.user_id === currentUser.id) {
+        return true;
+      }
+      
+      var patients = getPatients(getScheduleId(h_id));
+      
+      patients.forEach(p => {
+        if(p.user_id === currentUser.id){
+          return true;
+        }
+      })
+    }
+
+    return false;
   }
 
   return (
     <div>
       Harmonogram
-      <button onClick={() => addHarmonogramHandler()} className=" p-3 shadow-xl m-1 rounded-lg  bg-gray-600 text-white hover:bg-gray-400 hover:text-black ">
-        Dodaj
-      </button>
+      {showAdminBoard || showEmployeeBoard ?
+        <button onClick={() => addHarmonogramHandler()} className=" p-3 shadow-xl m-1 rounded-lg  bg-gray-600 text-white hover:bg-gray-400 hover:text-black ">
+          Dodaj
+        </button>
+        : null
+      }
       <table className='w-full text-center'>
         <thead>
           <th>Data rozpoczęcia</th>
@@ -198,55 +192,57 @@ const Schedule = () => {
           <th></th>
           <th></th>
           <th></th>
-          <th></th>
         </thead>
         <tbody>
           {harmonograms.map(h =>
-            <tr key={h.id}>
-              <td>{parseDate(h.begin_date)}</td>
-              <td>{parseDate(h.end_date)}</td>
-              <td>
-                {
-                  activities.find(activity => activity.id === getActivityId(h.id)) ?
-                    activities.find(activity => activity.id === getActivityId(h.id)).name :
-                    "brak"
+            checkIfBelong(h.id) || showAdminBoard ?
+              <tr key={h.id}>
+                <td>{parseDate(h.begin_date)}</td>
+                <td>{parseDate(h.end_date)}</td>
+                <td>
+                  {
+                    activities.find(activity => activity.id === getActivityId(h.id)) ?
+                      activities.find(activity => activity.id === getActivityId(h.id)).name :
+                      "brak"
+                  }
+                </td>
+                <td>
+                  {
+                    rooms.find(room => room.id === h.room_id) ?
+                      rooms.find(room => room.id === h.room_id).name :
+                      "brak"
+                  }
+                </td>
+                <td>
+                  {
+                    users.find(user => user.id === h.user_id) ?
+                      users.find(user => user.id === h.user_id).first_name + " " + users.find(user => user.id === h.user_id).last_name :
+                      "brak"
+                  }
+                </td>
+                <td>
+                  <button onClick={() => deatilsHarmonogramHandler(h.id, getScheduleId(h.id))} className=" p-3 shadow-xl m-1 rounded-lg  bg-gray-600 text-white hover:bg-gray-400 hover:text-black ">
+                    Szczegóły
+                  </button>
+                </td>
+                {showAdminBoard || (showEmployeeBoard && currentUser.id === h.user_id) ?
+                  <td>
+                    <button onClick={() => editHarmonogramHandler(h.id, getScheduleId(h.id))} className=" p-3 shadow-xl m-1 rounded-lg  bg-gray-600 text-white hover:bg-gray-400 hover:text-black ">
+                      Edytuj
+                    </button>
+                  </td>
+                  : <td></td>
                 }
-              </td>
-              <td>
-                {
-                  rooms.find(room => room.id === h.room_id) ?
-                    rooms.find(room => room.id === h.room_id).name :
-                    "brak"
+                {showAdminBoard || (showEmployeeBoard && currentUser.id === h.user_id) ?
+                  <td>
+                    <button onClick={() => deleteHandler(h.id, getScheduleId(h.id))} className=" p-3 shadow-xl m-1 rounded-lg  bg-gray-600 text-white hover:bg-gray-400 hover:text-black ">
+                      Usuń
+                    </button>
+                  </td>
+                  : <td></td>
                 }
-              </td>
-              <td>
-                {
-                  users.find(user => user.id === h.user_id) ?
-                    users.find(user => user.id === h.user_id).first_name + " " + users.find(user => user.id === h.user_id).last_name :
-                    "brak"
-                }
-              </td>
-              <td>
-                <button onClick={() => deatilsHarmonogramHandler(h.id, getScheduleId(h.id))} className=" p-3 shadow-xl m-1 rounded-lg  bg-gray-600 text-white hover:bg-gray-400 hover:text-black ">
-                  Details
-                </button>
-              </td>
-              <td>
-                <button onClick={() => editHarmonogramHandler(h.id, getScheduleId(h.id))} className=" p-3 shadow-xl m-1 rounded-lg  bg-gray-600 text-white hover:bg-gray-400 hover:text-black ">
-                  Edytuj
-                </button>
-              </td>
-              <td>
-                <button onClick={() => manageUsersHandler(h.id, getScheduleId(h.id), getRoomSize(h.room_id))} className=" p-3 shadow-xl m-1 rounded-lg  bg-gray-600 text-white hover:bg-gray-400 hover:text-black ">
-                  Edytuj pacjentów
-                </button>
-              </td>
-              <td>
-                <button onClick={() => deleteHandler(h.id, getScheduleId(h.id))} className=" p-3 shadow-xl m-1 rounded-lg  bg-gray-600 text-white hover:bg-gray-400 hover:text-black ">
-                  Usuń
-                </button>
-              </td>
-            </tr>
+              </tr>
+              : null
           )}
         </tbody>
       </table>

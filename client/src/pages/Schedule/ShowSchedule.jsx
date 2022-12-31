@@ -70,7 +70,7 @@ const ShowSchedule = () => {
     const fetchRoom = () => {
         RoomService.showRooms()
             .then(response => {
-                setRooms(response.data.map(e => { return { id: e.id, name: e.name } }));
+                setRooms(response.data);
             })
             .catch(error => {
                 console.error(error)
@@ -129,8 +129,37 @@ const ShowSchedule = () => {
         return null;
     }
 
+    function getRoomSize(r_id) {
+        if (rooms.find(room => room.id === r_id)) {
+            return rooms.find(room => room.id === r_id).capacity;
+        }
+        return 0;
+    }
+
     const goBackHandler = () => {
         navigate("/schedule");
+    }
+
+    function manageUsersHandler(r_size) {
+        navigate('/schedule/manageusers/' + h_id + "/" + s_id + "/" + r_size);
+    }
+
+    function cancelClassHandler(s_id) {
+        setMessage("");
+        setSuccessful(false);
+        ScheduleService.deleteScheduleUser(s_id, currentUser.id).then(() => {
+            window.location.reload();
+        }).catch((error) => {
+            const resMessage =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+
+            setMessage(resMessage);
+            setSuccessful(false);
+        })
     }
 
     return (
@@ -198,6 +227,24 @@ const ShowSchedule = () => {
                                     "brak"
                             }
                         </td>
+                    </tr>
+                    <tr>
+                        {patients.find(patient => patient === currentUser.id) ?
+                            <td>
+                                <button onClick={() => cancelClassHandler(s_id)} className=" p-3 shadow-xl m-1 rounded-lg  bg-gray-600 text-white hover:bg-gray-400 hover:text-black ">
+                                    Wypisz się z zajęć
+                                </button>
+                            </td>
+                            : <td></td>
+                        }
+                        {showAdminBoard || showEmployeeBoard ?
+                            <td>
+                                <button onClick={() => manageUsersHandler(getRoomSize(harmonogram.room_id))} className=" p-3 shadow-xl m-1 rounded-lg  bg-gray-600 text-white hover:bg-gray-400 hover:text-black ">
+                                    Zarządzaj pacjentami
+                                </button>
+                            </td>
+                            : <td></td>
+                        }
                     </tr>
                     <tr>
                         <td>Lista pacjentów: </td>

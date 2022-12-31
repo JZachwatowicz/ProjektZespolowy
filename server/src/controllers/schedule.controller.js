@@ -60,7 +60,6 @@ exports.add_user = async (req, res) => {
     await Schedule.findOne({
         where: { id: req.params.id }
     }).then(schedule => {
-        
         UserSchedule.findAll({
             where: {schedule_id: schedule.id}
         }).then(userSchedules => {
@@ -122,5 +121,25 @@ exports.get_schedule_users = async (req, res) => {
         res.status(200).send(schedules);
     }).catch(err => {
         res.status(200).send(null);
+    });
+}
+
+exports.delete_schedule_user = async (req, res) => {
+    await Schedule.findOne({
+        where: { id: req.params.s_id }
+    }).then(schedule => {
+        UserSchedule.findAll({
+            where: {schedule_id: schedule.id}
+        }).then(userSchedules => {
+            userSchedules.forEach(item => {
+                if(item.user_id == req.params.user_id){
+                    item.destroy();
+                }
+            })
+        }).catch(err => {
+            res.status(500).send({ message: err.message });
+        });
+    }).catch(err => {
+        res.status(500).send({ message: err.message });
     });
 }

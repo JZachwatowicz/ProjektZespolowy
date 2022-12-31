@@ -20,6 +20,10 @@ const getScheduleUsers = (id) => {
     return axios.get(API_URL + "getScheduleUsers/" + id, {headers: authHeader()});
 }
 
+const deleteScheduleUser = (s_id, user_id) => {
+    return axios.delete(API_URL + "deleteScheduleUser/" + s_id + "/" + user_id, {headers: authHeader()});
+}
+
 const editSchedule = (id, data) => {
     return axios.put(API_URL + "edit/" + id, data, { headers: authHeader() });
 };
@@ -34,7 +38,8 @@ const ScheduleService = {
     editSchedule,
     getSchedule,
     addUserSchedule,
-    getScheduleUsers
+    getScheduleUsers,
+    deleteScheduleUser
 }
 
 export default ScheduleService;

@@ -99,7 +99,7 @@ const EditSchedule = () => {
     }, []);
 
     const handleCancel = () => {
-        navigate("/schedule")
+        navigate('/schedule/show/' + h_id + "/" + s_id);
     }
 
     const handleOnChange = (position) => {
