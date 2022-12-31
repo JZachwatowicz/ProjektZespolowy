@@ -40,6 +40,7 @@ export {default as ShowRooms} from './Room/ShowRooms'
 export {default as RoomTypes} from './Room/RoomTypes'
 
 export {default as Schedule} from './Schedule/Schedule'
+export {default as ShowSchedule} from './Schedule/ShowSchedule'
 export {default as EditSchedule} from './Schedule/EditSchedule'
 export {default as AddSchedule} from './Schedule/AddSchedule'
 // export {default as AdminBoard} from './Boards/AdminBoard';

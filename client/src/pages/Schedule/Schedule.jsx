@@ -134,6 +134,10 @@ const Schedule = () => {
     navigate('/schedule/add');
   }
 
+  function deatilsHarmonogramHandler(h_id, s_id) {
+    navigate('/schedule/show/' + h_id + "/" + s_id);
+  }
+
   function manageUsersHandler(h_id, s_id, r_size) {
     navigate('/schedule/manageusers/' + h_id + "/" + s_id + "/" + r_size);
   }
@@ -191,7 +195,7 @@ const Schedule = () => {
           <th>Nazwa zajęć</th>
           <th>Sala</th>
           <th>Prowadzący</th>
-          <th>Uczestnicy</th>
+          <th></th>
           <th></th>
           <th></th>
           <th></th>
@@ -223,7 +227,9 @@ const Schedule = () => {
                 }
               </td>
               <td>
-                {renderPatients(h.id)}
+                <button onClick={() => deatilsHarmonogramHandler(h.id, getScheduleId(h.id))} className=" p-3 shadow-xl m-1 rounded-lg  bg-gray-600 text-white hover:bg-gray-400 hover:text-black ">
+                  Details
+                </button>
               </td>
               <td>
                 <button onClick={() => editHarmonogramHandler(h.id, getScheduleId(h.id))} className=" p-3 shadow-xl m-1 rounded-lg  bg-gray-600 text-white hover:bg-gray-400 hover:text-black ">
