@@ -23,6 +23,7 @@ const Schedule = () => {
 
   const [schedules, setSchedules] = useState([])
   const [users, setUsers] = useState([])
+  const [patients, setPatients] = useState([])
   const [harmonograms, setHarmonograms] = useState([])
   const [rooms, setRooms] = useState([])
   const [activities, setActivities] = useState([])
@@ -30,10 +31,39 @@ const Schedule = () => {
   const [message, setMessage] = useState(location.state ? location.state.message : "");
   const [successful, setSuccessful] = useState(location.state ? location.state.successful : false);
 
+  function checkIfBelong(h, h_id) {
+    if(currentUser.roles[0] === "ROLE_ADMIN"){
+      return true;
+    }
+    if (h.find(harmonogram => harmonogram.id === h_id)) {
+      if (h.find(harmonogram => harmonogram.id === h_id).user_id === currentUser.id) {
+        return true;
+      }
+
+      ScheduleService.getScheduleUsers(getScheduleId(h_id)).then(res => {
+        res.data.forEach(us => {
+          if (us.schedule_id === getScheduleId(h_id) && us.user_id === currentUser.id) {
+            console.log(us.schedule_id + ": " + us.user_id);
+            return true;
+          }
+        })
+      });
+    }
+
+    return false;
+  }
+
   const fetchHarmonograms = () => {
     HarmonogramService.showHarmonograms()
       .then(response => {
-        setHarmonograms(response.data);
+        console.log(currentUser);
+        var new_harmonograms = response.data;
+        for (var i = 0; i < new_harmonograms.length; i++) {
+          if (checkIfBelong(new_harmonograms, new_harmonograms[i].id) === false) {
+            new_harmonograms.splice(i, 1);
+          }
+        }
+        setHarmonograms(new_harmonograms);
       })
       .catch(error => {
         console.error(error)
@@ -142,37 +172,6 @@ const Schedule = () => {
     return parsed;
   }
 
-  function getPatients(s_id) {
-    var usersSchedule = [];
-    ScheduleService.getScheduleUsers(s_id).then(res => {
-      res.data.forEach(us => {
-        usersSchedule.push(us);
-        console.log(us);
-      })
-    });
-
-    return usersSchedule;
-  }
-
-  function checkIfBelong(h_id) {
-    var h = harmonograms.find(harmonogram => harmonogram.id === h_id);
-    if(h){
-      if(h.user_id === currentUser.id) {
-        return true;
-      }
-      
-      var patients = getPatients(getScheduleId(h_id));
-      
-      patients.forEach(p => {
-        if(p.user_id === currentUser.id){
-          return true;
-        }
-      })
-    }
-
-    return false;
-  }
-
   return (
     <div>
       Harmonogram
@@ -195,54 +194,52 @@ const Schedule = () => {
         </thead>
         <tbody>
           {harmonograms.map(h =>
-            checkIfBelong(h.id) || showAdminBoard ?
-              <tr key={h.id}>
-                <td>{parseDate(h.begin_date)}</td>
-                <td>{parseDate(h.end_date)}</td>
+            <tr key={h.id}>
+              <td>{parseDate(h.begin_date)}</td>
+              <td>{parseDate(h.end_date)}</td>
+              <td>
+                {
+                  activities.find(activity => activity.id === getActivityId(h.id)) ?
+                    activities.find(activity => activity.id === getActivityId(h.id)).name :
+                    "brak"
+                }
+              </td>
+              <td>
+                {
+                  rooms.find(room => room.id === h.room_id) ?
+                    rooms.find(room => room.id === h.room_id).name :
+                    "brak"
+                }
+              </td>
+              <td>
+                {
+                  users.find(user => user.id === h.user_id) ?
+                    users.find(user => user.id === h.user_id).first_name + " " + users.find(user => user.id === h.user_id).last_name :
+                    "brak"
+                }
+              </td>
+              <td>
+                <button onClick={() => deatilsHarmonogramHandler(h.id, getScheduleId(h.id))} className=" p-3 shadow-xl m-1 rounded-lg  bg-gray-600 text-white hover:bg-gray-400 hover:text-black ">
+                  Szczegóły
+                </button>
+              </td>
+              {showAdminBoard || (showEmployeeBoard && currentUser.id === h.user_id) ?
                 <td>
-                  {
-                    activities.find(activity => activity.id === getActivityId(h.id)) ?
-                      activities.find(activity => activity.id === getActivityId(h.id)).name :
-                      "brak"
-                  }
-                </td>
-                <td>
-                  {
-                    rooms.find(room => room.id === h.room_id) ?
-                      rooms.find(room => room.id === h.room_id).name :
-                      "brak"
-                  }
-                </td>
-                <td>
-                  {
-                    users.find(user => user.id === h.user_id) ?
-                      users.find(user => user.id === h.user_id).first_name + " " + users.find(user => user.id === h.user_id).last_name :
-                      "brak"
-                  }
-                </td>
-                <td>
-                  <button onClick={() => deatilsHarmonogramHandler(h.id, getScheduleId(h.id))} className=" p-3 shadow-xl m-1 rounded-lg  bg-gray-600 text-white hover:bg-gray-400 hover:text-black ">
-                    Szczegóły
+                  <button onClick={() => editHarmonogramHandler(h.id, getScheduleId(h.id))} className=" p-3 shadow-xl m-1 rounded-lg  bg-gray-600 text-white hover:bg-gray-400 hover:text-black ">
+                    Edytuj
                   </button>
                 </td>
-                {showAdminBoard || (showEmployeeBoard && currentUser.id === h.user_id) ?
-                  <td>
-                    <button onClick={() => editHarmonogramHandler(h.id, getScheduleId(h.id))} className=" p-3 shadow-xl m-1 rounded-lg  bg-gray-600 text-white hover:bg-gray-400 hover:text-black ">
-                      Edytuj
-                    </button>
-                  </td>
-                  : <td></td>
-                }
-                {showAdminBoard || (showEmployeeBoard && currentUser.id === h.user_id) ?
-                  <td>
-                    <button onClick={() => deleteHandler(h.id, getScheduleId(h.id))} className=" p-3 shadow-xl m-1 rounded-lg  bg-gray-600 text-white hover:bg-gray-400 hover:text-black ">
-                      Usuń
-                    </button>
-                  </td>
-                  : <td></td>
-                }
-              </tr>
-              : null
+                : <td></td>
+              }
+              {showAdminBoard || (showEmployeeBoard && currentUser.id === h.user_id) ?
+                <td>
+                  <button onClick={() => deleteHandler(h.id, getScheduleId(h.id))} className=" p-3 shadow-xl m-1 rounded-lg  bg-gray-600 text-white hover:bg-gray-400 hover:text-black ">
+                    Usuń
+                  </button>
+                </td>
+                : <td></td>
+              }
+            </tr>
           )}
         </tbody>
       </table>
