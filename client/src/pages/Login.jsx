@@ -106,9 +106,9 @@ const Login = () => {
               {message}
             </div>
           )}
-          <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
+          {/* <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
             Nie masz konta? <Link to={"/register"} className="text-blue-700 hover:underline dark:text-blue-500"> Zarejestruj się</Link>
-          </div>
+          </div> */}
           <CheckButton  ref={checkBtn} />
         </Form>
       </div>

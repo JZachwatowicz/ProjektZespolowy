@@ -136,12 +136,14 @@ import AuthService from "../../services/auth.service.js";
   }
 
   return (
+    <div className="flex flex-wrap justify-center min-h-screen content-center">
+
     <div className='flex gap-10 flex-wrap justify-center'>
       <div className="p-11 mb-20 flex-grow ">
         <h1 className="mb-8 text-center text-3xl font-semibold">Lista Sprzętu</h1>
           <div className=' grid grid-cols-3 content-center'>
             <div className="flex items-center col-span-2">
-              <input className="form-control  dark:text-black p-3 rounded-l-lg w-4/5 shadow-md  w-max" 
+              <input className="form-control  dark:text-black p-3 rounded-l-lg w-4/5 shadow-md " 
                 type="search" 
                 placeholder="Search"
                 value={search}
@@ -221,6 +223,7 @@ import AuthService from "../../services/auth.service.js";
                 </div>
               }
       </div>
+    </div>
     </div>
   );
 }

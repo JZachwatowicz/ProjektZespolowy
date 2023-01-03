@@ -1,5 +1,6 @@
 const { authJwt } = require("../middleware");
 const controller = require("../controllers/address.controller.js");
+const { isAdmin } = require("../middleware/auth_jwt");
 const router = require('express').Router()
 
 
@@ -13,7 +14,7 @@ router.use((req, res, next) => {
 
 router.get(
     '/get',
-    [authJwt.verifyToken, authJwt.isEmployee],
+    [authJwt.verifyToken],
     controller.all_addresses
 );
 

@@ -41,7 +41,7 @@ exports.all_users = async (req, res) => {
 
 exports.edit_user = async (req, res) => {
 
-    const { username, email, password, firstName, lastName, pesel, contactNumber, role_id } = req.body
+    const { username, email, password, first_name, last_name, pesel, contact_number, role_id } = req.body
 
     await User.findOne({
         where: { id: req.params.id }
@@ -50,10 +50,10 @@ exports.edit_user = async (req, res) => {
             username,
             email,
             password,
-            firstName,
-            lastName,
+            first_name,
+            last_name,
             pesel,
-            contactNumber,
+            contact_number,
             role_id
         });
 
@@ -62,10 +62,10 @@ exports.edit_user = async (req, res) => {
                 'username',
                 'email',
                 'password',
-                'firstName',
-                'lastName',
+                'first_name',
+                'last_name',
                 'pesel',
-                'contactNumber',
+                'contact_number',
                 'role_id'
             ]
         });
@@ -132,9 +132,9 @@ exports.delete_user = async (req, res) => {
 
 exports.add_user = async (req, res) => {
 
-    const { username, email, password, firstName, lastName, pesel, contactNumber, role_id } = req.body
+    const { username, email, password, first_name, last_name, pesel, contact_number, role_id } = req.body
 
-    await createUserRole(username, email, password, firstName, lastName, pesel, contactNumber, role_id)
+    await createUserRole(username, email, password, first_name, last_name, pesel, contact_number, role_id)
         .then(() => {
             res.send({ message: "User was registered successfully!" });
         })

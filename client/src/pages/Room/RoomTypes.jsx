@@ -184,6 +184,8 @@ const required = (value) => {
       );
   }
     return (
+      <div className="flex flex-wrap justify-center min-h-screen content-center">
+
         <div className='flex gap-10 flex-wrap justify-center'>
       <div className="p-11 mb-20 flex-grow ">
       <button className="p-4 shadow-xl rounded-lg border-1 hover:bg-gray-600 hover:text-white"  onClick={handleCancel}> 
@@ -193,7 +195,7 @@ const required = (value) => {
               </button><h1 className="mb-8 text-center text-3xl font-semibold">Typy pokoi</h1>
           <div className=' grid grid-cols-2 content-center'>
             <div className="flex items-center ">
-              <input className="form-control shadow-md dark:text-black p-3 rounded-l-lg w-4/5  w-max" 
+              <input className="form-control shadow-md dark:text-black p-3 rounded-l-lg w-4/5 " 
                 type="search" 
                 placeholder="Search"
                 value={search}
@@ -283,6 +285,7 @@ const required = (value) => {
                 </div>
               }
       </div>
+    </div>
     </div>
       );
 }

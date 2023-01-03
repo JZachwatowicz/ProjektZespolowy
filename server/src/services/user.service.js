@@ -41,18 +41,18 @@ const rozkodujPesel = (pesel) =>
 }
 
 const createUser = async (
-    username, email, password, firstName, lastName,
-    pesel, contactNumber, addressId) => {
+    username, email, password, first_name, last_name,
+    pesel, contact_number, addressId) => {
 
     await User.create({
         username: username,
         email: email,
         password: bcrypt.hashSync(password, 8),
-        first_name: firstName,
-        last_name: lastName,
+        first_name: first_name,
+        last_name: last_name,
         birth_date: rozkodujPesel(pesel),
         pesel: pesel,
-        contact_number: contactNumber,
+        contact_number: contact_number,
         address_id: addressId
     }).then(user => {
         user.setRole(1)
@@ -60,17 +60,17 @@ const createUser = async (
 }
 
 const createUserRole = async (
-    username, email, password, firstName, lastName,
-    pesel, contactNumber, role_id) => {
+    username, email, password, first_name, last_name,
+    pesel, contact_number, role_id) => {
     await User.create({
         username: username,
         email: email,
         password: bcrypt.hashSync(password, 8),
-        first_name: firstName,
-        last_name: lastName,
+        first_name: first_name,
+        last_name: last_name,
         birth_date: rozkodujPesel(pesel),
         pesel: pesel,
-        contact_number: contactNumber,
+        contact_number: contact_number,
         role_id: role_id,
     })
 }

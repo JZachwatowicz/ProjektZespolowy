@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useStateContext } from '../../services/ContextProvider';
 import ActivityService from "../../services/activity.service.js";
+import AuthService from "../../services/auth.service.js";
 import Pagination from "../../components/Pagination.jsx";
 import { useNavigate, useLocation} from 'react-router-dom';
 
 const ShowActivities = () => {
 
+  const currentUser = AuthService.getCurrentUser();
   const [activities, setActivities] = useState([])
   const [filteredActivities, setFiltered] = useState([])
   const [currentPage, setCurrentPage] = useState(1);
@@ -93,7 +95,7 @@ const ShowActivities = () => {
         <h1 className="mb-8 text-center text-3xl font-semibold">Lista Aktywności</h1>
           <div className=' grid grid-cols-3'>
             <div className="flex items-center input-group  d-flex justify-content-between">
-              <input className="form-control p-3 shadow-md  rounded-l-lg w-4/5  w-max" 
+              <input className="form-control p-3 shadow-md  rounded-l-lg w-4/5" 
                 type="search" 
                 placeholder="Search"
                 value={search}
@@ -105,11 +107,13 @@ const ShowActivities = () => {
                 </svg>
               </button>
             </div>
+            { (currentUser.roles.includes("ROLE_EMPLOYEE") || currentUser.roles.includes("ROLE_ADMIN")) && 
             <div className='col-span-2 flex justify-end'>
               <button onClick={handleAddActivity} className="p-4 shadow-xl m-2 rounded-lg border-1 hover:bg-gray-600 hover:text-white">
                 Dodaj  Aktywność
               </button>
             </div>
+            }
           </div>
           <hr />
           {message && (
@@ -132,6 +136,7 @@ const ShowActivities = () => {
                     <div className="col-span-2 break-all flex items-center p-1">{act.name}</div>
                     <div className="col-span-3 flex p-1 items-center break-words">{act.description}</div>
                       <div className=" flex justify-end items-center pr-2">
+                        { (currentUser.roles.includes("ROLE_EMPLOYEE") || currentUser.roles.includes("ROLE_ADMIN")) && 
                         <div className={screenSize <= 1200 ? 'flex flex-col' : 'flex flex-row'}>
                           <button onClick={() => editActivityHandler(act.id)} className=" p-3 shadow-xl m-1 rounded-lg  bg-gray-600 text-white hover:bg-gray-400 hover:text-black ">
                             Edytuj
@@ -141,6 +146,7 @@ const ShowActivities = () => {
                             <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/></svg>
                           </button>
                         </div>
+                         }
                       </div>
                     </div>
                   </>
