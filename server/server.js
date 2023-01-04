@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors')
-import chat from "./src/controllers/chat.controller";
+const chat = require('./src/controllers/chat.controller')
+
 // app
 const app = express();
 const http = require("http").createServer(app);

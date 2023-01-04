@@ -86,4 +86,4 @@ const chat = (io) => {
   });
 };
 
-export default chat;
+module.exports = chat;
