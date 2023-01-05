@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { useStateContext } from "../../services/ContextProvider";
 import AuthService from "../../services/auth.service"
 
+var bcrypt = require("bcryptjs");
 
 const required = (value) => {
   if (!value) {
@@ -42,22 +43,22 @@ const vusername = (value) => {
   }
 };
 
-// const vpassword = (value) => {
-//   if (value.length < 6 || value.length > 40) {
-//     return (
-//       <div className="text-red-500 font-medium">
-//         The password must be between 6 and 40 characters.
-//       </div>
-//     );
-//   }
-// }
+const vpassword = (value) => {
+  if (value.length < 6 || value.length > 40) {
+    return (
+      <div className="text-red-500 font-medium">
+        The password must be between 6 and 40 characters.
+      </div>
+    );
+  }
+}
 
 const EditProfile = () => {
 
-    const currentUser = AuthService.getCurrentUser();
+  const currentUser = AuthService.getCurrentUser();
 
 
-let id = currentUser.id;
+  let id = currentUser.id;
 
 
   const navigate = useNavigate()
@@ -66,6 +67,7 @@ let id = currentUser.id;
 
   const [successful, setSuccessful] = useState(false);
   const [message, setMessage] = useState("");
+  const [password2, setPassword2] = useState("");
 
   const [formData, setFormData] = useState({
     username: "",
@@ -95,7 +97,9 @@ let id = currentUser.id;
 
     form.current.validateAll();
     if (checkBtn.current.context._errors.length === 0) {
-      UserService.editUser(id,formData)
+
+      if (password2.length !== 0) formData.password = bcrypt.hashSync(password2, 8)
+      UserService.editUser(id, formData)
         .then(() => navigate('/profile'))
         .catch(error => console.log(error));
     }
@@ -126,15 +130,15 @@ let id = currentUser.id;
               </div>
 
               <div className="mb-6">
-                <label for="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hasło</label>
+                <label for="password2" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nowe hasło</label>
                 <Input
                   type="password"
                   className={formStyle}
-                  name="password"
+                  name="password2"
                   placeholder="*********"
-                  value={formData.password}
-                  onChange={onChange}
-                  validations={[required]} />
+                  value={password2}
+                  onChange={(e) => setPassword2(e.target.value)}
+                  validations={[vpassword]} />
               </div>
 
               <div className="mb-6">
@@ -190,15 +194,14 @@ let id = currentUser.id;
                     className={formStyle}
                     name="contact_number"
                     placeholder="Telefon"
-                    // pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}"
                     value={formData.contact_number}
                     onChange={onChange}
                     validations={[required]} />
                 </div>
               </div>
-              
 
-              <button type="submit" className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Dodaj</button>
+
+              <button type="submit" className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Zapisz</button>
               <button onClick={() => navigate("/profile")} className="w-full text-white bg-gray-600 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 text-center py-2.5 dark:hover:bg-gray-100 ">Wróć  </button>
 
             </>
