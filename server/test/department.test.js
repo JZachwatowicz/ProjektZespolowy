@@ -44,62 +44,56 @@
        pesel: TestUser.pesel,
        contact_number: TestUser.contactNumber,
        role_id: TestUser.role_id,
-   });
- });
+    });
+  });
+  after(async () => {
+    User.destroy({
+      where: {pesel: TestUser.pesel}
+    });
+  });
+  beforeEach( (done) => {
+     chai
+     .request(app)
+     .post("/api/auth/signin")
+     .send({username: TestUser.username, password: TestUser.password})
+     .end((err, res) => {
+       res.should.have.status(200);
+       should.exist(res.body.accessToken);
+       token = res.body.accessToken;
+       done();
      });
-      beforeEach( (done) => {
-         chai
-         .request(app)
-         .post("/api/auth/signin")
-         .send({username: TestUser.username, password: TestUser.password})
-         .end((err, res) => {
-           res.should.have.status(200);
-           should.exist(res.body.accessToken);
-           token = res.body.accessToken;
-           done();
-         });
-      });
+  });
    
-      describe("/POST Department" ,() => {
-        before( async () => {
-          await Department.destroy({
-          where: {name: TestDepartment.name}
+  describe("/POST Department" ,() => {
+    before( async () => { 
+      await Department.destroy({
+      where: {name: TestDepartment.name}
+  });
+     it("it should POST Department", (done) => {
+        chai
+        .request(app)
+        .post("/api/department/add")
+        .set({'x-access-token': token})
+        .send(TestDepartment)
+        .end((err, res) => {
+          res.should.have.status(200);
+          should.exist(res.body);
+          done();
+        });
       });
-         it("it should POST Department", (done) => {
-            chai
-            .request(app)
-            .post("/api/department/add")
-            .set({'x-access-token': token})
-            .send(TestDepartment)
-            .end((err, res) => {
-              res.should.have.status(200);
-              should.exist(res.body);
-              done();
-            });
-       });
     });
 
-//  let GETdepartments = {name: "DepToGET", description: "DescToGET"};
-     describe("/GET Departments" ,() => {
-    //   before(async () => {
-    //    await Department.destroy(
-    //        {where: {name: GETdepartments.name}}
-    //    );
-    //    await Department.create(
-    //      GETdepartments
-    //  );
-
-    //  });
-      it("it should GET all Departments", (done) => {
-         chai
-         .request(app)
-         .get("/api/department/get")
-         .set({'x-access-token': token})
-         .end((err, res) => {
-           res.should.have.status(200);
-           should.exist(res.body);
-           done();
-         });
+  describe("/GET Departments" ,() => {
+   it("it should GET all Departments", (done) => {
+      chai
+      .request(app)
+      .get("/api/department/get")
+      .set({'x-access-token': token})
+      .end((err, res) => {
+        res.should.have.status(200);
+        should.exist(res.body);
+        done();
+      });
     });
  });
 
@@ -191,3 +185,4 @@
     });
   });
  });
+});
