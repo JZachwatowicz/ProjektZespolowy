@@ -105,7 +105,7 @@ const AddSchedule = () => {
               navigate("/schedule", { state: { message: "Successfully added room.", successful: true } })
               window.location.reload();
               setSuccessful(true);
-              setMessage("Successfuly added schedule.");  
+              setMessage("Successfuly added schedule.");
             }).catch(error => {
               const resMessage =
                 (error.response &&
@@ -152,6 +152,7 @@ const AddSchedule = () => {
     const x = e.target.value;
     setRoomId(x);
   };
+  const formStyle = "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 
   return (
     <div>
@@ -163,60 +164,80 @@ const AddSchedule = () => {
             </div>
           </div>
         )}
-        <div className={`p-11 shadow-2xl mb-20  ${screenSize <= 800 ? 'w-full' : 'w-10/12'}`}>
+        <div className="w-full max-w-xl p-4 bg-white border border-gray-200 rounded-lg shadow-2xl sm:p-6 md:p-8 dark:bg-secondary-dark-bg dark:border-gray-700">
           <h1 className="mb-8 text-center text-3xl  font-semibold">Godziny:</h1>
-          <hr />
 
-          <Form onSubmit={addScheduleHandler} ref={form} className="pt-4 flex-2 text-center">
 
-            <Input className="form-control dark:text-black p-3 m-2 border-b-2 shadow-md w-full max-w-3xl"
-              value={begin_date_v}
-              name="begin_date_v"
-              onChange={onChangeBeginDate}
-              type="datetime-local"
-              validations={[required, vdate]}
-            />
-            <Input className="form-control dark:text-black p-3 m-2 border-b-2 shadow-md  w-full max-w-3xl "
-              value={end_date_v}
-              name="end_date_v"
-              onChange={onChangeEndDate}
-              type="datetime-local"
-              validations={[required, vdate]}
-            />
-            <Select className="form-control dark:text-black p-3 m-2 border-b-2 shadow-md  w-full max-w-3xl"
-              value={room_id_v || ''}
-              onChange={onChangeRoom}
-              validations={[required]}
-            >
-              <option value={null} >----</option>
-              {
-                rooms.length > 0 &&
-                rooms.map(room => (
-                  <option value={room.id} key={room.id}>{room.name}</option>
-                ))
-              }
-            </Select>
-            <Select className="form-control dark:text-black p-3 m-2 border-b-2 shadow-md  w-full max-w-3xl"
-              value={activity_id_v || ''}
-              onChange={onChangeActivity}
-              validations={[required]}
-            >
-              <option value={null} >----</option>
-              {
-                activities.length > 0 &&
-                activities.map(activity => (
-                  <option value={activity.id} key={activity.id}>{activity.name}</option>
-                ))
-              }
-            </Select>
-            <div className='m-auto'>
-              <button className='p-4 shadow-xl m-2 rounded-lg bg- border-1 bg-gray-600 text-white hover:bg-gray-400 hover:text-black' type="submit">
-                Dodaj
-              </button>
-              <button className='p-4 shadow-xl m-2 rounded-lg border-1 hover:bg-gray-400 hover:text-white' type="Reset" onClick={handleCancel}>
-                Anuluj
-              </button>
+          <Form onSubmit={addScheduleHandler} ref={form} className="space-y-6">
+            <hr />
+            <div className="mb-6">
+              <label for="begin_date_v" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Data rozpoczęcia</label>
+              <Input
+                className={formStyle}
+                value={begin_date_v}
+                name="begin_date_v"
+                onChange={onChangeBeginDate}
+                type="datetime-local"
+                validations={[required, vdate]}
+              />
             </div>
+            <div className="mb-6">
+              <label for="end_date_v" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Data zakończenia</label>
+              <Input
+                className={formStyle}
+                value={end_date_v}
+                name="end_date_v"
+                onChange={onChangeEndDate}
+                type="datetime-local"
+                validations={[required, vdate]}
+              />
+            </div>
+            <div className="mb-6">
+              <label for="room" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sala</label>
+              <Select
+                name="room"
+                className={formStyle}
+                value={room_id_v || ''}
+                onChange={onChangeRoom}
+                validations={[required]}
+              >
+                <option value={null} >----</option>
+                {
+                  rooms.length > 0 &&
+                  rooms.map(room => (
+                    <option value={room.id} key={room.id}>{room.name}</option>
+                  ))
+                }
+              </Select>
+            </div>
+            <div className="mb-6">
+              <label for="activity" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Zajęcia</label>
+              <Select
+                name="activity"
+                className={formStyle}
+                value={activity_id_v || ''}
+                onChange={onChangeActivity}
+                validations={[required]}
+              >
+                <option value={null} >----</option>
+                {
+                  activities.length > 0 &&
+                  activities.map(activity => (
+                    <option value={activity.id} key={activity.id}>{activity.name}</option>
+                  ))
+                }
+              </Select>
+            </div>
+            <button
+              className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              type="submit">
+              Dodaj
+            </button>
+            <button
+              className="w-full text-white bg-gray-600 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 text-center py-2.5 dark:hover:bg-gray-100 "
+              type="Reset" onClick={handleCancel}>
+              Anuluj
+            </button>
 
             <CheckButton style={{ display: "none" }} ref={checkBtn} />
           </Form>
