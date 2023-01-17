@@ -1,25 +1,26 @@
 const express = require('express')
 const cors = require('cors')
-import chat from "./src/controllers/chat.controller";
+const chat = require('./src/controllers/chat.controller')
+
 // app
 const app = express();
 const http = require("http").createServer(app);
 
 // socket io
-const io = require("socket.io")(http, {
-  path: "/socket.io",
-  cors: {
-    origin: ["http://localhost:3000", "http://localhost:3001"],
-    methods: ["GET", "POST"],
-    allowedHeaders: ["content-type"],
-  },
-});
+ const io = require("socket.io")(http, {
+   path: "/socket.io",
+   cors: {
+     origin: ["http://localhost:3000", "http://localhost:3001"],
+     methods: ["GET", "POST"],
+     allowedHeaders: ["content-type"],
+   },
+ });
 // api routes
 // make sure to install cors from npm before using api routes from your react client
-// var corsOptions = {
-//     credentials: true,
-//     origin: "http://localhost:3000"
-//   };
+ var corsOptions = {
+     credentials: true,
+     origin: "http://localhost:3000"
+   };
   
 
 
@@ -53,7 +54,7 @@ app.use('/api/description', require('./src/routes/user_description.routes.js'))
 
 app.use('/Images', express.static('./Images'))
 
-chat(io);
+//chat(io);
 
 //port
 
