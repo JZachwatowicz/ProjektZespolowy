@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Sidebar, Footer } from './components';
 import {
   Home, Login, Profile, About, Contact, News, RoomTypes, AddUser, EditUser, EditUserAddress, ShowUsers, EditAddress, EditProfile,
-  ShowDeprtments, AddDepartment, EditDepartment, ShowDescriptions, AddDescription, AddActivity, EditActivity, ShowActivities, OneNews, ShowDescription, EditItem, AddItem, ShowItems, ItemTypes, EditRoom, AddRoom, ShowRooms, Schedule, EditSchedule, AddSchedule, ReserveItem
+  ShowDeprtments, AddDepartment, EditDepartment, ShowDescriptions, AddDescription, AddActivity, EditActivity, ShowActivities, OneNews, ShowDescription, EditItem, AddItem, ShowItems, ItemTypes, EditRoom, AddRoom, ShowRooms, Schedule, EditSchedule, AddSchedule, ReserveItem, ShowSchedule
 } from './pages';
 import './App.css';
 
@@ -82,6 +82,7 @@ const App = () => {
               <Route exact path="/items" element={<ShowItems />} />
 
               <Route exact path="/schedule" element={<Schedule />} />
+              <Route exact path="/schedule/show/:h_id/:s_id" element={<ShowSchedule />} />
               <Route exact path='/schedule/add' element={<AddSchedule />} />
               <Route exact path='/schedule/edit/:h_id/:s_id' element={<EditSchedule />} />
               <Route exact path='/schedule/manageusers/:h_id/:s_id/:r_size' element={<ManageScheduleUsers />} />

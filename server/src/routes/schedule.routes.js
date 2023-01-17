@@ -19,7 +19,7 @@ router.get(
 
 router.get(
     '/getScheduleUsers/:id',
-    [authJwt.verifyToken, authJwt.isAdmin],
+    [authJwt.verifyToken],
     controller.get_schedule_users
 );
 
@@ -51,6 +51,12 @@ router.delete(
     '/delete/:id',
     [authJwt.verifyToken, authJwt.isEmployee],
     controller.delete_schedule
+);
+
+router.delete(
+    '/deleteScheduleUser/:s_id/:user_id',
+    [authJwt.verifyToken],
+    controller.delete_schedule_user
 );
 
 module.exports = router

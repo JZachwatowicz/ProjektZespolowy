@@ -113,15 +113,7 @@ function Chat() {
         }, 1000);
     };
 
-    const handleMessage = (e) => {
-        e.preventDefault();
-        socket.emit("message", {
-            id: Date.now(),
-            name: username,
-            message,
-        });
-        setMessage("");
-    };
+
 
     if (message) {
         socket.emit("typing", username);
@@ -201,7 +193,16 @@ function Chat() {
             setPrivateMessage("");
         }
     };
-
+    const handleMessage = (e) => {
+        e.preventDefault();
+        socket.emit("message", {
+            id: Date.now(),
+            name: username,
+            message,
+        });
+        setMessage("");
+    };
+    
     const formStyle = "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 
     return (

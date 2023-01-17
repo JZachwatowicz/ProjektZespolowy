@@ -35,7 +35,7 @@ const ShowUserDescription = () => {
   console.log(descriptions)
   return (
 
-    <div class="overflow-x-auto relative shadow-lg sm:rounded-lg w-10/12 border-1">
+    <div className="overflow-x-auto relative shadow-lg sm:rounded-lg w-10/12 border-1">
 
       <table className="w-full text-left  rounded-lg" >
         <caption className="p-5 text-lg font-semibold text-center text-gray-900 bg-white dark:text-white dark:bg-secondary-dark-bg">
